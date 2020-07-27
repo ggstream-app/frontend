@@ -5,5 +5,10 @@
 <div id="player"></div>
 
 @section Scripts {
-    @await Html.PartialAsync("_OvenPlayerStartup", "personal-streamkey")
+    @inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+
+    @await Html.PartialAsync("_OvenPlayerStartup", new OvenPlayerConfiguration(Configuration)
+    {
+        StreamKey = "personal-streamkey"
+    })
 }
