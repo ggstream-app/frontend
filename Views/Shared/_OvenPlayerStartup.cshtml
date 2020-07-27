@@ -1,0 +1,26 @@
+﻿@model string
+
+<script src="~/lib/ovenplayer/ovenplayer.js"></script>
+
+<script>
+    var player = OvenPlayer.create("player", {
+        sources: [
+            {
+                type: 'webrtc',
+                file: 'wss://svc.ggstream.app:3334/app/@Model',
+                label: 'WebRTC - Preferred'
+            },
+            {
+                type: 'webrtc',
+                file: 'wss://svc-azure.ggstream.app:3334/app/@Model',
+                label: 'WebRTC - Azure'
+            },
+            {
+                type: 'webrtc',
+                file: 'wss://svc-westin.ggstream.app:3334/app/@Model',
+                label: 'WebRTC - Westin'
+            },
+        ],
+        autoStart: true
+    });
+</script>
