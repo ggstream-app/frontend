@@ -2,7 +2,33 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="wrapper">
+    <div id="player"></div>
 </div>
+
+@section Scripts {
+    <script src="/js/ovenplayer/ovenplayer.js"></script>
+
+    <script>
+        var player = OvenPlayer.create("player", {
+            sources: [
+                {
+                    type: 'webrtc',
+                    file: 'wss://svc.ggstream.app:3334/app/personal-streamkey',
+                    label: 'WebRTC - Preferred'
+                },
+                {
+                    type: 'webrtc',
+                    file: 'wss://svc-azure.ggstream.app:3334/app/personal-streamkey',
+                    label: 'WebRTC - Azure'
+                },
+                {
+                    type: 'webrtc',
+                    file: 'wss://svc-westin.ggstream.app:3334/app/personal-streamkey',
+                    label: 'WebRTC - Westin'
+                },
+            ],
+            autoStart: true
+        });
+    </script>
+}
