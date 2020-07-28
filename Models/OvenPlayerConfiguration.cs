@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using GGStream.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,39 +22,6 @@ namespace GGStream.Models
             }
         }
 
-        public Boolean SupportsWebRTC
-        {
-            get
-            {
-                List<string> protocols = Configuration.GetSection("Protocols").Get<List<string>>();
-                return protocols.Contains("WebRTC");
-            }
-        }
-
-        /**
-         * DASH is not currently supported
-         */
-        public Boolean SupportsDASH
-        {
-            get
-            {
-                List<string> protocols = Configuration.GetSection("Protocols").Get<List<string>>();
-                return protocols.Contains("DASH");
-            }
-        }
-
-        /**
-         * HLS is not currently supported
-         */
-        public Boolean SupportsHLS
-        {
-            get
-            {
-                List<string> protocols = Configuration.GetSection("Protocols").Get<List<string>>();
-                return protocols.Contains("HLS");
-            }
-        }
-
         public string EndpointJson
         {
             get
@@ -60,16 +30,23 @@ namespace GGStream.Models
 
                 var endpointArr = instances.Select(i =>
                 {
-                    var protocol = i.Secure ? "wss" : "ws";
-                    var port = i.Secure ? "3334" : "3333";
+                    List<EndpointJson> allEndpoints = new List<EndpointJson>();
 
-                    return new EndpointJson()
+                    if (i.Protocols.WebRTC)
                     {
-                        type = "webrtc",
-                        file = $"{protocol}://{i.Endpoint}:{port}/app/{StreamKey}",
-                        label = $"WebRTC - {i.Name}",
-                    };
-                }).ToArray();
+                        allEndpoints.Add(GetWebRTCEndpoint(i));
+                    }
+                    if (i.Protocols.DASH)
+                    {
+                        allEndpoints.Add(GetDASHEndpoint(i));
+                    }
+                    if (i.Protocols.HLS)
+                    {
+                        allEndpoints.Add(GetHLSEndpoint(i));
+                    }
+
+                    return allEndpoints;
+                }).Aggregate(new List<EndpointJson>(), (acc, x) => acc.Concat(x).ToList());
 
                 return JsonConvert.SerializeObject(endpointArr);
             }
@@ -81,6 +58,45 @@ namespace GGStream.Models
         {
             Configuration = configuration;
         }
+
+        private EndpointJson GetWebRTCEndpoint(SvcInstance instance)
+        {
+            var protocol = instance.Secure ? "wss" : "ws";
+            var port = instance.Secure ? "3334" : "3333";
+
+            return new EndpointJson()
+            {
+                type = "webrtc",
+                file = $"{protocol}://{instance.Endpoint}:{port}/app/{StreamKey}",
+                label = $"{instance.Name} - WebRTC",
+            };
+        }
+
+        private EndpointJson GetDASHEndpoint(SvcInstance instance)
+        {
+            var protocol = instance.Secure ? "https" : "http";
+            var port = instance.Secure ? "8443" : "8080";
+
+            return new EndpointJson()
+            {
+                type = "dash",
+                file = $"{protocol}://{instance.Endpoint}:{port}/app/{StreamKey}/manifest.mpd",
+                label = $"{instance.Name} - DASH",
+            };
+        }
+
+        private EndpointJson GetHLSEndpoint(SvcInstance instance)
+        {
+            var protocol = instance.Secure ? "https" : "http";
+            var port = instance.Secure ? "8443" : "8080";
+
+            return new EndpointJson()
+            {
+                type = "hls",
+                file = $"{protocol}://{instance.Endpoint}:{port}/app/{StreamKey}/playlist.m3u8",
+                label = $"{instance.Name} - HLS",
+            };
+        }
     }
 
     public class SvcInstance
@@ -89,9 +105,17 @@ namespace GGStream.Models
         public string Endpoint { get; set; }
         public Boolean Default { get; set; }
         public Boolean Secure { get; set; }
+        public InstanceProtocols Protocols { get; set; }
     }
 
-    public class EndpointJson
+    public class InstanceProtocols
+    {
+        public Boolean WebRTC { get; set; }
+        public Boolean DASH { get; set; }
+        public Boolean HLS { get; set; }
+    }
+
+    class EndpointJson
     {
 #pragma warning disable IDE1006 // Naming Styles
         public string type { get; set; }
