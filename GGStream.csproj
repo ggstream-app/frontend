@@ -21,6 +21,8 @@
     <Compile Remove="Migrations\20200728055346_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200728060453_Initial.cs" />
     <Compile Remove="Migrations\20200728060453_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200728060541_Initial.cs" />
+    <Compile Remove="Migrations\20200728060541_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +57,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="Nanoid" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

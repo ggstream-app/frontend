@@ -11,29 +11,16 @@ namespace GGStream.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid StreamKey { get; set; }
+        public Guid ID { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string StreamKey { get; set; }
 
         /**
          * Collection this stream is a part of.
          */
         public Collection Collection { get; set; }
         public string CollectionURL { get; set; }
-
-        /**
-         * Full Stream Key used in OME, in the form of <Collection URL>_<StreamKey>.
-         */
-        [NotMapped]
-        public string FullStreamKey { 
-            get
-            {
-                if (CollectionURL != null && StreamKey != null)
-                {
-                    return $"{CollectionURL}_{StreamKey}";
-                }
-
-                return "defaultstreamkey";
-            }
-        }
 
         /**
          * Date the stream starts, currently used only for pulling latest.

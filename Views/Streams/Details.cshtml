@@ -11,20 +11,26 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Collection)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CollectionURL)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.StreamKey)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.StreamKey)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.StartDate)
         </dd>

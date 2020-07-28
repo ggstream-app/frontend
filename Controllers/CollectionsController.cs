@@ -36,7 +36,7 @@ namespace GGStream.Controllers
             {
                 // Check if it's a direct stream link
                 var stream = await _context.Stream
-                    .FirstOrDefaultAsync(m => m.StreamKey == new Guid(url));
+                    .FirstOrDefaultAsync(m => m.ID == new Guid(url));
                 if (stream == null)
                 {
                     return NotFound();

@@ -44,7 +44,7 @@ namespace GGStream.Migrations
 
             modelBuilder.Entity("GGStream.Models.Stream", b =>
                 {
-                    b.Property<Guid>("StreamKey")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -57,7 +57,11 @@ namespace GGStream.Migrations
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("StreamKey");
+                    b.Property<string>("StreamKey")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
 
                     b.HasIndex("CollectionURL");
 

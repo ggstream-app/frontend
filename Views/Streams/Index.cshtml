@@ -13,10 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Collection)
+                @Html.DisplayNameFor(model => model.ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StreamKey)
+                @Html.DisplayNameFor(model => model.Collection)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StartDate)
@@ -30,11 +30,11 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.CollectionURL)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StreamKey)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
@@ -43,9 +43,9 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.StreamKey">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StreamKey">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StreamKey">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
 }
