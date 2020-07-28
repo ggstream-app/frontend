@@ -19,6 +19,34 @@ namespace GGStream.Controllers
             _context = context;
         }
 
+        #region Public Routes
+
+        // GET: personal/12345678-1234-1234-123456789012
+        public async Task<IActionResult> ViewStream(string url, Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var stream = await _context.Stream
+                .FirstOrDefaultAsync(m => m.StreamKey == id);
+            if (stream == null)
+            {
+                return NotFound();
+            }
+
+            if (stream.Collection.URL != url)
+            {
+                return NotFound();
+            }
+
+            return View(stream);
+        }
+
+        #endregion
+
+        #region Admin Routes
         // GET: Streams
         public async Task<IActionResult> Index()
         {
@@ -145,6 +173,8 @@ namespace GGStream.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        #endregion
 
         private bool StreamExists(Guid id)
         {

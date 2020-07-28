@@ -93,8 +93,10 @@ namespace GGStream.Models
 
     public class EndpointJson
     {
+#pragma warning disable IDE1006 // Naming Styles
         public string type { get; set; }
         public string file { get; set; }
         public string label { get; set; }
+#pragma warning restore IDE1006 // Naming Styles
     }
 }

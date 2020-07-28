@@ -20,6 +20,16 @@ namespace GGStream.Models
         public Collection Collection { get; set; }
 
         /**
+         * Full Stream Key used in OME, in the form of <Collection URL>_<StreamKey>.
+         */
+        public string FullStreamKey { 
+            get
+            {
+                return $"{Collection.URL}_{StreamKey}";
+            }
+        }
+
+        /**
          * Date the stream starts, currently used only for pulling latest.
          */
         [Required]
