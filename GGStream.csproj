@@ -29,10 +29,6 @@
 
   <ItemGroup>
     <None Include="wwwroot\lib\bootstrap-argon\css\argon-design-system.css.map" />
-    <None Include="wwwroot\lib\bootstrap-argon\fonts\fontawesome-webfont.svg" />
-    <None Include="wwwroot\lib\bootstrap-argon\fonts\fontawesome-webfont.woff2" />
-    <None Include="wwwroot\lib\bootstrap-argon\fonts\nucleo-icons.svg" />
-    <None Include="wwwroot\lib\bootstrap-argon\fonts\nucleo-icons.woff2" />
     <None Include="wwwroot\lib\bootstrap-argon\js\argon-design-system.js" />
     <None Include="wwwroot\lib\bootstrap-argon\js\argon-design-system.js.map" />
     <None Include="wwwroot\lib\bootstrap-argon\js\argon-design-system.min.js" />
@@ -47,6 +43,16 @@
     <None Include="wwwroot\lib\bootstrap-argon\js\plugins\moment.min.js" />
     <None Include="wwwroot\lib\bootstrap-argon\js\plugins\nouislider.min.js" />
     <None Include="wwwroot\lib\bootstrap-argon\js\plugins\perfect-scrollbar.jquery.min.js" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-duotone-900.svg" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-duotone-900.woff2" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-light-300.svg" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-light-300.woff2" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\lib\fontawesome\webfonts\fa-solid-900.woff2" />
   </ItemGroup>
 
   <ItemGroup>

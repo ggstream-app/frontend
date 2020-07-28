@@ -21,7 +21,7 @@ namespace GGStream.Controllers
         }
 
         [Route("/{url}/{id?}")]
-        public async Task<IActionResult> ViewStream(string url, string? id)
+        public async Task<IActionResult> ViewStream(string url, string id)
         {
             if (url == null)
             {
