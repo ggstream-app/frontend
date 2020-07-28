@@ -15,16 +15,25 @@ for details on configuring this project to bundle and minify static web assets. 
     background-color: #527FCB;
 }
 
-/* Flexbox helpers
--------------------------------------------------- */
-.flex-auto {
-    flex: 1 1 auto;
+.navbar-title {
+    font-size: 1.75rem;
+    font-weight: 300;
 }
 
 /* OvenPlayer
 -------------------------------------------------- */
 .op-container {
     max-width: 1440px;
+}
+
+/* Bootstrap utility extensions
+-------------------------------------------------- */
+.flex-auto {
+    flex: 1 1 auto;
+}
+
+.mh-95 {
+    max-height: 95%;
 }
 
 /* Extra responsive breaks
