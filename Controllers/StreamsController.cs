@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GGStream.Data;
 using GGStream.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace GGStream.Controllers
 {
@@ -22,7 +23,7 @@ namespace GGStream.Controllers
         #region Public Routes
 
         // GET: personal/12345678-1234-1234-123456789012
-        public async Task<IActionResult> ViewStream(string url, Guid? id)
+        public async Task<IActionResult> ViewStream(string url, Guid id)
         {
             if (id == null)
             {
@@ -36,10 +37,15 @@ namespace GGStream.Controllers
                 return NotFound();
             }
 
-            if (stream.Collection.URL != url)
+            // Verify that this stream belongs to this collection
+            if (stream.CollectionURL != url)
             {
                 return NotFound();
             }
+
+            // Attach Collection to stream
+            var collection = await _context.Collection.FirstOrDefaultAsync(m => m.URL == url);
+            stream.Collection = collection;
 
             return View(stream);
         }
@@ -82,8 +88,20 @@ namespace GGStream.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StreamKey,StartDate,EndDate,ShowHowTo,TeamsLink")] Stream stream)
+        public async Task<IActionResult> Create([Bind("StreamKey,StartDate,EndDate")] Stream stream, [FromForm] string url)
         {
+            Collection collection = await _context.Collection.FirstOrDefaultAsync(m => m.URL == url);
+
+            if (collection == null)
+            {
+                return View(stream);
+            } 
+            else
+            {
+                stream.Collection = collection;
+                stream.CollectionURL = url;
+            }
+
             if (ModelState.IsValid)
             {
                 stream.StreamKey = Guid.NewGuid();
@@ -115,7 +133,7 @@ namespace GGStream.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("StreamKey,StartDate,EndDate,ShowHowTo,TeamsLink")] Stream stream)
+        public async Task<IActionResult> Edit(Guid id, [Bind("StreamKey,StartDate,EndDate")] Stream stream)
         {
             if (id != stream.StreamKey)
             {

@@ -63,7 +63,7 @@ namespace GGStream
                         action = "Index"
                     });
 
-                /* Admin/Default Interfaces */
+                /* Admin/Default Entrypoints */
                 endpoints.MapControllerRoute(
                     name: "admin",
                     pattern: "/Admin/{controller=Admin}/{action=Index}/{id?}");

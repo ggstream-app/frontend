@@ -21,7 +21,8 @@ namespace GGStream.Controllers
 
         #region Public Routes
 
-        // GET: personal
+        // GET: personal (Collection's current stream)
+        // GET: 12345678-1234-1234-123456789012 (Direct to stream)
         public async Task<IActionResult> ViewStream(string url)
         {
             if (url == null)
@@ -33,16 +34,43 @@ namespace GGStream.Controllers
                 .FirstOrDefaultAsync(m => m.URL == url);
             if (collection == null)
             {
-                return NotFound();
+                // Check if it's a direct stream link
+                var stream = await _context.Stream
+                    .FirstOrDefaultAsync(m => m.StreamKey == new Guid(url));
+                if (stream == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    // Attach Collection to stream
+                    var streamCollection = await _context.Collection
+                        .FirstOrDefaultAsync(m => m.URL == stream.CollectionURL);
+
+                    stream.Collection = streamCollection;
+                    return View("../Streams/ViewStream", stream);
+                }
             }
 
+            // Determine which stream to play
+            Stream streamToPlay;
             if (collection.Private)
             {
                 // TODO: In the future, show a "private" message here that tells users to query the stream
-                return NotFound();
+                return NotFound("This collection is private");
+            }
+            else
+            {
+                streamToPlay = StreamToPlay(collection);
             }
 
-            return View(collection);
+            if (streamToPlay != null)
+            {
+                return View("../Streams/ViewStream", streamToPlay);
+            }
+
+            // TODO: In the future, show a "no stream playing" message here
+            return NotFound("There's no streams playing!");
         }
 
         #endregion
@@ -56,7 +84,7 @@ namespace GGStream.Controllers
         }
 
         // GET: Collections/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -64,7 +92,7 @@ namespace GGStream.Controllers
             }
 
             var collection = await _context.Collection
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.URL == id);
             if (collection == null)
             {
                 return NotFound();
@@ -84,11 +112,10 @@ namespace GGStream.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,URL,BaseColor,Private,ShowHowTo,TeamsLink")] Collection collection)
+        public async Task<IActionResult> Create([Bind("URL,Name,BaseColor,Private,ShowHowTo,TeamsLink")] Collection collection)
         {
             if (ModelState.IsValid)
             {
-                collection.Id = Guid.NewGuid();
                 _context.Add(collection);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,7 +124,7 @@ namespace GGStream.Controllers
         }
 
         // GET: Collections/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -117,9 +144,9 @@ namespace GGStream.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,URL,BaseColor,Private,ShowHowTo,TeamsLink")] Collection collection)
+        public async Task<IActionResult> Edit(string id, [Bind("URL,Name,BaseColor,Private,ShowHowTo,TeamsLink")] Collection collection)
         {
-            if (id != collection.Id)
+            if (id != collection.URL)
             {
                 return NotFound();
             }
@@ -133,7 +160,7 @@ namespace GGStream.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CollectionExists(collection.Id))
+                    if (!CollectionExists(collection.URL))
                     {
                         return NotFound();
                     }
@@ -148,7 +175,7 @@ namespace GGStream.Controllers
         }
 
         // GET: Collections/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -156,7 +183,7 @@ namespace GGStream.Controllers
             }
 
             var collection = await _context.Collection
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.URL == id);
             if (collection == null)
             {
                 return NotFound();
@@ -168,7 +195,7 @@ namespace GGStream.Controllers
         // POST: Collections/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var collection = await _context.Collection.FindAsync(id);
             _context.Collection.Remove(collection);
@@ -176,11 +203,25 @@ namespace GGStream.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        private bool CollectionExists(string id)
+        {
+            return _context.Collection.Any(e => e.URL == id);
+        }
+
         #endregion
 
-        private bool CollectionExists(Guid id)
+        private Stream StreamToPlay(Collection collection)
         {
-            return _context.Collection.Any(e => e.Id == id);
+            var today = DateTime.Today;
+            var stream = _context.Stream.FirstOrDefault((Stream s) =>
+                s.Collection.URL == collection.URL &&
+                (s.StartDate == null || s.StartDate > today) &&
+                (s.EndDate == null || s.EndDate < today));
+
+            // Attach collection to stream
+            stream.Collection = collection;
+
+            return stream;
         }
     }
 }

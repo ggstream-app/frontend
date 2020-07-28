@@ -9,21 +9,18 @@ namespace GGStream.Models
 {
     public class Collection
     {
+        /**
+         * URL path to use when querying for this collection.
+         */
+        [Required]
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set;  }
+        public string URL { get; set; }
 
         /**
          * Public name, used in branding.
          */
         [Required]
         public string Name { get; set; }
-
-        /**
-         * URL path to use when querying for this collection.
-         */
-        [Required]
-        public string URL { get; set; }
 
         /**
          * Base color to use for UI. Currently unused.
@@ -44,5 +41,10 @@ namespace GGStream.Models
          * Teams link to show in UI. If not set, won't show button.
          */
         public string TeamsLink { get; set; }
+
+        /**
+         * All streams for this collection
+         */
+        public List<Stream> Streams { get; set; }
     }
 }

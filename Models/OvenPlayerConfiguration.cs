@@ -103,7 +103,6 @@ namespace GGStream.Models
     {
         public string Name { get; set; }
         public string Endpoint { get; set; }
-        public Boolean Default { get; set; }
         public Boolean Secure { get; set; }
         public InstanceProtocols Protocols { get; set; }
     }
