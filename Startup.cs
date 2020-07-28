@@ -53,64 +53,7 @@ namespace GGStream
 
             app.UseEndpoints(endpoints =>
             {
-                /* Homepage */
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "/",
-                    defaults: new
-                    {
-                        controller = "Home",
-                        action = "Index"
-                    });
-
-
-                /* Collection Entrypoint */
-                endpoints.MapControllerRoute(
-                    name: "collection",
-                    pattern: "{url}",
-                    defaults: new
-                    {
-                        controller = "Collections",
-                        action = "ViewStream"
-                    });
-
-                /* Stream Entrypoint */
-                endpoints.MapControllerRoute(
-                    name: "stream",
-                    pattern: "{url}/{id}",
-                    defaults: new
-                    {
-                        controller = "Streams",
-                        action = "ViewStream"
-                    });
-
-
-                /* Admin Entrypoints */
                 endpoints.MapControllers();
-                //endpoints.MapControllerRoute(
-                //    name: "admin",
-                //    pattern: "admin/",
-                //    defaults: new
-                //    {
-                //        controller = "Collections",
-                //        action = "Index"
-                //    });
-
-                //endpoints.MapControllerRoute(
-                //    name: "admin-collection",
-                //    pattern: "admin/{url}/{action = Details}",
-                //    defaults: new
-                //    {
-                //        controller = "Collections",
-                //    });
-
-                //endpoints.MapControllerRoute(
-                //    name: "admin-stream",
-                //    pattern: "admin/{url}/streams/{id}/{action = Details}",
-                //    defaults: new
-                //    {
-                //        controller = "Streams",
-                //    });
             });
         }
     }
