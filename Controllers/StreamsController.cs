@@ -23,6 +23,7 @@ namespace GGStream.Controllers
         #region Public Routes
 
         // GET: personal/1234567890
+        [Route("/{url}/{id}")]
         public async Task<IActionResult> ViewStream(string url, string id)
         {
             if (id == null)
@@ -54,13 +55,15 @@ namespace GGStream.Controllers
 
         #region Admin Routes
         // GET: Streams
-        public async Task<IActionResult> Index()
+        [Route("/admin/{url}/streams")]
+        public async Task<IActionResult> Index(string url)
         {
-            return View(await _context.Stream.ToListAsync());
+            return View(await _context.Stream.Where(s => s.CollectionURL == url).ToListAsync());
         }
 
         // GET: Streams/Details/5
-        public async Task<IActionResult> Details(string? id)
+        [Route("/admin/{url}/streams/{id}")]
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -78,6 +81,7 @@ namespace GGStream.Controllers
         }
 
         // GET: Streams/Create
+        [Route("/admin/{url}/streams/{id}/create")]
         public IActionResult Create()
         {
             return View();
@@ -88,6 +92,7 @@ namespace GGStream.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("/admin/{url}/streams/create")]
         public async Task<IActionResult> Create([Bind("StartDate,EndDate")] Stream stream, [FromForm] string url)
         {
             Collection collection = await _context.Collection.FirstOrDefaultAsync(m => m.URL == url);
@@ -114,7 +119,8 @@ namespace GGStream.Controllers
         }
 
         // GET: Streams/Edit/5
-        public async Task<IActionResult> Edit(string? id)
+        [Route("/admin/{url}/streams/{id}/edit")]
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -134,6 +140,7 @@ namespace GGStream.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("/admin/{url}/streams/{id}/edit")]
         public async Task<IActionResult> Edit(string id, [Bind("StartDate,EndDate")] Stream stream)
         {
             if (id != stream.ID)
@@ -165,7 +172,8 @@ namespace GGStream.Controllers
         }
 
         // GET: Streams/Delete/5
-        public async Task<IActionResult> Delete(string? id)
+        [Route("/admin/{url}/streams/{id}/delete")]
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -185,6 +193,7 @@ namespace GGStream.Controllers
         // POST: Streams/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Route("/admin/{url}/streams/{id}/delete")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var stream = await _context.Stream.FindAsync(id);

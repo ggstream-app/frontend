@@ -8,6 +8,7 @@ namespace GGStream.Controllers
 {
     public class AdminController : Controller
     {
+        [Route("/adminhome")]
         public IActionResult Index()
         {
             return View();

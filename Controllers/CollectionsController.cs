@@ -78,21 +78,22 @@ namespace GGStream.Controllers
         #region Admin Routes
 
         // GET: Collections
+        [Route("/admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Collection.ToListAsync());
         }
 
         // GET: Collections/Details/5
-        public async Task<IActionResult> Details(string id)
+        [Route("/admin/{url}")]
+        public async Task<IActionResult> Details(string url)
         {
-            if (id == null)
+            if (url == null)
             {
                 return NotFound();
             }
 
-            var collection = await _context.Collection
-                .FirstOrDefaultAsync(m => m.URL == id);
+            var collection = await _context.Collection.FindAsync(url);
             if (collection == null)
             {
                 return NotFound();
@@ -102,6 +103,7 @@ namespace GGStream.Controllers
         }
 
         // GET: Collections/Create
+        [Route("/admin/create")]
         public IActionResult Create()
         {
             return View();
@@ -112,6 +114,7 @@ namespace GGStream.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("/admin/create")]
         public async Task<IActionResult> Create([Bind("URL,Name,BaseColor,Private,ShowHowTo,TeamsLink")] Collection collection)
         {
             if (ModelState.IsValid)
@@ -124,14 +127,15 @@ namespace GGStream.Controllers
         }
 
         // GET: Collections/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        [Route("/admin/{url}/edit")]
+        public async Task<IActionResult> Edit(string url)
         {
-            if (id == null)
+            if (url == null)
             {
                 return NotFound();
             }
 
-            var collection = await _context.Collection.FindAsync(id);
+            var collection = await _context.Collection.FindAsync(url);
             if (collection == null)
             {
                 return NotFound();
@@ -144,9 +148,10 @@ namespace GGStream.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("URL,Name,BaseColor,Private,ShowHowTo,TeamsLink")] Collection collection)
+        [Route("/admin/{url}/edit")]
+        public async Task<IActionResult> Edit(string url, [Bind("URL,Name,BaseColor,Private,ShowHowTo,TeamsLink")] Collection collection)
         {
-            if (id != collection.URL)
+            if (url != collection.URL)
             {
                 return NotFound();
             }
@@ -175,15 +180,15 @@ namespace GGStream.Controllers
         }
 
         // GET: Collections/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        [Route("/admin/{url}/delete")]
+        public async Task<IActionResult> Delete(string url)
         {
-            if (id == null)
+            if (url == null)
             {
                 return NotFound();
             }
 
-            var collection = await _context.Collection
-                .FirstOrDefaultAsync(m => m.URL == id);
+            var collection = await _context.Collection.FindAsync(url);
             if (collection == null)
             {
                 return NotFound();
@@ -195,17 +200,18 @@ namespace GGStream.Controllers
         // POST: Collections/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        [Route("/admin/{url}/delete")]
+        public async Task<IActionResult> DeleteConfirmed(string url)
         {
-            var collection = await _context.Collection.FindAsync(id);
+            var collection = await _context.Collection.FindAsync(url);
             _context.Collection.Remove(collection);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CollectionExists(string id)
+        private bool CollectionExists(string url)
         {
-            return _context.Collection.Any(e => e.URL == id);
+            return _context.Collection.Any(e => e.URL == url);
         }
 
         #endregion
