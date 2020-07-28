@@ -27,14 +27,15 @@ namespace GGStream.Migrations
                 name: "Stream",
                 columns: table => new
                 {
-                    StreamKey = table.Column<Guid>(nullable: false),
+                    ID = table.Column<Guid>(nullable: false),
+                    StreamKey = table.Column<string>(nullable: true),
                     CollectionURL = table.Column<string>(nullable: true),
                     StartDate = table.Column<DateTime>(nullable: true),
                     EndDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stream", x => x.StreamKey);
+                    table.PrimaryKey("PK_Stream", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Stream_Collection_CollectionURL",
                         column: x => x.CollectionURL,

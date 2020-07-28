@@ -31,7 +31,7 @@ namespace GGStream.Controllers
             }
 
             var stream = await _context.Stream
-                .FirstOrDefaultAsync(m => m.StreamKey == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (stream == null)
             {
                 return NotFound();
@@ -68,7 +68,7 @@ namespace GGStream.Controllers
             }
 
             var stream = await _context.Stream
-                .FirstOrDefaultAsync(m => m.StreamKey == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (stream == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace GGStream.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StreamKey,StartDate,EndDate")] Stream stream, [FromForm] string url)
+        public async Task<IActionResult> Create([Bind("StartDate,EndDate")] Stream stream, [FromForm] string url)
         {
             Collection collection = await _context.Collection.FirstOrDefaultAsync(m => m.URL == url);
 
@@ -104,7 +104,8 @@ namespace GGStream.Controllers
 
             if (ModelState.IsValid)
             {
-                stream.StreamKey = Guid.NewGuid();
+                stream.ID = Guid.NewGuid();
+                stream.StreamKey = $"{url}-{Nanoid.Nanoid.Generate("_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")}";
                 _context.Add(stream);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -133,9 +134,9 @@ namespace GGStream.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("StreamKey,StartDate,EndDate")] Stream stream)
+        public async Task<IActionResult> Edit(Guid id, [Bind("StartDate,EndDate")] Stream stream)
         {
-            if (id != stream.StreamKey)
+            if (id != stream.ID)
             {
                 return NotFound();
             }
@@ -149,7 +150,7 @@ namespace GGStream.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StreamExists(stream.StreamKey))
+                    if (!StreamExists(stream.ID))
                     {
                         return NotFound();
                     }
@@ -172,7 +173,7 @@ namespace GGStream.Controllers
             }
 
             var stream = await _context.Stream
-                .FirstOrDefaultAsync(m => m.StreamKey == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (stream == null)
             {
                 return NotFound();
@@ -196,7 +197,7 @@ namespace GGStream.Controllers
 
         private bool StreamExists(Guid id)
         {
-            return _context.Stream.Any(e => e.StreamKey == id);
+            return _context.Stream.Any(e => e.ID == id);
         }
     }
 }
