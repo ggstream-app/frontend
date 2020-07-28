@@ -10,44 +10,66 @@
 
     <!-- Bootstrap - Argon -->
     <link rel="stylesheet" href="~/lib/bootstrap-argon/css/argon-design-system.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap-argon/css/font-awesome.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap-argon/css/nucleo-icons.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap-argon/css/nucleo-svg.css" />
+
+    <!-- FontAwesome-->
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" />
 
     <!-- Site CSS -->
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body class="bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"]</text> } }">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"]</text> } }">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GGStream</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="#">@(ViewData["Title:Nav"] ?? "GGStream")</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbar-default">
+                    <div class="navbar-collapse-header">
+                        <div class="row">
+                            <div class="col-6 collapse-brand">
+                                <a href="javascript:void(0)">
+                                    <img src="../../assets/img/brand/blue.png">
+                                </a>
+                            </div>
+                            <div class="col-6 collapse-close">
+                                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span></span>
+                                    <span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="navbar-nav ml-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link nav-link-icon" href="#">
+                                <i class="ni ni-favourite-28"></i>
+                                <span class="nav-link-inner--text d-lg-none">Discover</span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link nav-link-icon" href="#">
+                                <i class="ni ni-notification-70"></i>
+                                <span class="nav-link-inner--text d-lg-none">Profile</span>
+                            </a>
                         </li>
                     </ul>
+
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"]</text> } }">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"]</text> } }">
         <div class="container">
-            &copy; 2020 - GGStream - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - GGStream
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -1,7 +1,12 @@
 ﻿@model Stream
 
 @{
-    ViewData["Title"] = Model.Collection != null ? Model.Collection.Name : "Stream";
+    ViewData["Title"] = Model.Collection.Name;
+
+    ViewData["Title:Nav"] = Model.Collection.Name;
+    ViewData["Color:Nav"] = Model.Collection.DarkColor;
+    ViewData["Color:Base"] = Model.Collection.BaseColor;
+    ViewData["Color:Accent"] = Model.Collection.LightColor;
 }
 
 <div class="row mb-3">
