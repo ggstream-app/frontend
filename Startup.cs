@@ -63,10 +63,6 @@ namespace GGStream
                         action = "Index"
                     });
 
-                /* Admin/Default Entrypoints */
-                endpoints.MapControllerRoute(
-                    name: "admin",
-                    pattern: "/Admin/{controller=Admin}/{action=Index}/{id?}");
 
                 /* Collection Entrypoint */
                 endpoints.MapControllerRoute(
@@ -87,6 +83,34 @@ namespace GGStream
                         controller = "Streams",
                         action = "ViewStream"
                     });
+
+
+                /* Admin Entrypoints */
+                endpoints.MapControllers();
+                //endpoints.MapControllerRoute(
+                //    name: "admin",
+                //    pattern: "admin/",
+                //    defaults: new
+                //    {
+                //        controller = "Collections",
+                //        action = "Index"
+                //    });
+
+                //endpoints.MapControllerRoute(
+                //    name: "admin-collection",
+                //    pattern: "admin/{url}/{action = Details}",
+                //    defaults: new
+                //    {
+                //        controller = "Collections",
+                //    });
+
+                //endpoints.MapControllerRoute(
+                //    name: "admin-stream",
+                //    pattern: "admin/{url}/streams/{id}/{action = Details}",
+                //    defaults: new
+                //    {
+                //        controller = "Streams",
+                //    });
             });
         }
     }
