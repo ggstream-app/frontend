@@ -9,20 +9,7 @@
     ViewData["Color:Accent"] = Model.Collection.LightColor;
 }
 
-<div class="row mb-3">
-    <div class="col-12 op-container">
-        <div id="player"></div>
-    </div>
-</div>
-
-<div class="row align-items-center">
-    <div class="col-8 justify-content-center">
-        <h2>@Model.Collection.Name</h2>
-    </div>
-    <div class="col-4">
-        <span>@Model.Collection.Private</span>
-    </div>
-</div>
+<div id="player"></div>
 
 @section Scripts {
     @inject Microsoft.Extensions.Configuration.IConfiguration Configuration

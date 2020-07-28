@@ -15,23 +15,10 @@ for details on configuring this project to bundle and minify static web assets. 
     background-color: #527FCB;
 }
 
-/* Sticky footer
+/* Flexbox helpers
 -------------------------------------------------- */
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 80px;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
+.flex-auto {
+    flex: 1 1 auto;
 }
 
 /* OvenPlayer
