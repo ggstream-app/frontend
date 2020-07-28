@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GGStream.Migrations
 {
-    public partial class InitialSchema : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,9 +11,8 @@ namespace GGStream.Migrations
                 name: "Collection",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
                     URL = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     BaseColor = table.Column<string>(nullable: true),
                     Private = table.Column<bool>(nullable: false),
                     ShowHowTo = table.Column<bool>(nullable: false),
@@ -21,7 +20,7 @@ namespace GGStream.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Collection", x => x.Id);
+                    table.PrimaryKey("PK_Collection", x => x.URL);
                 });
 
             migrationBuilder.CreateTable(
@@ -29,27 +28,25 @@ namespace GGStream.Migrations
                 columns: table => new
                 {
                     StreamKey = table.Column<Guid>(nullable: false),
-                    CollectionId = table.Column<Guid>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
-                    ShowHowTo = table.Column<bool>(nullable: false),
-                    TeamsLink = table.Column<string>(nullable: true)
+                    CollectionURL = table.Column<string>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stream", x => x.StreamKey);
                     table.ForeignKey(
-                        name: "FK_Stream_Collection_CollectionId",
-                        column: x => x.CollectionId,
+                        name: "FK_Stream_Collection_CollectionURL",
+                        column: x => x.CollectionURL,
                         principalTable: "Collection",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "URL",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stream_CollectionId",
+                name: "IX_Stream_CollectionURL",
                 table: "Stream",
-                column: "CollectionId");
+                column: "CollectionURL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

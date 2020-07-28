@@ -9,6 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200727212903_InitialSchema.cs" />
+    <Compile Remove="Migrations\20200727212903_InitialSchema.Designer.cs" />
+    <Compile Remove="Migrations\20200728053531_Relationship.cs" />
+    <Compile Remove="Migrations\20200728053531_Relationship.Designer.cs" />
+    <Compile Remove="Migrations\20200728053714_Initial.cs" />
+    <Compile Remove="Migrations\20200728053714_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200728054338_Initial.cs" />
+    <Compile Remove="Migrations\20200728054338_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200728055346_Initial.cs" />
+    <Compile Remove="Migrations\20200728055346_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200728060453_Initial.cs" />
+    <Compile Remove="Migrations\20200728060453_Initial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />

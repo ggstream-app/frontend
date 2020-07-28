@@ -18,8 +18,7 @@ namespace GGStream.Migrations
 
             modelBuilder.Entity("GGStream.Models.Collection", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("URL")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("BaseColor")
@@ -38,11 +37,7 @@ namespace GGStream.Migrations
                     b.Property<string>("TeamsLink")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("URL")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
+                    b.HasKey("URL");
 
                     b.ToTable("Collection");
                 });
@@ -53,24 +48,18 @@ namespace GGStream.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("CollectionId")
+                    b.Property<string>("CollectionURL")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("ShowHowTo")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TeamsLink")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("StreamKey");
 
-                    b.HasIndex("CollectionId");
+                    b.HasIndex("CollectionURL");
 
                     b.ToTable("Stream");
                 });
@@ -78,10 +67,8 @@ namespace GGStream.Migrations
             modelBuilder.Entity("GGStream.Models.Stream", b =>
                 {
                     b.HasOne("GGStream.Models.Collection", "Collection")
-                        .WithMany()
-                        .HasForeignKey("CollectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Streams")
+                        .HasForeignKey("CollectionURL");
                 });
 #pragma warning restore 612, 618
         }

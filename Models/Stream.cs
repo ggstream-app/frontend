@@ -16,40 +16,35 @@ namespace GGStream.Models
         /**
          * Collection this stream is a part of.
          */
-        [Required]
         public Collection Collection { get; set; }
+        public string CollectionURL { get; set; }
 
         /**
          * Full Stream Key used in OME, in the form of <Collection URL>_<StreamKey>.
          */
+        [NotMapped]
         public string FullStreamKey { 
             get
             {
-                return $"{Collection.URL}_{StreamKey}";
+                if (CollectionURL != null && StreamKey != null)
+                {
+                    return $"{CollectionURL}_{StreamKey}";
+                }
+
+                return "defaultstreamkey";
             }
         }
 
         /**
          * Date the stream starts, currently used only for pulling latest.
          */
-        [Required]
-        [DataType(DataType.Date)]
-        public DateTime StartDate { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime? StartDate { get; set; }
 
         /**
          * Date the stream ends, currently unused.
          */
-        [DataType(DataType.Date)]
-        public DateTime EndDate { get; set; }
-
-        /**
-         * Whether to show How To instructions, wil override Collection-level setting.
-         */
-        public Boolean ShowHowTo { get; set; }
-
-        /**
-         * Teams link to show in UI, will override Collection-level setting.
-         */
-        public string TeamsLink { get; set; }   
+        [DataType(DataType.DateTime)]
+        public DateTime? EndDate { get; set; }
     }
 }
