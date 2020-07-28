@@ -19,64 +19,6 @@ namespace GGStream.Controllers
             _context = context;
         }
 
-        #region Public Routes
-
-        // GET: personal (Collection's current stream)
-        // GET: 1234567890 (Direct to stream)
-        public async Task<IActionResult> ViewStream(string url)
-        {
-            if (url == null)
-            {
-                return NotFound();
-            }
-
-            var collection = await _context.Collection
-                .FirstOrDefaultAsync(m => m.URL == url);
-            if (collection == null)
-            {
-                // Check if it's a direct stream link
-                var stream = await _context.Stream
-                    .FirstOrDefaultAsync(m => m.ID == url);
-                if (stream == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    // Attach Collection to stream
-                    var streamCollection = await _context.Collection
-                        .FirstOrDefaultAsync(m => m.URL == stream.CollectionURL);
-
-                    stream.Collection = streamCollection;
-                    return View("../Streams/ViewStream", stream);
-                }
-            }
-
-            // Determine which stream to play
-            Stream streamToPlay;
-            if (collection.Private)
-            {
-                // TODO: In the future, show a "private" message here that tells users to query the stream
-                return NotFound("This collection is private");
-            }
-            else
-            {
-                streamToPlay = StreamToPlay(collection);
-            }
-
-            if (streamToPlay != null)
-            {
-                return View("../Streams/ViewStream", streamToPlay);
-            }
-
-            // TODO: In the future, show a "no stream playing" message here
-            return NotFound("There's no streams playing!");
-        }
-
-        #endregion
-
-        #region Admin Routes
-
         // GET: Collections
         [Route("/admin")]
         public async Task<IActionResult> Index()
@@ -212,22 +154,6 @@ namespace GGStream.Controllers
         private bool CollectionExists(string url)
         {
             return _context.Collection.Any(e => e.URL == url);
-        }
-
-        #endregion
-
-        private Stream StreamToPlay(Collection collection)
-        {
-            var today = DateTime.Today;
-            var stream = _context.Stream.FirstOrDefault((Stream s) =>
-                s.Collection.URL == collection.URL &&
-                (s.StartDate == null || s.StartDate > today) &&
-                (s.EndDate == null || s.EndDate < today));
-
-            // Attach collection to stream
-            stream.Collection = collection;
-
-            return stream;
         }
     }
 }

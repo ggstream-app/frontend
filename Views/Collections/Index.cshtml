@@ -49,9 +49,9 @@
                 @Html.DisplayFor(modelItem => item.TeamsLink)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.URL">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.URL">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.URL">Delete</a>
+                <a asp-action="Edit" asp-route-url="@item.URL">Edit</a> |
+                <a asp-action="Details" asp-route-url="@item.URL">Details</a> |
+                <a asp-action="Delete" asp-route-url="@item.URL">Delete</a>
             </td>
         </tr>
 }
