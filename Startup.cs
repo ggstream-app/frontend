@@ -53,9 +53,40 @@ namespace GGStream
 
             app.UseEndpoints(endpoints =>
             {
+                /* Homepage */
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "/",
+                    defaults: new
+                    {
+                        controller = "Home",
+                        action = "Index"
+                    });
+
+                /* Admin/Default Interfaces */
+                endpoints.MapControllerRoute(
+                    name: "admin",
+                    pattern: "/Admin/{controller=Admin}/{action=Index}/{id?}");
+
+                /* Collection Entrypoint */
+                endpoints.MapControllerRoute(
+                    name: "collection",
+                    pattern: "{url}",
+                    defaults: new
+                    {
+                        controller = "Collections",
+                        action = "ViewStream"
+                    });
+
+                /* Stream Entrypoint */
+                endpoints.MapControllerRoute(
+                    name: "stream",
+                    pattern: "{url}/{id}",
+                    defaults: new
+                    {
+                        controller = "Streams",
+                        action = "ViewStream"
+                    });
             });
         }
     }

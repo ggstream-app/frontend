@@ -19,6 +19,36 @@ namespace GGStream.Controllers
             _context = context;
         }
 
+        #region Public Routes
+
+        // GET: personal
+        public async Task<IActionResult> ViewStream(string url)
+        {
+            if (url == null)
+            {
+                return NotFound();
+            }
+
+            var collection = await _context.Collection
+                .FirstOrDefaultAsync(m => m.URL == url);
+            if (collection == null)
+            {
+                return NotFound();
+            }
+
+            if (collection.Private)
+            {
+                // TODO: In the future, show a "private" message here that tells users to query the stream
+                return NotFound();
+            }
+
+            return View(collection);
+        }
+
+        #endregion
+
+        #region Admin Routes
+
         // GET: Collections
         public async Task<IActionResult> Index()
         {
@@ -145,6 +175,8 @@ namespace GGStream.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        #endregion
 
         private bool CollectionExists(Guid id)
         {
