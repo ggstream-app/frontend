@@ -19,9 +19,9 @@
 </head>
 <body class="h-100 d-flex flex-column bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"]</text> } }">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"]</text> } }">
+        <nav class="navbar navbar-expand-lg navbar-dark text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"]</text> } }">
             <div class="container">
-                <a class="navbar-brand" href="#">@(ViewData["Title:Nav"] ?? "GGStream")</a>
+                <span class="navbar-title text-white">@(ViewData["Title:Nav"] ?? "GGStream")</span>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -59,13 +59,13 @@
             </div>
         </nav>
     </header>
-    <div class="container d-flex flex-auto bg-ggstream-base mb-3 mt-3" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"]</text> } }">
-        <main role="main" class="d-flex flex-auto justify-content-center align-self-center">
+    <div class="container d-flex flex-auto bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"]</text> } }">
+        <main role="main" class="d-flex flex-auto mh-95 justify-content-center align-self-center">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="footer text-muted bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"]</text> } }">
+    <footer class="footer text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"]</text> } }">
         <div class="container">
             &copy; 2020 GGStream
         </div>
