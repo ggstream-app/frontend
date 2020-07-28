@@ -24,6 +24,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\lib\bootstrap-argon\css\argon-design-system.css.map" />
+    <None Include="wwwroot\lib\bootstrap-argon\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\lib\bootstrap-argon\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\lib\bootstrap-argon\fonts\nucleo-icons.svg" />
+    <None Include="wwwroot\lib\bootstrap-argon\fonts\nucleo-icons.woff2" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\argon-design-system.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\argon-design-system.js.map" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\argon-design-system.min.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\core\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\core\jquery.min.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\core\popper.min.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\bootstrap-datepicker.min.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\bootstrap-switch.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\chartjs.min.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\datetimepicker.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\jquery.sharrre.min.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\moment.min.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\nouislider.min.js" />
+    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\perfect-scrollbar.jquery.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
