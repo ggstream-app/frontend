@@ -1,4 +1,4 @@
-name: Build GGStream
+name: .NET Build
 
 on:
   push:
