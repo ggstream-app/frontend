@@ -27,7 +27,7 @@ namespace GGStream.Migrations
                 name: "Stream",
                 columns: table => new
                 {
-                    ID = table.Column<Guid>(nullable: false),
+                    ID = table.Column<string>(nullable: false),
                     StreamKey = table.Column<string>(nullable: true),
                     CollectionURL = table.Column<string>(nullable: true),
                     StartDate = table.Column<DateTime>(nullable: true),

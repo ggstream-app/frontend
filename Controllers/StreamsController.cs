@@ -22,8 +22,8 @@ namespace GGStream.Controllers
 
         #region Public Routes
 
-        // GET: personal/12345678-1234-1234-123456789012
-        public async Task<IActionResult> ViewStream(string url, Guid id)
+        // GET: personal/1234567890
+        public async Task<IActionResult> ViewStream(string url, string id)
         {
             if (id == null)
             {
@@ -60,7 +60,7 @@ namespace GGStream.Controllers
         }
 
         // GET: Streams/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -104,7 +104,7 @@ namespace GGStream.Controllers
 
             if (ModelState.IsValid)
             {
-                stream.ID = Guid.NewGuid();
+                stream.ID = Nanoid.Nanoid.Generate("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 10);
                 stream.StreamKey = $"{url}-{Nanoid.Nanoid.Generate("_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")}";
                 _context.Add(stream);
                 await _context.SaveChangesAsync();
@@ -114,7 +114,7 @@ namespace GGStream.Controllers
         }
 
         // GET: Streams/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -134,7 +134,7 @@ namespace GGStream.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("StartDate,EndDate")] Stream stream)
+        public async Task<IActionResult> Edit(string id, [Bind("StartDate,EndDate")] Stream stream)
         {
             if (id != stream.ID)
             {
@@ -165,7 +165,7 @@ namespace GGStream.Controllers
         }
 
         // GET: Streams/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -185,7 +185,7 @@ namespace GGStream.Controllers
         // POST: Streams/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var stream = await _context.Stream.FindAsync(id);
             _context.Stream.Remove(stream);
@@ -195,7 +195,7 @@ namespace GGStream.Controllers
 
         #endregion
 
-        private bool StreamExists(Guid id)
+        private bool StreamExists(string id)
         {
             return _context.Stream.Any(e => e.ID == id);
         }

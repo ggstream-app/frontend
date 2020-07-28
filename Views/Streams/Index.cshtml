@@ -31,7 +31,7 @@
 @foreach (var item in Model) {
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ID)
+                @Html.DisplayFor(modelItem => item.ID)
             </th>
             <td>
                 @Html.DisplayFor(modelItem => item.CollectionURL)
