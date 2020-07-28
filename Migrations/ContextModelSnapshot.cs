@@ -44,7 +44,7 @@ namespace GGStream.Migrations
 
             modelBuilder.Entity("GGStream.Models.Stream", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<string>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 

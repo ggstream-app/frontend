@@ -22,7 +22,7 @@ namespace GGStream.Controllers
         #region Public Routes
 
         // GET: personal (Collection's current stream)
-        // GET: 12345678-1234-1234-123456789012 (Direct to stream)
+        // GET: 1234567890 (Direct to stream)
         public async Task<IActionResult> ViewStream(string url)
         {
             if (url == null)
@@ -36,7 +36,7 @@ namespace GGStream.Controllers
             {
                 // Check if it's a direct stream link
                 var stream = await _context.Stream
-                    .FirstOrDefaultAsync(m => m.ID == new Guid(url));
+                    .FirstOrDefaultAsync(m => m.ID == url);
                 if (stream == null)
                 {
                     return NotFound();

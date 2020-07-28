@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GGStream.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200728082049_Initial")]
+    [Migration("20200728082931_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,7 +46,7 @@ namespace GGStream.Migrations
 
             modelBuilder.Entity("GGStream.Models.Stream", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<string>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
