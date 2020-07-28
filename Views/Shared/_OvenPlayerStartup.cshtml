@@ -1,10 +1,13 @@
 ﻿@model OvenPlayerConfiguration
 
-<script src="~/lib/ovenplayer/ovenplayer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dashjs/2.9.3/dash.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-<script>
+    <script src="~/lib/ovenplayer/ovenplayer.js"></script>
+
+    <script>
     var player = OvenPlayer.create("player", {
         sources: @(Html.Raw(Model.EndpointJson)),
         autoStart: true
     });
-</script>
+    </script>
