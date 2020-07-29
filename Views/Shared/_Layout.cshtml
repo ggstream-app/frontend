@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GGStream</title>
 
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
@@ -21,7 +24,13 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"];</text> } }">
             <div class="container">
-                <a href="#" class="navbar-title text-white">@{ if (ViewData["Icon:Nav"] != null) { <i class="mr-1 @ViewData["Icon:Nav"]"></i> } } @(ViewData["Title:Nav"] ?? "GGStream")</a>
+                <a href="#" class="navbar-title text-white">
+                    @{ if (ViewData["Icon:Nav"] != null) { <i class="mr-1 @ViewData["Icon:Nav"]"></i> } }
+                    @(ViewData["Title:Nav"] ?? "GGStream")
+                    @{ if (ViewData["Subtitle:Nav"] != null) { 
+                        <span class="ml-2">/</span>
+                        <span class="text-muted ml-2" style="@{ if (ViewData["Color:Accent"] != null) { <text>color: @ViewData["Color:Accent"] !important;</text> } }">@ViewData["Subtitle:Nav"]</span> } }
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

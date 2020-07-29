@@ -1,8 +1,9 @@
 ﻿@model Stream
 
 @{
-    ViewData["Title"] = Model.Collection.Name;
+    ViewData["Title"] = Model.Name + " - " + Model.Collection.Name;
     ViewData["Title:Nav"] = Model.Collection.Name;
+    ViewData["Subtitle:Nav"] = Model.Name;
     ViewData["Icon:Nav"] = Model.Collection.Icon;
     ViewData["Color:Nav"] = Model.Collection.DarkColor;
     ViewData["Color:NavBtn"] = Model.Collection.DarkerColor;

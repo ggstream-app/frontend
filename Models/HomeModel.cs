@@ -8,6 +8,6 @@ namespace GGStream.Models
     public class HomeModel
     {
         public List<Collection> PublicCollections { get; set; }
-        public List<Stream> UpcomingPublicStreams { get; set; }
+        public List<Stream> CurrentPublicStreams { get; set; }
     }
 }

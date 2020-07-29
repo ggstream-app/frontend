@@ -40,7 +40,7 @@ namespace GGStream.Models
         {
             get
             {
-                return ChangeColorBrightness((float)0.6);
+                return ChangeColorBrightness((float)0.8);
             }
         }
 
@@ -67,7 +67,7 @@ namespace GGStream.Models
         {
             get
             {
-                return ChangeColorBrightness((float)-0.6);
+                return ChangeColorBrightness((float)-0.5);
             }
         }
 

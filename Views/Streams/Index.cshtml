@@ -17,6 +17,9 @@
                 @Html.DisplayNameFor(model => model.ID)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Collection)
             </th>
             <th>
@@ -34,6 +37,9 @@
             <th>
                 @Html.DisplayFor(modelItem => item.ID)
             </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CollectionURL)
             </td>

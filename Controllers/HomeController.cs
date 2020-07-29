@@ -27,12 +27,15 @@ namespace GGStream.Controllers
         {
             List<Collection> collections = _context.Collection.Where(c => c.Private == false).OrderBy(s => s.URL).ToList();
             List<string> collectionURLs = collections.Select(c => c.URL).ToList();
-            List<Stream> streams = _context.Stream.Where(s => (s.EndDate == null || s.EndDate > DateTime.Now) && collectionURLs.Contains(s.CollectionURL)).OrderBy(s => s.StartDate).ToList();
+            List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < DateTime.Now.AddDays(30)) && (s.EndDate == null || s.EndDate > DateTime.Now) && collectionURLs.Contains(s.CollectionURL)).OrderBy(s => s.StartDate).ToList().ConvertAll(s => {
+                s.Collection = collections.First(c => c.URL == s.CollectionURL);
+                return s;
+            });
 
             HomeModel model = new HomeModel
             {
                 PublicCollections = collections,
-                UpcomingPublicStreams = streams
+                CurrentPublicStreams = streams
             };
 
             return View(model);

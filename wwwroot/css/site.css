@@ -1,6 +1,17 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+/* Font
+-------------------------------------------------- */
+
+html, body {
+    font-family: 'Cairo', sans-serif;
+}
+
+h6 {
+    font-size: 1.1rem;
+}
+
 /* Base colors
 -------------------------------------------------- */
 .bg-ggstream-nav {
@@ -43,14 +54,24 @@ for details on configuring this project to bundle and minify static web assets. 
     max-width: 1440px;
 }
 
+/* Footer
+-------------------------------------------------- */
+.footer {
+    padding: 1rem;
+}
+
 /* Bootstrap utility extensions
 -------------------------------------------------- */
-.flex-auto {
+    .flex-auto {
     flex: 1 1 auto;
 }
 
 .mh-95 {
     max-height: 95%;
+}
+
+.h-6rem {
+    height: 6rem;
 }
 
 /* Extra responsive breaks
