@@ -25,14 +25,21 @@ namespace GGStream.Controllers
         [Route("/")]
         public IActionResult Index()
         {
-            List<Collection> collections = _context.Collection.Where(c => c.Private == false).OrderBy(s => s.URL).ToList();
+            // Public collections
+            List<Collection> collections = _context.Collection.Where(c => c.Private != true).OrderBy(s => s.URL).ToList();
             List<string> collectionURLs = collections.Select(c => c.URL).ToList();
-            List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < DateTime.Now.AddDays(30)) && (s.EndDate == null || s.EndDate > DateTime.Now) && collectionURLs.Contains(s.CollectionURL)).OrderBy(s => s.StartDate).ToList().ConvertAll(s => {
+
+            // Public streams
+            List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < DateTime.Now.AddDays(30)) && 
+                (s.EndDate == null || s.EndDate > DateTime.Now) && 
+                collectionURLs.Contains(s.CollectionURL) &&
+                s.Private != true)
+            .OrderBy(s => s.StartDate).ToList().ConvertAll(s => {
                 s.Collection = collections.First(c => c.URL == s.CollectionURL);
                 return s;
             });
 
-            HomeModel model = new HomeModel
+            HomeViewModel model = new HomeViewModel
             {
                 PublicCollections = collections,
                 CurrentPublicStreams = streams
@@ -41,10 +48,49 @@ namespace GGStream.Controllers
             return View(model);
         }
 
+        [Route("/error")]
+        public IActionResult HandleError([FromQuery]int code, [FromQuery]string message)
+        {
+            var genericMessages = new string[]{ "Something went wrong!",
+                                                "Egads! Something broke!",
+                                                "Zoinks! I think we broke it!" };
+
+            string errorMsg = null;
+            if (code == 401 || code == 403)
+            {
+                errorMsg = "I can't let you do that, Dave.";
+            }
+            else if (code == 404)
+            {
+                errorMsg = "This is not the resource you're looking for.";
+            }
+            else if (code == 500 || code == 502 || code == 503)
+            {
+                errorMsg = "It's our fault! Sorry!";
+            }
+
+            if (message != null)
+            {
+                errorMsg = message;
+            }
+
+            if (errorMsg == null)
+            {
+                Random random = new Random();
+                int messageIdx = random.Next(0, genericMessages.Length);
+                errorMsg = $"{genericMessages[messageIdx]} Error code: {code}";
+            }
+
+            ViewData["ErrorMessage"] = errorMsg;
+            return View("~/Views/Shared/Error.cshtml");
+        }
+
+        [Route("/exception")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ViewData["ErrorMessage"] = "It's our fault! Sorry!";
+            return View("~/Views/Shared/Error.cshtml");
         }
     }
 }

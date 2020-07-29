@@ -68,7 +68,7 @@ namespace GGStream.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/streams/create")]
-        public async Task<IActionResult> Create(string url, [Bind("Name,StartDate,EndDate")] Stream stream)
+        public async Task<IActionResult> Create(string url, [Bind("Name,StartDate,EndDate,Private")] Stream stream)
         {
             Collection collection = await _context.Collection.FindAsync(url);
             ViewData["Collection:Name"] = collection.Name;
@@ -118,7 +118,7 @@ namespace GGStream.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/streams/{id}/edit")]
-        public async Task<IActionResult> Edit(string url, string id, [Bind("ID,CollectionURL,StreamKey,Name,StartDate,EndDate")] Stream stream)
+        public async Task<IActionResult> Edit(string url, string id, [Bind("ID,CollectionURL,StreamKey,Name,StartDate,EndDate,Private")] Stream stream)
         {
             if (id != stream.ID || url != stream.CollectionURL)
             {

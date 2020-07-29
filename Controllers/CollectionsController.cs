@@ -59,6 +59,11 @@ namespace GGStream.Controllers
         [Route("/admin/create")]
         public async Task<IActionResult> Create([Bind("URL,Name,Icon,BaseColor,Private,InstructionType,CallLink")] Collection collection)
         {
+            if (collection.BaseColor == "#000000")
+            {
+                collection.BaseColor = null;
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(collection);
@@ -96,6 +101,11 @@ namespace GGStream.Controllers
             if (url != collection.URL)
             {
                 return NotFound();
+            }
+
+            if (collection.BaseColor == "#000000")
+            {
+                collection.BaseColor = null;
             }
 
             if (ModelState.IsValid)
