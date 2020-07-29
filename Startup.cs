@@ -66,6 +66,9 @@ namespace GGStream
             {
                 endpoints.MapControllers();
             });
+
+            app.UseStatusCodePagesWithReExecute("/Error", "?code={0}");
+
         }
     }
 }
