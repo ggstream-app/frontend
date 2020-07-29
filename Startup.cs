@@ -48,7 +48,7 @@ namespace GGStream
                     options.UseSqlite(Configuration.GetConnectionString("Context")));
 
             // App Insights
-            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
+            services.AddApplicationInsightsTelemetry();
 
             // Custom Services
             services.Add(new ServiceDescriptor(typeof(IApplicationDateTime), new ApplicationDateTime(Configuration)));
@@ -104,21 +104,16 @@ namespace GGStream
 
         public void LogAppStartup(ILogger<Startup> logger, IApplicationDateTime adt)
         {
-            logger.LogInformation("GGStream.app Frontend - Startup");
-            logger.LogInformation("===================================================\n");
+            logger.LogInformation("=== GGStream.app Frontend - Startup");
 
-            logger.LogInformation("\nConfigured Endpoints");
-            logger.LogInformation("---------------------------------------------------");
-
+            logger.LogInformation("\n--- Configured Endpoints");
             logger.LogInformation("Ingest: {Ingest}", Configuration.GetValue<string>("IngestEndpoint"));
             Configuration.GetSection("SvcInstances").Get<List<SvcInstance>>().ForEach(i =>
             {
                 logger.LogInformation("Service: {Service} / {Endpoint} / Secure: {Secure}, WebRTC: {WebRTC}, DASH: {DASH}, HLS {HLS}", i.Name, i.Endpoint, i.Secure, i.Protocols.WebRTC, i.Protocols.DASH, i.Protocols.HLS);
             });
 
-            logger.LogInformation("\nApplication DateTime");
-            logger.LogInformation("---------------------------------------------------");
-
+            logger.LogInformation("\n--- Application DateTime");
             var tzi = TimeZoneInfo.FindSystemTimeZoneById(Configuration.GetValue<string>("TimeZone"));
 
             logger.LogInformation("System time: {Time}", DateTime.Now.ToString());
@@ -127,11 +122,13 @@ namespace GGStream
             logger.LogInformation("Base Offset: {TZI} / DST: {DST}", tzi.BaseUtcOffset, tzi.IsDaylightSavingTime(DateTime.Now));
             logger.LogInformation("ApplicationDateTime: {ADTime}", adt.Now().ToString());
 
-            logger.LogInformation("\n AAD Authentication");
-            logger.LogInformation("---------------------------------------------------");
+            logger.LogInformation("\n--- AAD Authentication");
             logger.LogInformation("Domain: {Domain}", Configuration.GetValue<string>("AzureAd:Domain"));
             logger.LogInformation("TenantId: {TenantId}", Configuration.GetValue<string>("AzureAd:TenantId"));
             logger.LogInformation("ClientId: {ClientId}", Configuration.GetValue<string>("AzureAd:ClientId"));
+
+            logger.LogInformation("\n--- Application Insights");
+            logger.LogInformation("Instrumentation Key: {IKey}", Configuration.GetValue<string>("ApplicationInsights:InstrumentationKey"));
 
         }
     }
