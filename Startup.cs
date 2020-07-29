@@ -70,27 +70,6 @@ namespace GGStream
 
             app.UseForwardedHeaders();
 
-            // Log Forwarding requests
-            app.Use(async (context, next) =>
-            {
-                // Request method, scheme, and path
-                logger.LogDebug("Request Method: {Method}", context.Request.Method);
-                logger.LogDebug("Request Scheme: {Scheme}", context.Request.Scheme);
-                logger.LogDebug("Request Path: {Path}", context.Request.Path);
-
-                // Headers
-                foreach (var header in context.Request.Headers)
-                {
-                    logger.LogDebug("Header: {Key}: {Value}", header.Key, header.Value);
-                }
-
-                // Connection: RemoteIp
-                logger.LogDebug("Request RemoteIp: {RemoteIpAddress}",
-                    context.Connection.RemoteIpAddress);
-
-                await next();
-            });
-
             if (env.IsDevelopment())
             {
                 logger.LogInformation("Development Mode");
