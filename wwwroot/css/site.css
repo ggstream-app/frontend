@@ -60,6 +60,12 @@ h6 {
     padding: 1rem;
 }
 
+/* Pointers
+*/
+.cursor-default {
+    cursor:default;
+}
+
 /* Bootstrap utility extensions
 -------------------------------------------------- */
 .flex-1-auto {

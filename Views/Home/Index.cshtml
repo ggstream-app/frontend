@@ -12,9 +12,9 @@
     @foreach (var stream in Model.CurrentPublicStreams)
     {
         <div class="col-12 col-md-6 col-xl-4 mb-4 mb-xl-0">
-            <div class="card border-0" style="@{ if (stream.Collection.BaseColor != null) { <text>border-color: @stream.Collection.LighterColor !important;</text> } }">
-                <h5 class="card-header" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.LighterColor;</text> } }">
-                    @{ if (stream.Collection.Icon != null) { <i class="@Html.DisplayFor(model => stream.Collection.Icon)"></i> } }
+            <div class="card border-0">
+                <h5 class="card-header bg-default text-secondary" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor;</text> } }">
+                    @{ if (stream.Collection.Icon != null) { <i class="@Html.DisplayFor(model => stream.Collection.Icon) mr-1"></i> } }
                     @Html.DisplayFor(model => stream.Collection.Name)
                 </h5>
                 <div class="card-body">
@@ -70,8 +70,8 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <a href="@Url.ActionLink("ViewStream", "Player", new { url = stream.ID })" class="btn btn-default" style="@{ if (stream.Collection.DarkerColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.LighterColor; border: 0;</text> } }">
-                                    <i class="fad fa-video"></i> Watch Stream
+                                <a href="@Url.ActionLink("ViewStream", "Player", new { url = stream.ID })" class="btn btn-default" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor; border: 0;</text> } }">
+                                    <i class="fad fa-video mr-2"></i> Watch Stream
                                 </a>
                             </div>
                         </div>
@@ -92,10 +92,10 @@
     @foreach (var collection in Model.PublicCollections)
     {
         <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4 mb-xl-0">
-            <a href="@Url.ActionLink("ViewStream", "Player", new { url = collection.URL })" class="card" style="@{ if (collection.BaseColor != null) { <text>background-color: @collection.BaseColor !important;</text> } }">
+            <a href="@Url.ActionLink("ViewStream", "Player", new { url = collection.URL })" class="card bg-default border-0" style="@{ if (collection.BaseColor != null) { <text>background-color: @collection.BaseColor !important;</text> } }">
                 <div class="card-body d-flex flex-0-auto h-6rem justify-content-center align-items-center">
-                    <h5 class="card-title mb-0" style="@{ if (collection.BaseColor != null) { <text>color: @collection.LighterColor !important;</text> } }">
-                        @{ if (collection.Icon != null) { <i class="@Html.DisplayFor(model => collection.Icon)"></i> } }
+                    <h5 class="card-title mb-0 text-secondary" style="@{ if (collection.BaseColor != null) { <text>color: @collection.NearWhiteColor !important;</text> } }">
+                        @{ if (collection.Icon != null) { <i class="@Html.DisplayFor(model => collection.Icon) mr-1"></i> } }
                         @Html.DisplayFor(model => collection.Name)
                     </h5>
                 </div>

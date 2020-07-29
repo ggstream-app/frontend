@@ -36,7 +36,7 @@ namespace GGStream.Models
         public string BaseColor { get; set; }
 
         [NotMapped]
-        public string LighterColor
+        public string NearWhiteColor
         {
             get
             {
@@ -45,10 +45,28 @@ namespace GGStream.Models
         }
 
         [NotMapped]
+        public string LightestColor
+        {
+            get
+            {
+                return ChangeColorBrightness((float)0.6);
+            }
+        }
+
+        [NotMapped]
+        public string LighterColor
+        {
+            get
+            {
+                return ChangeColorBrightness((float)0.4);
+            }
+        }
+
+        [NotMapped]
         public string LightColor { 
             get
             {
-                return ChangeColorBrightness((float)0.3);
+                return ChangeColorBrightness((float)0.2);
             } 
         }
 
@@ -57,7 +75,7 @@ namespace GGStream.Models
         {
             get
             {
-                return ChangeColorBrightness((float)-0.3);
+                return ChangeColorBrightness((float)-0.2);
             }
         }
         
@@ -67,7 +85,25 @@ namespace GGStream.Models
         {
             get
             {
-                return ChangeColorBrightness((float)-0.5);
+                return ChangeColorBrightness((float)-0.4);
+            }
+        }
+
+        [NotMapped]
+        public string DarkestColor
+        {
+            get
+            {
+                return ChangeColorBrightness((float)-0.6);
+            }
+        }
+
+        [NotMapped]
+        public string NearBlackColor
+        {
+            get
+            {
+                return ChangeColorBrightness((float)-0.8);
             }
         }
 
