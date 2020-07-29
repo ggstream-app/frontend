@@ -19,6 +19,9 @@
 
     <!-- Site CSS -->
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <!-- Favicons -->
+    <partial>@Html.Partial("_Favicons")</partial>
 </head>
 <body class="h-100 d-flex flex-column bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"];</text> } }">
     <header>
