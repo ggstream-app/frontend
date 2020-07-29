@@ -16,7 +16,7 @@ namespace GGStream.Migrations
                     BaseColor = table.Column<string>(nullable: true),
                     Private = table.Column<bool>(nullable: false),
                     ShowHowTo = table.Column<bool>(nullable: false),
-                    TeamsLink = table.Column<string>(nullable: true)
+                    CallLink = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

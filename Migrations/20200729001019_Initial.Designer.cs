@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GGStream.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200728082931_Initial")]
+    [Migration("20200729001019_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,6 +26,9 @@ namespace GGStream.Migrations
                     b.Property<string>("BaseColor")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CallLink")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -35,9 +38,6 @@ namespace GGStream.Migrations
 
                     b.Property<bool>("ShowHowTo")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("TeamsLink")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("URL");
 

@@ -58,7 +58,7 @@ namespace GGStream.Models
         /**
          * Teams link to show in UI. If not set, won't show button.
          */
-        public string TeamsLink { get; set; }
+        public string CallLink { get; set; }
 
         /**
          * All streams for this collection

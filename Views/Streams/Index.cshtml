@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<GGStream.Models.Stream>
 
 @{
+    Layout = "_AdminLayout";
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-route-url="@(ViewContext.RouteData.Values["url"])">Create New</a>
 </p>
 <table class="table">
     <thead>

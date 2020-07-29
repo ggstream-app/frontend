@@ -31,28 +31,6 @@ var $collapse = $('.navbar .collapse');
 var $html = $('html');
 var $tagsinput = $('.tagsinput');
 
-(function() {
-  var isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
-
-  if (isWindows) {
-    // if we are on windows OS we activate the perfectScrollbar function
-
-    $('.wrapper .login-page, .register-page, .card').perfectScrollbar();
-
-
-    if ($('.tab-content .table-responsive').length != 0) {
-
-      $('.table-responsive').each(function() {
-        var ps2 = new PerfectScrollbar($(this)[0]);
-      });
-    }
-
-    $html.addClass('perfect-scrollbar-on');
-  } else {
-    $html.addClass('perfect-scrollbar-off');
-  }
-})();
-
 $(document).ready(function() {
   //  Activate the Tooltips
   $('[data-toggle="tooltip"], [rel="tooltip"]').tooltip();

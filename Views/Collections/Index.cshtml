@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<GGStream.Models.Collection>
 
 @{
+    Layout = "_AdminLayout";
     ViewData["Title"] = "Index";
 }
 
@@ -25,7 +26,7 @@
                 @Html.DisplayNameFor(model => model.ShowHowTo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TeamsLink)
+                @Html.DisplayNameFor(model => model.CallLink)
             </th>
             <th></th>
         </tr>
@@ -46,7 +47,7 @@
                 @Html.DisplayFor(modelItem => item.ShowHowTo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TeamsLink)
+                @Html.DisplayFor(modelItem => item.CallLink)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-url="@item.URL">Edit</a> |

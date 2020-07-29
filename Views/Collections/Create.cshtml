@@ -1,6 +1,7 @@
 ﻿@model GGStream.Models.Collection
 
 @{
+    Layout = "_AdminLayout";
     ViewData["Title"] = "Create";
 }
 
@@ -38,9 +39,9 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="TeamsLink" class="control-label"></label>
-                <input asp-for="TeamsLink" class="form-control" />
-                <span asp-validation-for="TeamsLink" class="text-danger"></span>
+                <label asp-for="CallLink" class="control-label"></label>
+                <input asp-for="CallLink" class="form-control" />
+                <span asp-validation-for="CallLink" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
