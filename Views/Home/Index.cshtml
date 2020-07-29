@@ -23,7 +23,7 @@
                     </h5>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a class="btn btn-secondary text-default" asp-action="Edit" asp-controller="Streams" asp-route-url="@stream.CollectionURL" asp-route-id="@stream.ID" style="@{ if (stream.Collection.BaseColor != null) { <text>color: @stream.Collection.BaseColor !important;</text> } }">
+                        <a class="btn btn-secondary btn-icon-only text-default" asp-action="Edit" asp-controller="Streams" asp-route-url="@stream.CollectionURL" asp-route-id="@stream.ID" style="@{ if (stream.Collection.BaseColor != null) { <text>color: @stream.Collection.BaseColor !important;</text> } }">
                             <i class="fad fa-pencil"></i>
                         </a>
                     }
@@ -37,11 +37,6 @@
                                     {<i class="fad fa-lock mr-2"></i>}
                                     @Html.DisplayFor(model => stream.Name)
                                 </h4>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <h6>Stream Time</h6>
                             </div>
                         </div>
                         <div class="row">
@@ -66,7 +61,7 @@
                                 <i class="fad fa-chevron-down"></i>
                             </div>
                         </div>
-                        <div class="row mb-5">
+                        <div class="row mb-4">
                             <div class="col-12">
                                 @{
                                     if (stream.EndDate != null)
@@ -95,7 +90,7 @@
                                     else
                                     {
                                         <button disabled class="btn btn-default" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor; border: 0;</text> } }">
-                                            <i class="fad fa-video-slash mr-2"></i> Stream isn't Active
+                                            <i class="fad fa-video-slash mr-2"></i> Stream isn't Live
                                         </button>
                                     }
 

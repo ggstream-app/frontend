@@ -1,0 +1,19 @@
+{
+    "name": "GGStream",
+    "short_name": "GGStream",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png?v=yyQlRaAM4m",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png?v=yyQlRaAM4m",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#213d6e",
+    "background_color": "#213d6e",
+    "display": "standalone"
+}
