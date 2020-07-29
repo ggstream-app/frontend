@@ -94,7 +94,10 @@ namespace GGStream.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            ViewData["ErrorMessage"] = "It's our fault! Sorry!";
+            ViewData["Message"] = "It's our fault! Sorry!";
+            ViewData["Color"] = "danger";
+            ViewData["Icon"] = "fad fa-warning-exclamation";
+
             return View("~/Views/Shared/Error.cshtml");
         }
     }
