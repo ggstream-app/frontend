@@ -27,11 +27,11 @@ namespace GGStream.Controllers
         [Route("/")]
         public IActionResult Index()
         {
-            // Public collections
+            // Get all collections
             List<Collection> allCollections = _context.Collection.OrderBy(s => s.URL).ToList();
             List<string> collectionURLs = allCollections.Select(c => c.URL).ToList();
 
-            // Public streams
+            // Streams - All if logged in, public if logged out
             List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < _dateTime.Now().AddDays(30)) && (s.EndDate == null || s.EndDate > _dateTime.Now()))
                 .OrderBy(s => s.StartDate)
                 .ToList()
@@ -39,7 +39,7 @@ namespace GGStream.Controllers
                     s.Collection = allCollections.First(c => c.URL == s.CollectionURL);
                     return s;
                 })
-                .Where(s => User.Identity.IsAuthenticated || (s.Private != true || s.Collection.Private != true))
+                .Where(s => User.Identity.IsAuthenticated || (s.Private != true && s.Collection.Private != true))
                 .ToList();
 
             HomeViewModel model = new HomeViewModel
