@@ -33,7 +33,7 @@
                         <div class="row mb-2">
                             <div class="col-12">
                                 <h4>
-                                    @if (User.Identity.IsAuthenticated && stream.Private)
+                                    @if (User.Identity.IsAuthenticated && (stream.Private || stream.Collection.Private))
                                     {<i class="fad fa-lock mr-2"></i>}
                                     @Html.DisplayFor(model => stream.Name)
                                 </h4>

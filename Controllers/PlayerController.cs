@@ -51,7 +51,7 @@ namespace GGStream.Controllers
                 }
                 else
                 {
-                    ViewData["Message"] = "This stream isn't playing right now.";
+                    ViewData["Message"] = "This stream isn't live right now.";
                     ViewData["Color"] = "info";
                     ViewData["Icon"] = "fad fa-calendar-times";
 
@@ -74,7 +74,7 @@ namespace GGStream.Controllers
                     }
                     else
                     {
-                        ViewData["Message"] = "There are no streams playing right now.";
+                        ViewData["Message"] = "There are no streams live right now.";
                         ViewData["Color"] = "info";
                         ViewData["Icon"] = "fad fa-calendar-times";
 

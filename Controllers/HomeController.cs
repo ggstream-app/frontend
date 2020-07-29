@@ -28,22 +28,23 @@ namespace GGStream.Controllers
         public IActionResult Index()
         {
             // Public collections
-            List<Collection> collections = _context.Collection.Where(c => User.Identity.IsAuthenticated || c.Private != true).OrderBy(s => s.URL).ToList();
-            List<string> collectionURLs = collections.Select(c => c.URL).ToList();
+            List<Collection> allCollections = _context.Collection.OrderBy(s => s.URL).ToList();
+            List<string> collectionURLs = allCollections.Select(c => c.URL).ToList();
 
             // Public streams
-            List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < _dateTime.Now().AddDays(30)) && 
-                (s.EndDate == null || s.EndDate > _dateTime.Now()) && 
-                collectionURLs.Contains(s.CollectionURL) &&
-                (User.Identity.IsAuthenticated || s.Private != true))
-            .OrderBy(s => s.StartDate).ToList().ConvertAll(s => {
-                s.Collection = collections.First(c => c.URL == s.CollectionURL);
-                return s;
-            });
+            List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < _dateTime.Now().AddDays(30)) && (s.EndDate == null || s.EndDate > _dateTime.Now()))
+                .OrderBy(s => s.StartDate)
+                .ToList()
+                .ConvertAll(s => {
+                    s.Collection = allCollections.First(c => c.URL == s.CollectionURL);
+                    return s;
+                })
+                .Where(s => User.Identity.IsAuthenticated || (s.Private != true || s.Collection.Private != true))
+                .ToList();
 
             HomeViewModel model = new HomeViewModel
             {
-                PublicCollections = collections,
+                PublicCollections = allCollections.Where(c => c.Private != true).ToList(),
                 CurrentPublicStreams = streams
             };
 
@@ -85,7 +86,7 @@ namespace GGStream.Controllers
 
             ViewData["Message"] = errorMsg;
             ViewData["Color"] = "warning";
-            ViewData["Icon"] = "fad fa-warning-exclamation";
+            ViewData["Icon"] = "fad fa-exclamation-triangle";
 
             return View("~/Views/Shared/Error.cshtml");
         }
@@ -96,7 +97,7 @@ namespace GGStream.Controllers
         {
             ViewData["Message"] = "It's our fault! Sorry!";
             ViewData["Color"] = "danger";
-            ViewData["Icon"] = "fad fa-warning-exclamation";
+            ViewData["Icon"] = "fad fa-exclamation-triangle";
 
             return View("~/Views/Shared/Error.cshtml");
         }
