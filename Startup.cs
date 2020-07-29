@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace GGStream
@@ -106,10 +107,7 @@ namespace GGStream
                 app.UseHsts();
             }
 
-            logger.LogDebug("Current time: {Time}", DateTime.Now.ToString());
-            logger.LogDebug("Current UTC time: {TimeUTC}", DateTime.UtcNow.ToString());
-            logger.LogDebug("Current tzi: {TZI}", TimeZoneInfo.FindSystemTimeZoneById("America/Los_Angeles"));
-            logger.LogDebug("Current ApplicationDateTime: {ADTime}", adt.Now().ToString());
+            LogAppStartup(logger, adt);
 
             app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
 
@@ -123,6 +121,39 @@ namespace GGStream
             {
                 endpoints.MapControllers();
             });
+        }
+
+        public void LogAppStartup(ILogger<Startup> logger, IApplicationDateTime adt)
+        {
+            logger.LogInformation("GGStream.app Frontend - Startup");
+            logger.LogInformation("===================================================\n");
+
+            logger.LogInformation("\nConfigured Endpoints");
+            logger.LogInformation("---------------------------------------------------");
+
+            logger.LogInformation("Ingest: {Ingest}", Configuration.GetValue<string>("IngestEndpoint"));
+            Configuration.GetSection("SvcInstances").Get<List<SvcInstance>>().ForEach(i =>
+            {
+                logger.LogInformation("Service: {Service} / {Endpoint} / Secure: {Secure}, WebRTC: {WebRTC}, DASH: {DASH}, HLS {HLS}", i.Name, i.Endpoint, i.Secure, i.Protocols.WebRTC, i.Protocols.DASH, i.Protocols.HLS);
+            });
+
+            logger.LogInformation("\nApplication DateTime");
+            logger.LogInformation("---------------------------------------------------");
+
+            var tzi = TimeZoneInfo.FindSystemTimeZoneById(Configuration.GetValue<string>("TimeZone"));
+
+            logger.LogInformation("System time: {Time}", DateTime.Now.ToString());
+            logger.LogInformation("UTC time: {TimeUTC}", DateTime.UtcNow.ToString());
+            logger.LogInformation("TimeZone: {TZ}", Configuration.GetValue<string>("TimeZone"));
+            logger.LogInformation("Base Offset: {TZI} / DST: {DST}", tzi.BaseUtcOffset, tzi.IsDaylightSavingTime(DateTime.Now));
+            logger.LogInformation("ApplicationDateTime: {ADTime}", adt.Now().ToString());
+
+            logger.LogInformation("\n AAD Authentication");
+            logger.LogInformation("---------------------------------------------------");
+            logger.LogInformation("Domain: {Domain}", Configuration.GetValue<string>("AzureAd:Domain"));
+            logger.LogInformation("TenantId: {TenantId}", Configuration.GetValue<string>("AzureAd:TenantId"));
+            logger.LogInformation("ClientId: {ClientId}", Configuration.GetValue<string>("AzureAd:ClientId"));
+
         }
     }
 }
