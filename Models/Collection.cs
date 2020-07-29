@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
@@ -24,8 +25,14 @@ namespace GGStream.Models
         public string Name { get; set; }
 
         /**
+         * Icon to display in name.
+         */
+        public string Icon { get; set; }
+
+        /**
          * Base color to use for UI.
          */
+        [DisplayName("Base color (#hex)")]
         public string BaseColor { get; set; }
 
         [NotMapped]
@@ -72,11 +79,13 @@ namespace GGStream.Models
         /**
          * Which instructions to show. None means no button is shown.
          */
+        [DisplayName("Display Instructions?")]
         public InstructionType InstructionType { get; set; }
 
         /**
          * Teams link to show in UI. If not set, won't show button.
          */
+        [DisplayName("Call/Chat Link")]
         public string CallLink { get; set; }
 
         /**
