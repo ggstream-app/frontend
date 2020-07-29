@@ -24,13 +24,13 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"];</text> } }">
             <div class="container">
-                <a href="#" class="navbar-title text-white cursor-default">
+                <span class="navbar-title text-white cursor-default">
                     @{ if (ViewData["Icon:Nav"] != null) { <i class="mr-1 @ViewData["Icon:Nav"]"></i> } }
                     @(ViewData["Title:Nav"] ?? "GGStream")
                     @{ if (ViewData["Subtitle:Nav"] != null) {
                         <span class="d-none d-md-inline ml-2">/</span>
                         <span class="d-none d-md-inline text-muted ml-2" style="@{ if (ViewData["Color:Accent"] != null) { <text>color: @ViewData["Color:Accent"] !important;</text> } }">@ViewData["Subtitle:Nav"]</span> } }
-                </a>
+                </span>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
