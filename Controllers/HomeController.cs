@@ -48,7 +48,7 @@ namespace GGStream.Controllers
             return View(model);
         }
 
-        [Route("/Error")]
+        [Route("/error")]
         public IActionResult HandleError([FromQuery]int code, [FromQuery]string message)
         {
             var genericMessages = new string[]{ "Something went wrong!",
@@ -85,10 +85,12 @@ namespace GGStream.Controllers
             return View("~/Views/Shared/Error.cshtml");
         }
 
+        [Route("/exception")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ViewData["ErrorMessage"] = "It's our fault! Sorry!";
+            return View("~/Views/Shared/Error.cshtml");
         }
     }
 }
