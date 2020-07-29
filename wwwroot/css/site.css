@@ -44,6 +44,12 @@ h6 {
     color: #212529;
 }
 
+/* Popover
+-------------------------------------------------- */
+.popover {
+    max-width: 20rem;
+}
+
 .popover-header {
     text-align: center;
 }

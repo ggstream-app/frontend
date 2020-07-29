@@ -11,6 +11,7 @@
     ViewData["Color:Link"] = Model.Collection.LighterColor;
     ViewData["Color:Accent"] = Model.Collection.LightestColor;
     ViewData["Page:Align"] = "center";
+    ViewData["HideLoginUI"] = true;
 }
 
 <div id="player"></div>
@@ -18,7 +19,7 @@
 @section Scripts {
     @inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 
-    @await Html.PartialAsync("_OvenPlayerStartup", new OvenPlayerConfiguration(Configuration)
+    @await Html.PartialAsync("_OvenPlayerStartup", new OvenPlayerViewModel(Configuration)
     {
         StreamKey = Model.StreamKey
     })
@@ -35,27 +36,23 @@
                 </a>
             </li>
         }
-    }
 
-    @{
         if (Model.Collection.CallLink != null)
         {
             <li class="nav-item">
-                <a class="nav-btn nav-link nav-link-icon btn btn-secondary text-default" href="@Model.Collection.CallLink" target="_blank" style="@{ if (Model.Collection.BaseColor != null) { <text>background-color: @Model.Collection.LighterColor !important; color: @Model.Collection.DarkestColor !important; border: 0;</text> } }">
+                <a class="nav-btn nav-link nav-link-icon btn btn-secondary text-default" href="@Model.Collection.CallLink" target="_blank" style="@{ if (Model.Collection.BaseColor != null) { <text>background-color: @Model.Collection.LightColor !important; color: @Model.Collection.DarkestColor !important; border: 0;</text> } }">
                     <i class="fas fa-headset"></i>
                     <span class="nav-link-inner--text">Join Call</span>
                 </a>
             </li>
         }
-    }
 
-    @{
         if (Model.Collection.Private || Model.Private)
         {
             <li class="nav-item">
                 <a class="nav-btn nav-link nav-link-icon btn btn-dark text-danger" style="@{ if (Model.Collection.BaseColor != null) { <text>background-color: @Model.Collection.NearBlackColor !important; color: @Model.Collection.LightestColor !important; border: 0;</text> } }"
-                    href="#" data-container="body" data-toggle="popover" data-placement="bottom"
-                    title="This stream is private" data-content="Please do not share the link to it.">
+                   href="#" data-container="body" data-toggle="popover" data-placement="bottom"
+                   title="This stream is private" data-content="Please do not share the link to it.">
                     <i class="fas fa-lock"></i>
                 </a>
             </li>
@@ -67,6 +64,23 @@
                    href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true"
                    title="Share this stream!" data-content="<a href='@Url.ActionLink("ViewStream", "Player", new { url = @Model.ID })'>@Url.ActionLink("ViewStream", "Player", new { url = @Model.ID })</a>">
                     <i class="fad fa-share-alt"></i>
+                </a>
+            </li>
+        }
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <li class="nav-item">
+                <a class="nav-btn nav-link nav-link-icon btn btn-secondary text-default" style="@{ if (Model.Collection.BaseColor != null) { <text>background-color: @Model.Collection.LighterColor !important; color: @Model.Collection.DarkestColor !important; border: 0;</text> } }"
+                   href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true"
+                   data-content="<p class='text-center'>To start broadcasting, set up OBS with the following parameters.</p><div class='text-center'><strong class='d-block'>Ingest Server</strong> <span class='d-block'>@ViewData["IngestEndpoint"]</span></div><div class='text-center'><strong class='d-block'>Stream Key</strong> <span class='d-block'>@Model.StreamKey</span></div>">
+                    <i class="fad fa-signal-stream"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-btn nav-link nav-link-icon btn btn-secondary text-default" style="@{ if (Model.Collection.BaseColor != null) { <text>background-color: @Model.Collection.LighterColor !important; color: @Model.Collection.DarkestColor !important; border: 0;</text> } }"
+                   asp-action="Edit" asp-controller="Streams" asp-route-url="@Model.CollectionURL" asp-route-id="@Model.ID">
+                    <i class="fad fa-pencil"></i>
                 </a>
             </li>
         }
