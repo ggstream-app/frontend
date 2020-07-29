@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GGStream</title>
 
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
@@ -21,7 +24,13 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"];</text> } }">
             <div class="container">
-                <span class="navbar-title text-white">@(ViewData["Title:Nav"] ?? "GGStream")</span>
+                <a href="#" class="navbar-title text-white">
+                    @{ if (ViewData["Icon:Nav"] != null) { <i class="mr-1 @ViewData["Icon:Nav"]"></i> } }
+                    @(ViewData["Title:Nav"] ?? "GGStream")
+                    @{ if (ViewData["Subtitle:Nav"] != null) {
+                        <span class="d-none d-md-inline ml-2">/</span>
+                        <span class="d-none d-md-inline text-muted ml-2" style="@{ if (ViewData["Color:Accent"] != null) { <text>color: @ViewData["Color:Accent"] !important;</text> } }">@ViewData["Subtitle:Nav"]</span> } }
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -48,8 +57,8 @@
             </div>
         </nav>
     </header>
-    <div class="container d-flex flex-auto bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"];</text> } }">
-        <main role="main" class="d-flex flex-auto flex-column mh-95 
+    <div class="container d-flex flex-1-auto bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"];</text> } }">
+        <main role="main" class="d-flex flex-1-auto flex-column mh-95 
               justify-content-@{ if (ViewData["Page:Align"] != null) { <text>@ViewData["Page:Align"]</text> } else { <text>start</text> } } 
               align-self-@{ if (ViewData["Page:Align"] != null) { <text>@ViewData["Page:Align"]</text> } else { <text>start</text> } }">
             @RenderBody()
@@ -57,8 +66,8 @@
     </div>
 
     <footer class="footer text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"];</text> } }">
-        <div class="container">
-            &copy; 2020 GGStream
+        <div class="container text-center">
+            Powered by <a asp-action="Index" asp-controller="Home">GGStream</a> | <a href="mailto:vlad@ggstream.app?subject=%5BGGStream%5D%20Help%20Needed%20-%20%3CFILL%20IN%20DESCRIPTION%3E&body=%3CFILL%20IN%20HELP%20REPORT%3E%0A%0A---%0APage%20URL%3A%20@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")">Help</a>
         </div>
     </footer>
 
