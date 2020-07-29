@@ -60,6 +60,22 @@ h6 {
     padding: 1rem;
 }
 
+/* Error
+-------------------------------------------------- */
+.error-icon {
+    font-size: 4rem;
+}
+
+.error-text {
+    font-size: 2.5rem;
+}
+
+/* Cursors
+-------------------------------------------------- */
+.cursor-default {
+    cursor:default;
+}
+
 /* Bootstrap utility extensions
 -------------------------------------------------- */
 .flex-1-auto {

@@ -48,5 +48,10 @@ namespace GGStream.Models
         [DataType(DataType.DateTime)]
         [DisplayName("End Date")]
         public DateTime? EndDate { get; set; }
+
+        /**
+         * Whether this collection is private (need stream key to watch) or public (pull latest stream).
+         */
+        public Boolean Private { get; set; }
     }
 }

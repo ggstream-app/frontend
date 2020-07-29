@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GGStream.Models
 {
-    public class HomeModel
+    public class HomeViewModel
     {
         public List<Collection> PublicCollections { get; set; }
         public List<Stream> CurrentPublicStreams { get; set; }

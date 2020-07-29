@@ -90,9 +90,15 @@ namespace GGStream.Controllers
         {
             var today = DateTime.Today;
             var stream = _context.Stream.FirstOrDefault((Stream s) =>
+                s.Private != true &&
                 s.Collection.URL == collection.URL &&
-                (s.StartDate == null || s.StartDate > today) &&
-                (s.EndDate == null || s.EndDate < today));
+                (s.StartDate == null || s.StartDate < today) &&
+                (s.EndDate == null || s.EndDate > today));
+
+            if (stream == null)
+            {
+                return null;
+            }
 
             // Attach collection to stream
             stream.Collection = collection;
