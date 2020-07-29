@@ -51,9 +51,9 @@ namespace GGStream.Models
         public Boolean Private { get; set; }
 
         /**
-         * Whether to show How To instructions.
+         * Which instructions to show. None means no button is shown.
          */
-        public Boolean ShowHowTo { get; set; }
+        public InstructionType InstructionType { get; set; }
 
         /**
          * Teams link to show in UI. If not set, won't show button.
@@ -96,4 +96,10 @@ namespace GGStream.Models
             return ColorTranslator.ToHtml(newColor);
         }
     }
+}
+
+public enum InstructionType
+{
+    None = 0,
+    Jackbox
 }

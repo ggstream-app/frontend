@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GGStream.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20200729001019_Initial")]
+    [Migration("20200729010841_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,14 +29,14 @@ namespace GGStream.Migrations
                     b.Property<string>("CallLink")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("InstructionType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("Private")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("ShowHowTo")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("URL");

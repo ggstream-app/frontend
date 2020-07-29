@@ -57,7 +57,7 @@ namespace GGStream.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/create")]
-        public async Task<IActionResult> Create([Bind("URL,Name,BaseColor,Private,ShowHowTo,CallLink")] Collection collection)
+        public async Task<IActionResult> Create([Bind("URL,Name,BaseColor,Private,InstructionType,CallLink")] Collection collection)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace GGStream.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/edit")]
-        public async Task<IActionResult> Edit(string url, [Bind("URL,Name,BaseColor,Private,ShowHowTo,CallLink")] Collection collection)
+        public async Task<IActionResult> Edit(string url, [Bind("URL,Name,BaseColor,Private,InstructionType,CallLink")] Collection collection)
         {
             if (url != collection.URL)
             {
