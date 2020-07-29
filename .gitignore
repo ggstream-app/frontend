@@ -33,3 +33,6 @@ msbuild.wrn
 
 # Local Database
 *.db
+
+# Local App Settings
+appsettings.Development.json
