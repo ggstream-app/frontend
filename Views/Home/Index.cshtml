@@ -11,7 +11,7 @@
 <div class="row">
     @foreach (var stream in Model.CurrentPublicStreams)
     {
-        <div class="col-4">
+        <div class="col-12 col-md-6 col-xl-4 mb-4 mb-xl-0">
             <div class="card" style="@{ if (stream.Collection.BaseColor != null) { <text>border-color: @stream.Collection.LighterColor !important;</text> } }">
                 <h5 class="card-header" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.LighterColor;</text> } }">
                     @{ if (stream.Collection.Icon != null) { <i class="@Html.DisplayFor(model => stream.Collection.Icon)"></i> } }
@@ -91,9 +91,9 @@
 <div class="row">
     @foreach (var collection in Model.PublicCollections)
     {
-        <div class="col-3">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4 mb-xl-0">
             <a href="@Url.ActionLink("ViewStream", "Player", new { url = collection.URL })" class="card" style="@{ if (collection.BaseColor != null) { <text>background-color: @collection.BaseColor !important;</text> } }">
-                <div class="card-body d-flex h-6rem justify-content-center align-items-center">
+                <div class="card-body d-flex flex-0-auto h-6rem justify-content-center align-items-center">
                     <h5 class="card-title mb-0" style="@{ if (collection.BaseColor != null) { <text>color: @collection.LighterColor !important;</text> } }">
                         @{ if (collection.Icon != null) { <i class="@Html.DisplayFor(model => collection.Icon)"></i> } }
                         @Html.DisplayFor(model => collection.Name)

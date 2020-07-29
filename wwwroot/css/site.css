@@ -62,8 +62,12 @@ h6 {
 
 /* Bootstrap utility extensions
 -------------------------------------------------- */
-    .flex-auto {
+.flex-1-auto {
     flex: 1 1 auto;
+}
+
+.flex-0-auto {
+    flex: 0 0 auto;
 }
 
 .mh-95 {
