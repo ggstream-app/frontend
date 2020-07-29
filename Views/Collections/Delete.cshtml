@@ -1,6 +1,7 @@
 ﻿@model GGStream.Models.Collection
 
 @{
+    Layout = "_AdminLayout";
     ViewData["Title"] = "Delete";
 }
 
@@ -36,10 +37,10 @@
             @Html.DisplayFor(model => model.ShowHowTo)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TeamsLink)
+            @Html.DisplayNameFor(model => model.CallLink)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TeamsLink)
+            @Html.DisplayFor(model => model.CallLink)
         </dd>
     </dl>
     

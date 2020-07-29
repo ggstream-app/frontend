@@ -20,6 +20,19 @@ for details on configuring this project to bundle and minify static web assets. 
     font-weight: 300;
 }
 
+/* Navbar
+-------------------------------------------------- */
+.navbar-nav .nav-link.nav-btn {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    text-transform: none;
+    line-height: 0.5 !important;
+}
+
+.navbar-nav .nav-link.nav-btn.btn-outline-secondary:hover {
+    color: #212529;
+}
+
 /* OvenPlayer
 -------------------------------------------------- */
 .op-container {

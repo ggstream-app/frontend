@@ -24,6 +24,9 @@ namespace GGStream.Migrations
                     b.Property<string>("BaseColor")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CallLink")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -33,9 +36,6 @@ namespace GGStream.Migrations
 
                     b.Property<bool>("ShowHowTo")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("TeamsLink")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("URL");
 

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap-argon/css/argon-design-system.min.css" />
 
     <!-- FontAwesome-->
-    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css" />
+    <script src="https://kit.fontawesome.com/6d57857f83.js" crossorigin="anonymous"></script>
 
     <!-- Site CSS -->
     <link rel="stylesheet" href="~/css/site.css" />
@@ -41,18 +41,7 @@
                     </div>
 
                     <ul class="navbar-nav ml-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-icon" href="#">
-                                <i class="ni ni-favourite-28"></i>
-                                <span class="nav-link-inner--text d-lg-none">Discover</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-icon" href="#">
-                                <i class="ni ni-notification-70"></i>
-                                <span class="nav-link-inner--text d-lg-none">Profile</span>
-                            </a>
-                        </li>
+                        @RenderSection("Navbar", required: false)
                     </ul>
 
                 </div>
@@ -60,7 +49,9 @@
         </nav>
     </header>
     <div class="container d-flex flex-auto bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"]</text> } }">
-        <main role="main" class="d-flex flex-auto mh-95 justify-content-center align-self-center">
+        <main role="main" class="d-flex flex-auto flex-column mh-95 
+              justify-content-@{ if (ViewData["Page:Align"] != null) { <text>@ViewData["Page:Align"]</text> } else { <text>start</text> } } 
+              align-self-@{ if (ViewData["Page:Align"] != null) { <text>@ViewData["Page:Align"]</text> } else { <text>start</text> } }">
             @RenderBody()
         </main>
     </div>
@@ -71,8 +62,10 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src=@("https://unpkg.com/@popperjs/core@2")></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/bootstrap-argon/js/argon-design-system.min.js"></script>
+    <script src="~/lib/bootstrap-argon/js/plugins/datetimepicker.js"></script>
+    <script src="~/lib/bootstrap-argon/js/argon-design-system.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

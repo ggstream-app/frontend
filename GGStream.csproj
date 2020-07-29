@@ -25,6 +25,10 @@
     <Compile Remove="Migrations\20200728060541_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200728082049_Initial.cs" />
     <Compile Remove="Migrations\20200728082049_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200728082931_Initial.cs" />
+    <Compile Remove="Migrations\20200728082931_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200729000850_RemoveTeams.cs" />
+    <Compile Remove="Migrations\20200729000850_RemoveTeams.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,16 +47,6 @@
     <None Include="wwwroot\lib\bootstrap-argon\js\plugins\moment.min.js" />
     <None Include="wwwroot\lib\bootstrap-argon\js\plugins\nouislider.min.js" />
     <None Include="wwwroot\lib\bootstrap-argon\js\plugins\perfect-scrollbar.jquery.min.js" />
-    <None Include="wwwroot\lib\fontawesome\webfonts\fa-brands-400.svg" />
-    <None Include="wwwroot\lib\fontawesome\webfonts\fa-brands-400.woff2" />
-    <None Include="wwwroot\lib\fontawesome\webfonts\fa-duotone-900.svg" />
-    <None Include="wwwroot\lib\fontawesome\webfonts\fa-duotone-900.woff2" />
-    <None Include="wwwroot\lib\fontawesome\webfonts\fa-light-300.svg" />
-    <None Include="wwwroot\lib\fontawesome\webfonts\fa-light-300.woff2" />
-    <None Include="wwwroot\lib\fontawesome\webfonts\fa-regular-400.svg" />
-    <None Include="wwwroot\lib\fontawesome\webfonts\fa-regular-400.woff2" />
-    <None Include="wwwroot\lib\fontawesome\webfonts\fa-solid-900.svg" />
-    <None Include="wwwroot\lib\fontawesome\webfonts\fa-solid-900.woff2" />
   </ItemGroup>
 
   <ItemGroup>

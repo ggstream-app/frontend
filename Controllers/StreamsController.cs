@@ -31,8 +31,7 @@ namespace GGStream.Controllers
                 return NotFound();
             }
 
-            var stream = await _context.Stream
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var stream = await _context.Stream.FindAsync(id);
             if (stream == null)
             {
                 return NotFound();
@@ -45,7 +44,7 @@ namespace GGStream.Controllers
             }
 
             // Attach Collection to stream
-            var collection = await _context.Collection.FirstOrDefaultAsync(m => m.URL == url);
+            var collection = await _context.Collection.FindAsync(url);
             stream.Collection = collection;
 
             return View(stream);
@@ -70,8 +69,7 @@ namespace GGStream.Controllers
                 return NotFound();
             }
 
-            var stream = await _context.Stream
-                .FirstOrDefaultAsync(m => m.ID == id);
+            var stream = await _context.Stream.FindAsync(id);
             if (stream == null)
             {
                 return NotFound();
@@ -81,9 +79,18 @@ namespace GGStream.Controllers
         }
 
         // GET: Streams/Create
-        [Route("/admin/{url}/streams/{id}/create")]
-        public IActionResult Create()
+        [Route("/admin/{url}/streams/create")]
+        public async Task<IActionResult> Create(string url)
         {
+            Collection collection = await _context.Collection.FindAsync(url);
+
+            if (collection == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["Collection:Name"] = collection.Name;
+
             return View();
         }
 
@@ -93,13 +100,14 @@ namespace GGStream.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/streams/create")]
-        public async Task<IActionResult> Create([Bind("StartDate,EndDate")] Stream stream, [FromForm] string url)
+        public async Task<IActionResult> Create(string url, [Bind("StartDate,EndDate")] Stream stream)
         {
-            Collection collection = await _context.Collection.FirstOrDefaultAsync(m => m.URL == url);
+            Collection collection = await _context.Collection.FindAsync(url);
+            ViewData["Collection:Name"] = collection.Name;
 
             if (collection == null)
             {
-                return View(stream);
+                return NotFound();
             } 
             else
             {
@@ -113,14 +121,15 @@ namespace GGStream.Controllers
                 stream.StreamKey = $"{url}-{Nanoid.Nanoid.Generate("_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")}";
                 _context.Add(stream);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { url });
             }
+
             return View(stream);
         }
 
         // GET: Streams/Edit/5
         [Route("/admin/{url}/streams/{id}/edit")]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string url, string id)
         {
             if (id == null)
             {
@@ -128,7 +137,7 @@ namespace GGStream.Controllers
             }
 
             var stream = await _context.Stream.FindAsync(id);
-            if (stream == null)
+            if (stream == null || stream.CollectionURL != url)
             {
                 return NotFound();
             }
@@ -141,9 +150,9 @@ namespace GGStream.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/streams/{id}/edit")]
-        public async Task<IActionResult> Edit(string id, [Bind("StartDate,EndDate")] Stream stream)
+        public async Task<IActionResult> Edit(string url, string id, [Bind("StartDate,EndDate")] Stream stream)
         {
-            if (id != stream.ID)
+            if (id != stream.ID || url != stream.CollectionURL)
             {
                 return NotFound();
             }
@@ -166,23 +175,22 @@ namespace GGStream.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { url });
             }
             return View(stream);
         }
 
         // GET: Streams/Delete/5
         [Route("/admin/{url}/streams/{id}/delete")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string url, string id)
         {
-            if (id == null)
+            if (id == null || url == null)
             {
                 return NotFound();
             }
 
-            var stream = await _context.Stream
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (stream == null)
+            var stream = await _context.Stream.FindAsync(id);
+            if (stream == null || stream.CollectionURL != url)
             {
                 return NotFound();
             }
@@ -194,12 +202,17 @@ namespace GGStream.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/streams/{id}/delete")]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string url, string id)
         {
             var stream = await _context.Stream.FindAsync(id);
+            if (stream == null || stream.CollectionURL != url)
+            {
+                return NotFound();
+            }
+
             _context.Stream.Remove(stream);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), new { url });
         }
 
         #endregion
