@@ -1,14 +1,105 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model HomeModel
+@{
+    ViewData["Title"] = "Welcome";
 }
 
-<div id="player"></div>
-
-@section Scripts {
-    @inject Microsoft.Extensions.Configuration.IConfiguration Configuration
-
-    @await Html.PartialAsync("_OvenPlayerStartup", new OvenPlayerConfiguration(Configuration)
+<div class="row mt-5">
+    <div class="col-12">
+        <h4 class="text-secondary">Current and Upcoming Streams</h4>
+    </div>
+</div>
+<div class="row">
+    @foreach (var stream in Model.CurrentPublicStreams)
     {
-        StreamKey = "personal-streamkey"
-    })
-}
+        <div class="col-12 col-md-6 col-xl-4 mb-4 mb-xl-0">
+            <div class="card" style="@{ if (stream.Collection.BaseColor != null) { <text>border-color: @stream.Collection.LighterColor !important;</text> } }">
+                <h5 class="card-header" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.LighterColor;</text> } }">
+                    @{ if (stream.Collection.Icon != null) { <i class="@Html.DisplayFor(model => stream.Collection.Icon)"></i> } }
+                    @Html.DisplayFor(model => stream.Collection.Name)
+                </h5>
+                <div class="card-body">
+                    <div class="container text-center pt-1 pb-1">
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <h4>@Html.DisplayFor(model => stream.Name)</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>Stream Time</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                @{
+                                    if (stream.StartDate != null)
+                                    {
+
+                                        <span class="mr-3"><i class="fad fa-calendar-day mr-1"></i> @String.Format("{0:ddd dd/MM/yyyy}", stream.StartDate)</span>
+                                        <span><i class="fad fa-clock mr-1"></i> @String.Format("{0:hh:mm tt}", stream.StartDate)</span>
+                                    }
+                                    else
+                                    {
+                                        <span><i class="fad fa-calendar-times mr-1"></i> No Start Date</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <i class="fad fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                @{
+                                    if (stream.EndDate != null)
+                                    {
+
+                                        <span class="mr-3"><i class="fad fa-calendar-day mr-1"></i> @String.Format("{0:ddd dd/MM/yyyy}", stream.EndDate)</span>
+                                        <span><i class="fad fa-clock mr-1"></i> @String.Format("{0:hh:mm tt}", stream.EndDate)</span>
+                                    }
+                                    else
+                                    {
+                                        <span><i class="fad fa-calendar-times mr-1"></i> No End Date</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="@Url.ActionLink("ViewStream", "Player", new { url = stream.ID })" class="btn btn-default" style="@{ if (stream.Collection.DarkerColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.LighterColor; border: 0;</text> } }">
+                                    <i class="fad fa-video"></i> Watch Stream
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <h4 class="text-secondary">Public Collections</h4>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var collection in Model.PublicCollections)
+    {
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4 mb-xl-0">
+            <a href="@Url.ActionLink("ViewStream", "Player", new { url = collection.URL })" class="card" style="@{ if (collection.BaseColor != null) { <text>background-color: @collection.BaseColor !important;</text> } }">
+                <div class="card-body d-flex flex-0-auto h-6rem justify-content-center align-items-center">
+                    <h5 class="card-title mb-0" style="@{ if (collection.BaseColor != null) { <text>color: @collection.LighterColor !important;</text> } }">
+                        @{ if (collection.Icon != null) { <i class="@Html.DisplayFor(model => collection.Icon)"></i> } }
+                        @Html.DisplayFor(model => collection.Name)
+                    </h5>
+                </div>
+            </a>
+        </div>
+    }
+</div>

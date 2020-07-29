@@ -1,9 +1,10 @@
 ﻿@model Stream
 
 @{
-    ViewData["Title"] = Model.Collection.Name;
-
+    ViewData["Title"] = Model.Name + " - " + Model.Collection.Name;
     ViewData["Title:Nav"] = Model.Collection.Name;
+    ViewData["Subtitle:Nav"] = Model.Name;
+    ViewData["Icon:Nav"] = Model.Collection.Icon;
     ViewData["Color:Nav"] = Model.Collection.DarkColor;
     ViewData["Color:NavBtn"] = Model.Collection.DarkerColor;
     ViewData["Color:Base"] = Model.Collection.BaseColor;
@@ -50,11 +51,13 @@
     @{
         if (Model.Collection.Private)
         {
-            <li class="nav-item">
-                <a class="nav-btn nav-link nav-link-icon btn btn-default" href="#" data-toggle="tooltip" data-placement="bottom" title="This stream is private, please don't share the link!">
-                    <i class="fas fa-lock"></i>
-                </a>
-            </li>
+        <li class="nav-item">
+            <a class="nav-btn nav-link nav-link-icon btn btn-default text-info" style="@{ if (ViewData["Color:NavBtn"] != null) { <text>background-color: @ViewData["Color:NavBtn"] !important;</text> } } @{ if (ViewData["Color:Accent"] != null) { <text>color: @ViewData["Color:Accent"] !important; border: 0;</text> } }"
+               href="#" data-container="body" data-toggle="popover" data-placement="bottom"
+               title="This stream is private" data-content="Please do not share the link to it.">
+                <i class="fas fa-lock"></i>
+            </a>
+        </li>
         }
         else
         {
