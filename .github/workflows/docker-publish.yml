@@ -3,8 +3,10 @@ name: Docker Build and Publish
 on:
   push:
     # Publish `master` as Docker `latest` image.
+    # Also publish `debug` for non-release debug images.
     branches:
       - master
+      - debug
 
     # Publish `v1.2.3` tags as releases.
     tags:

@@ -1,4 +1,6 @@
 ﻿@model HomeViewModel
+@inject IApplicationDateTime SystemTime
+
 @{
     ViewData["Title"] = "Welcome";
 }
@@ -21,17 +23,18 @@
                     </h5>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a class="btn btn-secondary text-default" asp-action="Edit" asp-controller="Stream" asp-route-url="@stream.CollectionURL" asp-route-id="@stream.ID" style="@{ if (stream.Collection.BaseColor != null) { <text>color: @stream.Collection.BaseColor !important;</text> } }">
+                        <a class="btn btn-secondary text-default" asp-action="Edit" asp-controller="Streams" asp-route-url="@stream.CollectionURL" asp-route-id="@stream.ID" style="@{ if (stream.Collection.BaseColor != null) { <text>color: @stream.Collection.BaseColor !important;</text> } }">
                             <i class="fad fa-pencil"></i>
                         </a>
                     }
-                    </div>
+                </div>
                 <div class="card-body">
                     <div class="container text-center pt-1 pb-1">
                         <div class="row mb-2">
                             <div class="col-12">
                                 <h4>
-                                    @if (User.Identity.IsAuthenticated && stream.Private) { <i class="fad fa-lock mr-2"></i> }
+                                    @if (User.Identity.IsAuthenticated && (stream.Private || stream.Collection.Private))
+                                    {<i class="fad fa-lock mr-2"></i>}
                                     @Html.DisplayFor(model => stream.Name)
                                 </h4>
                             </div>
@@ -83,7 +86,7 @@
                         <div class="row">
                             <div class="col-12">
                                 @{
-                                    if (stream.StartDate < DateTime.Now && stream.EndDate > DateTime.Now)
+                                    if ((stream.StartDate == null || stream.StartDate < SystemTime.Now()) && (stream.EndDate == null || stream.EndDate > SystemTime.Now()))
                                     {
                                         <a href="@Url.ActionLink("ViewStream", "Player", new { url = stream.ID })" class="btn btn-default" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor; border: 0;</text> } }">
                                             <i class="fad fa-video mr-2"></i> Watch Stream
@@ -120,7 +123,8 @@
             <a href="@Url.ActionLink("ViewStream", "Player", new { url = collection.URL })" class="card bg-default border-0" style="@{ if (collection.BaseColor != null) { <text>background-color: @collection.BaseColor !important;</text> } }">
                 <div class="card-body d-flex flex-0-auto h-6rem justify-content-center align-items-center">
                     <h5 class="card-title mb-0 text-secondary" style="@{ if (collection.BaseColor != null) { <text>color: @collection.NearWhiteColor !important;</text> } }">
-                        @{ if (collection.Icon != null) { <i class="@Html.DisplayFor(model => collection.Icon) mr-1"></i> } }
+                        @{ if (collection.Icon != null)
+                            { <i class="@Html.DisplayFor(model => collection.Icon) mr-1"></i> } }
                         @Html.DisplayFor(model => collection.Name)
                     </h5>
                 </div>
