@@ -29,6 +29,15 @@ namespace GGStream.Models
         public string BaseColor { get; set; }
 
         [NotMapped]
+        public string LighterColor
+        {
+            get
+            {
+                return ChangeColorBrightness((float)0.6);
+            }
+        }
+
+        [NotMapped]
         public string LightColor { 
             get
             {
@@ -42,6 +51,16 @@ namespace GGStream.Models
             get
             {
                 return ChangeColorBrightness((float)-0.3);
+            }
+        }
+        
+
+        [NotMapped]
+        public string DarkerColor
+        {
+            get
+            {
+                return ChangeColorBrightness((float)-0.6);
             }
         }
 
