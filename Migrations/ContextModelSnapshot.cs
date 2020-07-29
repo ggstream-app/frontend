@@ -27,14 +27,14 @@ namespace GGStream.Migrations
                     b.Property<string>("CallLink")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("InstructionType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("Private")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("ShowHowTo")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("URL");

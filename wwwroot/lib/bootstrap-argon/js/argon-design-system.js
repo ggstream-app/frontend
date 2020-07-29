@@ -33,7 +33,7 @@ var $tagsinput = $('.tagsinput');
 
 $(document).ready(function() {
   //  Activate the Tooltips
-  $('[data-toggle="tooltip"], [rel="tooltip"]').tooltip();
+  $('[data-toggle="tooltip"]').tooltip();
 
   // Activate Popovers and set color for popovers
   $('[data-toggle="popover"]').each(function() {

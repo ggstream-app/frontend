@@ -29,10 +29,12 @@
                     <input class="form-check-input" asp-for="Private" /> @Html.DisplayNameFor(model => model.Private)
                 </label>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ShowHowTo" /> @Html.DisplayNameFor(model => model.ShowHowTo)
-                </label>
+            <div class="form-group">
+                <label asp-for="InstructionType" class="control-label"></label>
+                <select asp-for="InstructionType" asp-items="Html.GetEnumSelectList<InstructionType>()">
+                    <option selected="selected" value="">Select a type</option>
+                </select>
+                <span asp-validation-for="InstructionType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CallLink" class="control-label"></label>
