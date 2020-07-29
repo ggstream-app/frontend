@@ -17,9 +17,9 @@
     <!-- Site CSS -->
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body class="h-100 d-flex flex-column bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"]</text> } }">
+<body class="h-100 d-flex flex-column bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"];</text> } }">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"]</text> } }">
+        <nav class="navbar navbar-expand-lg navbar-dark text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"];</text> } }">
             <div class="container">
                 <span class="navbar-title text-white">@(ViewData["Title:Nav"] ?? "GGStream")</span>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +29,7 @@
                     <div class="navbar-collapse-header">
                         <div class="row">
                             <div class="col-6 collapse-brand">
-                                @(ViewData["Title:Nav"] ?? "GGStream")
+                                GGStream
                             </div>
                             <div class="col-6 collapse-close">
                                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
             </div>
         </nav>
     </header>
-    <div class="container d-flex flex-auto bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"]</text> } }">
+    <div class="container d-flex flex-auto bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"];</text> } }">
         <main role="main" class="d-flex flex-auto flex-column mh-95 
               justify-content-@{ if (ViewData["Page:Align"] != null) { <text>@ViewData["Page:Align"]</text> } else { <text>start</text> } } 
               align-self-@{ if (ViewData["Page:Align"] != null) { <text>@ViewData["Page:Align"]</text> } else { <text>start</text> } }">
@@ -56,17 +56,19 @@
         </main>
     </div>
 
-    <footer class="footer text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"]</text> } }">
+    <footer class="footer text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"];</text> } }">
         <div class="container">
             &copy; 2020 GGStream
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src=@("https://unpkg.com/@popperjs/core@2")></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/bootstrap-argon/js/plugins/datetimepicker.js"></script>
     <script src="~/lib/bootstrap-argon/js/argon-design-system.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

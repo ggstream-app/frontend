@@ -20,38 +20,6 @@ namespace GGStream.Controllers
             _context = context;
         }
 
-        #region Public Routes
-
-        // GET: personal/1234567890
-        [Route("/{url}/{id}")]
-        public async Task<IActionResult> ViewStream(string url, string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var stream = await _context.Stream.FindAsync(id);
-            if (stream == null)
-            {
-                return NotFound();
-            }
-
-            // Verify that this stream belongs to this collection
-            if (stream.CollectionURL != url)
-            {
-                return NotFound();
-            }
-
-            // Attach Collection to stream
-            var collection = await _context.Collection.FindAsync(url);
-            stream.Collection = collection;
-
-            return View(stream);
-        }
-
-        #endregion
-
         #region Admin Routes
         // GET: Streams
         [Route("/admin/{url}/streams")]
