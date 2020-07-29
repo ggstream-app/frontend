@@ -28,6 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.EndDate)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Private)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -48,6 +51,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Private)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-url="@item.CollectionURL" asp-route-id="@item.ID">Edit</a> |

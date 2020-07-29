@@ -12,7 +12,7 @@
     @foreach (var stream in Model.CurrentPublicStreams)
     {
         <div class="col-12 col-md-6 col-xl-4 mb-4 mb-xl-0">
-            <div class="card" style="@{ if (stream.Collection.BaseColor != null) { <text>border-color: @stream.Collection.LighterColor !important;</text> } }">
+            <div class="card border-0" style="@{ if (stream.Collection.BaseColor != null) { <text>border-color: @stream.Collection.LighterColor !important;</text> } }">
                 <h5 class="card-header" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.LighterColor;</text> } }">
                     @{ if (stream.Collection.Icon != null) { <i class="@Html.DisplayFor(model => stream.Collection.Icon)"></i> } }
                     @Html.DisplayFor(model => stream.Collection.Name)

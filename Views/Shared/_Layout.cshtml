@@ -67,7 +67,8 @@
 
     <footer class="footer text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"];</text> } }">
         <div class="container text-center">
-            Powered by <a asp-action="Index" asp-controller="Home">GGStream</a> | <a href="mailto:vlad@ggstream.app?subject=%5BGGStream%5D%20Help%20Needed%20-%20%3CFILL%20IN%20DESCRIPTION%3E&body=%3CFILL%20IN%20HELP%20REPORT%3E%0A%0A---%0APage%20URL%3A%20@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")">Help</a>
+            Powered by <a asp-action="Index" asp-controller="Home" style="@{ if (ViewData["Color:Link"] != null) { <text>color: @ViewData["Color:Link"] !important;</text> } }">GGStream</a> | 
+            <a style="@{ if (ViewData["Color:Link"] != null) { <text>color: @ViewData["Color:Link"] !important;</text> } }" href="mailto:vlad@ggstream.app?subject=%5BGGStream%5D%20Help%20Needed%20-%20%3CFILL%20IN%20DESCRIPTION%3E&body=%3CFILL%20IN%20HELP%20REPORT%3E%0A%0A---%0APage%20URL%3A%20@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")">Help</a>
         </div>
     </footer>
 

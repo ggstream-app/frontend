@@ -8,7 +8,8 @@
     ViewData["Color:Nav"] = Model.Collection.DarkColor;
     ViewData["Color:NavBtn"] = Model.Collection.DarkerColor;
     ViewData["Color:Base"] = Model.Collection.BaseColor;
-    ViewData["Color:Accent"] = Model.Collection.LightColor;
+    ViewData["Color:Link"] = Model.Collection.LightColor;
+    ViewData["Color:Accent"] = Model.Collection.LighterColor;
     ViewData["Page:Align"] = "center";
 }
 
@@ -40,7 +41,7 @@
         if (Model.Collection.CallLink != null)
         {
             <li class="nav-item">
-                <a class="nav-btn nav-link nav-link-icon btn btn-primary" href="@Model.Collection.CallLink" target="_blank">
+                <a class="nav-btn nav-link nav-link-icon btn btn-primary" href="@Model.Collection.CallLink" target="_blank" style="@{ if (Model.Collection.BaseColor != null) { <text>background-color: @Model.Collection.DarkColor !important; color: @Model.Collection.LightColor !important; border: 0;</text> } }">
                     <i class="fas fa-headset"></i>
                     <span class="nav-link-inner--text">Join Call</span>
                 </a>
@@ -52,9 +53,9 @@
         if (Model.Collection.Private)
         {
         <li class="nav-item">
-            <a class="nav-btn nav-link nav-link-icon btn btn-default text-info" style="@{ if (ViewData["Color:NavBtn"] != null) { <text>background-color: @ViewData["Color:NavBtn"] !important;</text> } } @{ if (ViewData["Color:Accent"] != null) { <text>color: @ViewData["Color:Accent"] !important; border: 0;</text> } }"
-               href="#" data-container="body" data-toggle="popover" data-placement="bottom"
-               title="This stream is private" data-content="Please do not share the link to it.">
+            <a class="nav-btn nav-link nav-link-icon btn btn-default text-info" style="@{ if (Model.Collection.BaseColor != null) { <text>background-color: @Model.Collection.DarkColor !important; color: @Model.Collection.LightColor !important; border: 0;</text> } }"
+                href="#" data-container="body" data-toggle="popover" data-placement="bottom"
+                title="This stream is private" data-content="Please do not share the link to it.">
                 <i class="fas fa-lock"></i>
             </a>
         </li>
