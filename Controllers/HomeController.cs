@@ -26,14 +26,14 @@ namespace GGStream.Controllers
         public IActionResult Index()
         {
             // Public collections
-            List<Collection> collections = _context.Collection.Where(c => c.Private != true).OrderBy(s => s.URL).ToList();
+            List<Collection> collections = _context.Collection.Where(c => User.Identity.IsAuthenticated || c.Private != true).OrderBy(s => s.URL).ToList();
             List<string> collectionURLs = collections.Select(c => c.URL).ToList();
 
             // Public streams
             List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < DateTime.Now.AddDays(30)) && 
                 (s.EndDate == null || s.EndDate > DateTime.Now) && 
                 collectionURLs.Contains(s.CollectionURL) &&
-                s.Private != true)
+                (User.Identity.IsAuthenticated || s.Private != true))
             .OrderBy(s => s.StartDate).ToList().ConvertAll(s => {
                 s.Collection = collections.First(c => c.URL == s.CollectionURL);
                 return s;

@@ -4,16 +4,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GGStream.Data;
 using GGStream.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace GGStream.Controllers
 {
     public class PlayerController : Controller
     {
         private readonly Context _context;
+        private readonly IConfiguration Configuration;
 
-        public PlayerController(Context context)
+        public PlayerController(Context context, IConfiguration configuration)
         {
             _context = context;
+            Configuration = configuration;
         }
 
         [Route("/{url}/{id?}")]
@@ -23,6 +26,8 @@ namespace GGStream.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["IngestEndpoint"] = $"rtmp://{Configuration.GetValue<string>("IngestEndpoint")}:1935/app/";
 
             var collection = await _context.Collection.FindAsync(url);
             if (collection == null)

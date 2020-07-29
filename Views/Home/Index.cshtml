@@ -13,15 +13,27 @@
     {
         <div class="col-12 col-md-6 col-xl-4 mb-4 mb-xl-0">
             <div class="card border-0">
-                <h5 class="card-header bg-default text-secondary" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor;</text> } }">
-                    @{ if (stream.Collection.Icon != null) { <i class="@Html.DisplayFor(model => stream.Collection.Icon) mr-1"></i> } }
-                    @Html.DisplayFor(model => stream.Collection.Name)
-                </h5>
+                <div class="card-header bg-default d-flex align-items-center" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor;</text> } }">
+                    <h5 class="text-secondary mb-0 flex-1-auto">
+                        @{ if (stream.Collection.Icon != null)
+                            { <i class="@Html.DisplayFor(model => stream.Collection.Icon) mr-1"></i> } }
+                        @Html.DisplayFor(model => stream.Collection.Name)
+                    </h5>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-secondary text-default" asp-action="Edit" asp-controller="Stream" asp-route-url="@stream.CollectionURL" asp-route-id="@stream.ID" style="@{ if (stream.Collection.BaseColor != null) { <text>color: @stream.Collection.BaseColor !important;</text> } }">
+                            <i class="fad fa-pencil"></i>
+                        </a>
+                    }
+                    </div>
                 <div class="card-body">
                     <div class="container text-center pt-1 pb-1">
                         <div class="row mb-2">
                             <div class="col-12">
-                                <h4>@Html.DisplayFor(model => stream.Name)</h4>
+                                <h4>
+                                    @if (User.Identity.IsAuthenticated && stream.Private) { <i class="fad fa-lock mr-2"></i> }
+                                    @Html.DisplayFor(model => stream.Name)
+                                </h4>
                             </div>
                         </div>
                         <div class="row">
