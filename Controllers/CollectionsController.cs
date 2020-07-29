@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GGStream.Data;
 using GGStream.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GGStream.Controllers
 {
+    [Authorize]
     public class CollectionsController : Controller
     {
         private readonly Context _context;
@@ -19,14 +21,13 @@ namespace GGStream.Controllers
             _context = context;
         }
 
-        // GET: Collections
         [Route("/admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Collection.ToListAsync());
         }
 
-        // GET: Collections/Details/5
+        
         [Route("/admin/{url}")]
         public async Task<IActionResult> Details(string url)
         {
@@ -44,16 +45,12 @@ namespace GGStream.Controllers
             return View(collection);
         }
 
-        // GET: Collections/Create
         [Route("/admin/create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Collections/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/create")]
@@ -73,7 +70,6 @@ namespace GGStream.Controllers
             return View(collection);
         }
 
-        // GET: Collections/Edit/5
         [Route("/admin/{url}/edit")]
         public async Task<IActionResult> Edit(string url)
         {
@@ -90,9 +86,6 @@ namespace GGStream.Controllers
             return View(collection);
         }
 
-        // POST: Collections/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/edit")]
@@ -131,7 +124,6 @@ namespace GGStream.Controllers
             return View(collection);
         }
 
-        // GET: Collections/Delete/5
         [Route("/admin/{url}/delete")]
         public async Task<IActionResult> Delete(string url)
         {
@@ -149,7 +141,6 @@ namespace GGStream.Controllers
             return View(collection);
         }
 
-        // POST: Collections/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/delete")]

@@ -11,6 +11,7 @@
     ViewData["Color:Link"] = Model.Collection.LighterColor;
     ViewData["Color:Accent"] = Model.Collection.LightestColor;
     ViewData["Page:Align"] = "center";
+    ViewData["HideLoginUI"] = true;
 }
 
 <div id="player"></div>
@@ -18,7 +19,7 @@
 @section Scripts {
     @inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 
-    @await Html.PartialAsync("_OvenPlayerStartup", new OvenPlayerConfiguration(Configuration)
+    @await Html.PartialAsync("_OvenPlayerStartup", new OvenPlayerViewModel(Configuration)
     {
         StreamKey = Model.StreamKey
     })

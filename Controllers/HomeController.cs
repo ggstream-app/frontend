@@ -49,7 +49,7 @@ namespace GGStream.Controllers
         }
 
         [Route("/error")]
-        public IActionResult HandleError([FromQuery]int code, [FromQuery]string message)
+        public IActionResult HandleError([FromQuery]int code, [FromQuery]string message, [FromQuery]string icon)
         {
             var genericMessages = new string[]{ "Something went wrong!",
                                                 "Egads! Something broke!",
@@ -81,7 +81,10 @@ namespace GGStream.Controllers
                 errorMsg = $"{genericMessages[messageIdx]} Error code: {code}";
             }
 
-            ViewData["ErrorMessage"] = errorMsg;
+            ViewData["Message"] = errorMsg;
+            ViewData["Color"] = "warning";
+            ViewData["Icon"] = "fad fa-warning-exclamation";
+
             return View("~/Views/Shared/Error.cshtml");
         }
 

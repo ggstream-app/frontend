@@ -70,9 +70,22 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <a href="@Url.ActionLink("ViewStream", "Player", new { url = stream.ID })" class="btn btn-default" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor; border: 0;</text> } }">
-                                    <i class="fad fa-video mr-2"></i> Watch Stream
-                                </a>
+                                @{
+                                    if (stream.StartDate < DateTime.Now && stream.EndDate > DateTime.Now)
+                                    {
+                                        <a href="@Url.ActionLink("ViewStream", "Player", new { url = stream.ID })" class="btn btn-default" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor; border: 0;</text> } }">
+                                            <i class="fad fa-video mr-2"></i> Watch Stream
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <button disabled class="btn btn-default" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor; border: 0;</text> } }">
+                                            <i class="fad fa-video-slash mr-2"></i> Stream isn't Active
+                                        </button>
+                                    }
+
+                                }
+
                             </div>
                         </div>
                     </div>
