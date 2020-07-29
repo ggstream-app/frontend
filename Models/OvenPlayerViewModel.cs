@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GGStream.Models
 {
-    public class OvenPlayerConfiguration
+    public class OvenPlayerViewModel
     {
         public string StreamKey { get; set; }
 
@@ -54,7 +54,7 @@ namespace GGStream.Models
 
         private readonly IConfiguration Configuration;
 
-        public OvenPlayerConfiguration(IConfiguration configuration)
+        public OvenPlayerViewModel(IConfiguration configuration)
         {
             Configuration = configuration;
         }

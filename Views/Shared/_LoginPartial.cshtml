@@ -1,0 +1,29 @@
+﻿@model LoginViewModel 
+
+    <ul class="navbar-nav">
+        @if (Model.HideLoginUI != true)
+        {
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item">
+                    <a class="nav-link nav-btn btn-default border-0" asp-controller="Collections" asp-action="Index">
+                        Collections
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-btn btn-default border-0" asp-controller="Streams" asp-action="Index">
+                        Streams
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-btn nav-link nav-link-icon btn btn-outline-secondary" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut">Sign out</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-btn nav-link nav-link-icon btn btn-outline-secondary" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Sign in</a>
+                </li>
+            }
+        }
+    </ul>

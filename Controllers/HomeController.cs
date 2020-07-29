@@ -26,14 +26,14 @@ namespace GGStream.Controllers
         public IActionResult Index()
         {
             // Public collections
-            List<Collection> collections = _context.Collection.Where(c => c.Private != true).OrderBy(s => s.URL).ToList();
+            List<Collection> collections = _context.Collection.Where(c => User.Identity.IsAuthenticated || c.Private != true).OrderBy(s => s.URL).ToList();
             List<string> collectionURLs = collections.Select(c => c.URL).ToList();
 
             // Public streams
             List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < DateTime.Now.AddDays(30)) && 
                 (s.EndDate == null || s.EndDate > DateTime.Now) && 
                 collectionURLs.Contains(s.CollectionURL) &&
-                s.Private != true)
+                (User.Identity.IsAuthenticated || s.Private != true))
             .OrderBy(s => s.StartDate).ToList().ConvertAll(s => {
                 s.Collection = collections.First(c => c.URL == s.CollectionURL);
                 return s;
@@ -49,7 +49,7 @@ namespace GGStream.Controllers
         }
 
         [Route("/error")]
-        public IActionResult HandleError([FromQuery]int code, [FromQuery]string message)
+        public IActionResult HandleError([FromQuery]int code, [FromQuery]string message, [FromQuery]string icon)
         {
             var genericMessages = new string[]{ "Something went wrong!",
                                                 "Egads! Something broke!",
@@ -81,7 +81,10 @@ namespace GGStream.Controllers
                 errorMsg = $"{genericMessages[messageIdx]} Error code: {code}";
             }
 
-            ViewData["ErrorMessage"] = errorMsg;
+            ViewData["Message"] = errorMsg;
+            ViewData["Color"] = "warning";
+            ViewData["Icon"] = "fad fa-warning-exclamation";
+
             return View("~/Views/Shared/Error.cshtml");
         }
 

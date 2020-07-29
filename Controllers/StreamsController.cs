@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using GGStream.Data;
 using GGStream.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GGStream.Controllers
 {
+    [Authorize]
     public class StreamsController : Controller
     {
         private readonly Context _context;
@@ -20,15 +22,19 @@ namespace GGStream.Controllers
             _context = context;
         }
 
-        #region Admin Routes
-        // GET: Streams
+        [Route("/admin/streams")]
+        public async Task<IActionResult> Index()
+        {
+            ViewData["DisableCreate"] = true;
+            return View(await _context.Stream.ToListAsync());
+        }
+
         [Route("/admin/{url}/streams")]
         public async Task<IActionResult> Index(string url)
         {
             return View(await _context.Stream.Where(s => s.CollectionURL == url).ToListAsync());
         }
 
-        // GET: Streams/Details/5
         [Route("/admin/{url}/streams/{id}")]
         public async Task<IActionResult> Details(string id)
         {
@@ -46,7 +52,6 @@ namespace GGStream.Controllers
             return View(stream);
         }
 
-        // GET: Streams/Create
         [Route("/admin/{url}/streams/create")]
         public async Task<IActionResult> Create(string url)
         {
@@ -62,9 +67,6 @@ namespace GGStream.Controllers
             return View();
         }
 
-        // POST: Streams/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/streams/create")]
@@ -95,7 +97,6 @@ namespace GGStream.Controllers
             return View(stream);
         }
 
-        // GET: Streams/Edit/5
         [Route("/admin/{url}/streams/{id}/edit")]
         public async Task<IActionResult> Edit(string url, string id)
         {
@@ -112,9 +113,6 @@ namespace GGStream.Controllers
             return View(stream);
         }
 
-        // POST: Streams/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/streams/{id}/edit")]
@@ -148,7 +146,6 @@ namespace GGStream.Controllers
             return View(stream);
         }
 
-        // GET: Streams/Delete/5
         [Route("/admin/{url}/streams/{id}/delete")]
         public async Task<IActionResult> Delete(string url, string id)
         {
@@ -166,7 +163,6 @@ namespace GGStream.Controllers
             return View(stream);
         }
 
-        // POST: Streams/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/streams/{id}/delete")]
@@ -182,8 +178,6 @@ namespace GGStream.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index), new { url });
         }
-
-        #endregion
 
         private bool StreamExists(string id)
         {

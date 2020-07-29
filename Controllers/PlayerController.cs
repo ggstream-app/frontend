@@ -1,23 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using GGStream.Data;
 using GGStream.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Configuration;
 
 namespace GGStream.Controllers
 {
     public class PlayerController : Controller
     {
         private readonly Context _context;
+        private readonly IConfiguration Configuration;
 
-        public PlayerController(Context context)
+        public PlayerController(Context context, IConfiguration configuration)
         {
             _context = context;
+            Configuration = configuration;
         }
 
         [Route("/{url}/{id?}")]
@@ -28,6 +27,8 @@ namespace GGStream.Controllers
                 return NotFound();
             }
 
+            ViewData["IngestEndpoint"] = $"rtmp://{Configuration.GetValue<string>("IngestEndpoint")}:1935/app/";
+
             var collection = await _context.Collection.FindAsync(url);
             if (collection == null)
             {
@@ -37,7 +38,7 @@ namespace GGStream.Controllers
                 {
                     return NotFound();
                 }
-                else
+                else if(stream.StartDate < DateTime.Now && stream.EndDate > DateTime.Now)
                 {
                     // Attach Collection to stream
                     var streamCollection = await _context.Collection.FindAsync(stream.CollectionURL);
@@ -45,14 +46,21 @@ namespace GGStream.Controllers
                     stream.Collection = streamCollection;
                     return View(stream);
                 }
+                else
+                {
+                    ViewData["Message"] = "This stream isn't playing right now.";
+                    ViewData["Color"] = "info";
+                    ViewData["Icon"] = "fad fa-calendar-times";
+
+                    return View("Error");
+                }
             } 
             else if (id == null)
             {
                 // Determine which stream to play
                 if (collection.Private)
                 {
-                    // TODO: In the future, show a "private" message here that tells users to query the stream
-                    return NotFound("This collection is private");
+                    return NotFound();
                 }
                 else
                 {
@@ -63,7 +71,11 @@ namespace GGStream.Controllers
                     }
                     else
                     {
-                        return NotFound("There's no current streams playing");
+                        ViewData["Message"] = "There are no streams playing right now.";
+                        ViewData["Color"] = "info";
+                        ViewData["Icon"] = "fad fa-calendar-times";
+
+                        return View("Error");
                     }
                 }
             }
@@ -88,7 +100,7 @@ namespace GGStream.Controllers
 
         private Stream StreamToPlay(Collection collection)
         {
-            var today = DateTime.Today;
+            var today = DateTime.Now;
             var stream = _context.Stream.FirstOrDefault((Stream s) =>
                 s.Private != true &&
                 s.Collection.URL == collection.URL &&
