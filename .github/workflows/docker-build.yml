@@ -1,0 +1,17 @@
+name: Docker Build
+
+on:
+  pull_request:
+    branches: [ master ]
+
+env:
+  IMAGE_NAME: ggstream
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build image
+        run: docker build . --file Dockerfile
