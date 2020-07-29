@@ -32,7 +32,22 @@ namespace GGStream.Controllers
         [Route("/admin/{url}/streams")]
         public async Task<IActionResult> Index(string url)
         {
-            return View(await _context.Stream.Where(s => s.CollectionURL == url).ToListAsync());
+            Collection collection = await _context.Collection.FindAsync(url);
+
+            if (collection == null)
+            {
+                return NotFound();
+            }
+
+            var streams = await _context.Stream.Where(s => s.CollectionURL == url).ToListAsync();
+
+            streams.ConvertAll(s =>
+            {
+                s.Collection = collection;
+                return s;
+            });
+
+            return View(streams);
         }
 
         [Route("/admin/{url}/streams/{id}")]

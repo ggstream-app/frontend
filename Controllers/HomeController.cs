@@ -15,33 +15,36 @@ namespace GGStream.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly Context _context;
+        private readonly IApplicationDateTime _dateTime;
 
-        public HomeController(Context context, ILogger<HomeController> logger)
+        public HomeController(Context context, ILogger<HomeController> logger, IApplicationDateTime dateTime)
         {
             _context = context;
             _logger = logger;
+            _dateTime = dateTime;
         }
 
         [Route("/")]
         public IActionResult Index()
         {
-            // Public collections
-            List<Collection> collections = _context.Collection.Where(c => User.Identity.IsAuthenticated || c.Private != true).OrderBy(s => s.URL).ToList();
-            List<string> collectionURLs = collections.Select(c => c.URL).ToList();
+            // Get all collections
+            List<Collection> allCollections = _context.Collection.OrderBy(s => s.URL).ToList();
+            List<string> collectionURLs = allCollections.Select(c => c.URL).ToList();
 
-            // Public streams
-            List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < DateTime.Now.AddDays(30)) && 
-                (s.EndDate == null || s.EndDate > DateTime.Now) && 
-                collectionURLs.Contains(s.CollectionURL) &&
-                (User.Identity.IsAuthenticated || s.Private != true))
-            .OrderBy(s => s.StartDate).ToList().ConvertAll(s => {
-                s.Collection = collections.First(c => c.URL == s.CollectionURL);
-                return s;
-            });
+            // Streams - All if logged in, public if logged out
+            List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < _dateTime.Now().AddDays(30)) && (s.EndDate == null || s.EndDate > _dateTime.Now()))
+                .OrderBy(s => s.StartDate)
+                .ToList()
+                .ConvertAll(s => {
+                    s.Collection = allCollections.First(c => c.URL == s.CollectionURL);
+                    return s;
+                })
+                .Where(s => User.Identity.IsAuthenticated || (s.Private != true && s.Collection.Private != true))
+                .ToList();
 
             HomeViewModel model = new HomeViewModel
             {
-                PublicCollections = collections,
+                PublicCollections = allCollections.Where(c => c.Private != true).ToList(),
                 CurrentPublicStreams = streams
             };
 
@@ -83,7 +86,7 @@ namespace GGStream.Controllers
 
             ViewData["Message"] = errorMsg;
             ViewData["Color"] = "warning";
-            ViewData["Icon"] = "fad fa-warning-exclamation";
+            ViewData["Icon"] = "fad fa-exclamation-triangle";
 
             return View("~/Views/Shared/Error.cshtml");
         }
@@ -92,7 +95,10 @@ namespace GGStream.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            ViewData["ErrorMessage"] = "It's our fault! Sorry!";
+            ViewData["Message"] = "It's our fault! Sorry!";
+            ViewData["Color"] = "danger";
+            ViewData["Icon"] = "fad fa-exclamation-triangle";
+
             return View("~/Views/Shared/Error.cshtml");
         }
     }

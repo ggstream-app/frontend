@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 @{ 
-    if(ViewData["DisableCreate"] == null && (bool)ViewData["DisableCreate"] != true)
+    if(ViewData["DisableCreate"] == null || (bool)ViewData["DisableCreate"] != true)
     {
         <p>
             <a asp-action="Create" asp-route-url="@(ViewContext.RouteData.Values["url"])">Create New</a>
