@@ -15,11 +15,13 @@ namespace GGStream.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly Context _context;
+        private readonly IApplicationDateTime _dateTime;
 
-        public HomeController(Context context, ILogger<HomeController> logger)
+        public HomeController(Context context, ILogger<HomeController> logger, IApplicationDateTime dateTime)
         {
             _context = context;
             _logger = logger;
+            _dateTime = dateTime;
         }
 
         [Route("/")]
@@ -30,8 +32,8 @@ namespace GGStream.Controllers
             List<string> collectionURLs = collections.Select(c => c.URL).ToList();
 
             // Public streams
-            List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < DateTime.Now.AddDays(30)) && 
-                (s.EndDate == null || s.EndDate > DateTime.Now) && 
+            List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < _dateTime.Now().AddDays(30)) && 
+                (s.EndDate == null || s.EndDate > _dateTime.Now()) && 
                 collectionURLs.Contains(s.CollectionURL) &&
                 (User.Identity.IsAuthenticated || s.Private != true))
             .OrderBy(s => s.StartDate).ToList().ConvertAll(s => {

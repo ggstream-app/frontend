@@ -11,12 +11,15 @@ namespace GGStream.Controllers
     public class PlayerController : Controller
     {
         private readonly Context _context;
-        private readonly IConfiguration Configuration;
+        private readonly IConfiguration _config;
+        private readonly IApplicationDateTime _dateTime;
 
-        public PlayerController(Context context, IConfiguration configuration)
+        public PlayerController(Context context, IConfiguration config, ApplicationDateTime dateTime)
         {
             _context = context;
-            Configuration = configuration;
+            _config = config;
+            _dateTime = dateTime;
+
         }
 
         [Route("/{url}/{id?}")]
@@ -27,7 +30,7 @@ namespace GGStream.Controllers
                 return NotFound();
             }
 
-            ViewData["IngestEndpoint"] = $"rtmp://{Configuration.GetValue<string>("IngestEndpoint")}:1935/app/";
+            ViewData["IngestEndpoint"] = $"rtmp://{_config.GetValue<string>("IngestEndpoint")}:1935/app/";
 
             var collection = await _context.Collection.FindAsync(url);
             if (collection == null)
@@ -38,7 +41,7 @@ namespace GGStream.Controllers
                 {
                     return NotFound();
                 }
-                else if(stream.StartDate < DateTime.Now && stream.EndDate > DateTime.Now)
+                else if((stream.StartDate == null || stream.StartDate < _dateTime.Now()) && (stream.EndDate == null || stream.EndDate > _dateTime.Now()))
                 {
                     // Attach Collection to stream
                     var streamCollection = await _context.Collection.FindAsync(stream.CollectionURL);
@@ -100,7 +103,7 @@ namespace GGStream.Controllers
 
         private Stream StreamToPlay(Collection collection)
         {
-            var today = DateTime.Now;
+            var today = _dateTime.Now();
             var stream = _context.Stream.FirstOrDefault((Stream s) =>
                 s.Private != true &&
                 s.Collection.URL == collection.URL &&
