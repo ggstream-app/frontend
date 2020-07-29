@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using System;
+using System.Net;
 
 namespace GGStream
 {
@@ -28,21 +29,27 @@ namespace GGStream
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMicrosoftWebAppAuthentication(Configuration, "AzureAd");
-
-            services.AddRazorPages().AddMicrosoftIdentityUI();
-
+            // Reverse Proxy Forwarding
             services.Configure<ForwardedHeadersOptions>(options =>
             {
-                options.ForwardedHeaders =
-                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                
+                /* Add Docker default bridge */
+                options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("::ffff:172.17.0.0"), 24));
             });
 
+            // AAD Auth
+            services.AddMicrosoftWebAppAuthentication(Configuration, "AzureAd");
+            services.AddRazorPages().AddMicrosoftIdentityUI();
+
+            // Database
             services.AddDbContext<Context>(options =>
                     options.UseSqlite(Configuration.GetConnectionString("Context")));
 
+            // App Insights
             services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
 
+            // Custom Services
             services.Add(new ServiceDescriptor(typeof(IApplicationDateTime), new ApplicationDateTime(Configuration)));
         }
 
@@ -87,6 +94,9 @@ namespace GGStream
             {
                 logger.LogInformation("Development Mode");
                 app.UseDeveloperExceptionPage();
+
+                // Production will be hosted behind a reverse proxy, we only need to enable redirection locally
+                app.UseHttpsRedirection();
             }
             else
             {
@@ -103,7 +113,6 @@ namespace GGStream
 
             app.UseStatusCodePagesWithReExecute("/error", "?code={0}");
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
