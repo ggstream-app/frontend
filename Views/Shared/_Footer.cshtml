@@ -1,0 +1,15 @@
+﻿<footer class="footer text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"];</text> } }">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                Powered by <a asp-action="Index" asp-controller="Home" style="@{ if (ViewData["Color:Link"] != null) { <text>color: @ViewData["Color:Link"] !important;</text> } }">GGStream</a>
+            </div>
+            <div class="col-12 col-sm-6 text-right">
+                <a href="https://github.com/vladzaharia/ggstream" class="text-muted" style="@{ if (ViewData["Color:Link"] != null) { <text>color: @ViewData["Color:Link"] !important;</text> } }"><i class="fab fa-github-alt"></i></a> <span class="ml-1 mr-1"> | </span>
+                <a href="mailto:vlad@ggstream.app" class="text-muted" style="@{ if (ViewData["Color:Link"] != null) { <text>color: @ViewData["Color:Link"] !important;</text> } }"><i class="fas fa-envelope"></i></a> <span class="ml-1 mr-1"> | </span>
+                <a href="https://github.com/vladzaharia/ggstream/issues/new/choose" class="text-muted" style="@{ if (ViewData["Color:Link"] != null) { <text>color: @ViewData["Color:Link"] !important;</text> } }"><i class="fas fa-question-circle"></i></a>
+                
+            </div>
+        </div>
+</div>
+</footer>
