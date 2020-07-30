@@ -20,11 +20,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        
-      - name: Build image
-        run: docker build . --file Dockerfile --tag ggstream
-      
-      - name: Push to GitHub Packages
+              
+      - name: Build and push to GitHub Packages
         uses: docker/build-push-action@v1.1.0
         with:
           username: ${{ github.actor }}
@@ -33,10 +30,9 @@ jobs:
           repository: ${{ github.repository }}/ggstream
           tag_with_ref: true
           tag_with_sha: false
-          cache_froms: ggstream
           push: true
           
-      - name: Push to ACR
+      - name: Build and push to ACR
         uses: docker/build-push-action@v1.1.0
         with:
           username: ${{ secrets.ACR_USER }}
@@ -45,7 +41,6 @@ jobs:
           repository: ggstream
           tag_with_ref: true
           tag_with_sha: true
-          cache_froms: ggstream
           push: true
 
   publish:
@@ -55,8 +50,10 @@ jobs:
     
     steps:
       - name: Update on Cobalt
-        uses: JimCronqvist/action-ssh@master
+        uses: appleboy/ssh-action@master
         with:
-          hosts: ${{ secrets.HOST }}
-          privateKey: ${{ secrets.PRIVATE_KEY }}
-          command: ${{ secrets.UPDATE_CMD }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: ${{ secrets.UPDATE_CMD }}
