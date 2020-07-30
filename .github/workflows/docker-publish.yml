@@ -2,14 +2,10 @@ name: Docker Build and Publish
 
 on:
   push:
-    # Publish `master` as Docker `latest` image.
-    # Also publish `debug` for non-release debug images.
     branches:
       - master
       - debug
-      - test-ci
 
-    # Publish `v1.2.3` tags as releases.
     tags:
       - v*
 
@@ -46,7 +42,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs: [build]
-    if: github.ref == 'refs/heads/test-ci'
+    if: github.ref == 'refs/heads/master'
     
     steps:
       - name: Update on Cobalt
