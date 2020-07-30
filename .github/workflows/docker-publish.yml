@@ -68,7 +68,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs: [build]
-    if: github.ref == 'refs/head/test-ci'
+    if: github.ref == 'refs/heads/test-ci'
     
     steps:
       - name: Update on Cobalt
