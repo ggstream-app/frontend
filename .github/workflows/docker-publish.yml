@@ -39,8 +39,8 @@ jobs:
       - name: Push to ACR
         uses: docker/build-push-action@v1.1.0
         with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.ACR_USER }}
+          password: ${{ secrets.ACR_TOKEN }}
           registry: ggstream.azurecr.io
           repository: ggstream
           tag_with_ref: true
