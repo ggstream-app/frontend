@@ -30,7 +30,7 @@ namespace GGStream.Controllers
         }
 
         [Route("/admin/{url}/streams")]
-        public async Task<IActionResult> Index(string url)
+        public async Task<IActionResult> CollectionIndex(string url)
         {
             Collection collection = await _context.Collection.FindAsync(url);
 
@@ -47,7 +47,7 @@ namespace GGStream.Controllers
                 return s;
             });
 
-            return View(streams);
+            return View("Index", streams);
         }
 
         [Route("/admin/{url}/streams/{id}")]
@@ -106,7 +106,7 @@ namespace GGStream.Controllers
                 stream.StreamKey = $"{url}-{Nanoid.Nanoid.Generate("_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")}";
                 _context.Add(stream);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new { url });
+                return RedirectToAction(nameof(CollectionIndex), new { url = url });
             }
 
             return View(stream);
@@ -156,7 +156,7 @@ namespace GGStream.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index), new { url });
+                return RedirectToAction(nameof(CollectionIndex), new { url });
             }
             return View(stream);
         }
@@ -191,7 +191,7 @@ namespace GGStream.Controllers
 
             _context.Stream.Remove(stream);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new { url });
+            return RedirectToAction(nameof(CollectionIndex), new { url });
         }
 
         private bool StreamExists(string id)
