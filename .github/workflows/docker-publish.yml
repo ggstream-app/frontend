@@ -33,10 +33,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: ${{ github.repository }}/$IMAGE_NAME
+          repository: ${{ github.repository }}/${{ IMAGE_NAME }}
           tag_with_ref: true
           tag_with_sha: false
-          cache_froms: $IMAGE_NAME
+          cache_froms: ${{ IMAGE_NAME }}
           push: true
           
       - name: Push to ACR
@@ -45,10 +45,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ggstream.azurecr.io
-          repository: $IMAGE_NAME
+          repository: ${{ IMAGE_NAME }}
           tag_with_ref: true
           tag_with_sha: true
-          cache_froms: $IMAGE_NAME
+          cache_froms: ${{ IMAGE_NAME }}
           push: true
 
   publish:
