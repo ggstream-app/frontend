@@ -7,13 +7,13 @@ If you want to help out, here's a few ways to do so right now.
 
 Found a 🐛? I'm not surprised. This was a hackathon project, after all. 
 
-When filing a bug report, please try to include the full URL where the bug happened, an approximate timestamp, and a screenshot if you can.
+File a [bug report](https://github.com/vladzaharia/ggstream/issues/new?assignees=&labels=bug&template=bug_report.md&title=) and fill out as much as you can.
 
 ## Propose a feature
 
-Thought of a new feature for GGStream? File an issue with the #feature label to let me know. 
+Have a great 💡 for GGStream? File a [feature request](https://github.com/vladzaharia/ggstream/issues/new?assignees=&labels=feature&template=feature_request.md&title=) to let me know. 
 
-Want to do it yourself? Even better! Just tag it with #help to let me know you're working on it.
+Want to do it yourself? Even better! Just tag it with the #help label to let me know you're working on it.
 
 ## Contribute code
 
