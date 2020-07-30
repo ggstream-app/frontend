@@ -26,45 +26,31 @@ jobs:
         
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
-
-      - name: Log into GitHub Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
-      - name: Push image to GitHub Registry
-        run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          [ "$VERSION" == "master" ] && VERSION=latest
-
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+      
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: ${{ github.repository }}/$IMAGE_NAME
+          tag_with_ref: true
+          tag_with_sha: false
+          cache_froms: $IMAGE_NAME
+          push: true
           
-      - name: Log into Azure Container Registry
-        run: echo "${{ secrets.ACR_TOKEN }}" | docker login ggstream.azurecr.io -u ${{ secrets.ACR_USER }} --password-stdin
+      - name: Push to ACR
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ggstream.azurecr.io
+          repository: $IMAGE_NAME
+          tag_with_ref: true
+          tag_with_sha: true
+          cache_froms: $IMAGE_NAME
+          push: true
 
-      - name: Push image to Azure Container Registry
-        run: |
-          IMAGE_ID=ggstream.azurecr.io/${{ github.repository }}/$IMAGE_NAME
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          [ "$VERSION" == "master" ] && VERSION=latest
-
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
-          
   publish:
     runs-on: ubuntu-latest
     needs: [build]
