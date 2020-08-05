@@ -1,0 +1,11 @@
+﻿@model OvenPlayerViewModel
+<script src="~/lib/ovenplayer-dash/dash.all.min.js"></script>
+<script src="~/lib/ovenplayer-hls/hls.js"></script>
+<script src="~/lib/ovenplayer/ovenplayer.js"></script>
+
+<script>
+var player = OvenPlayer.create("player", {
+    sources: @(Html.Raw(Model.EndpointJson)),
+    autoStart: true
+});
+</script>

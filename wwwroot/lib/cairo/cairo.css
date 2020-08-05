@@ -1,0 +1,48 @@
+﻿/* cairo-200 - latin */
+@font-face {
+    font-family: 'Cairo';
+    font-style: normal;
+    font-weight: 200;
+    src: local('Cairo ExtraLight'), local('Cairo-ExtraLight'), url('cairo-v7-latin-200.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('cairo-v7-latin-200.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* cairo-regular - latin */
+@font-face {
+    font-family: 'Cairo';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Cairo Regular'), local('Cairo-Regular'), url('cairo-v7-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('cairo-v7-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* cairo-300 - latin */
+@font-face {
+    font-family: 'Cairo';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Cairo Light'), local('Cairo-Light'), url('cairo-v7-latin-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('cairo-v7-latin-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* cairo-600 - latin */
+@font-face {
+    font-family: 'Cairo';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Cairo SemiBold'), local('Cairo-SemiBold'), url('cairo-v7-latin-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('cairo-v7-latin-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* cairo-700 - latin */
+@font-face {
+    font-family: 'Cairo';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Cairo Bold'), local('Cairo-Bold'), url('cairo-v7-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('cairo-v7-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* cairo-900 - latin */
+@font-face {
+    font-family: 'Cairo';
+    font-style: normal;
+    font-weight: 900;
+    src: local('Cairo Black'), local('Cairo-Black'), url('cairo-v7-latin-900.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('cairo-v7-latin-900.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}

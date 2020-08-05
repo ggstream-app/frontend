@@ -5,23 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GGStream</title>
 
-    <!-- Inter Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-
-    <!-- Bootstrap - Argon -->
-    <link rel="stylesheet" href="~/lib/bootstrap-argon/css/argon-design-system.min.css" />
-
-    <!-- FontAwesome-->
-    <script src="https://kit.fontawesome.com/6d57857f83.js" crossorigin="anonymous"></script>
-
-    <!-- Site CSS -->
-    <link rel="stylesheet" href="~/css/site.css" />
-
-    <!-- Favicons -->
-    <partial name="_Favicons" />
+    <partial name="Partials/Imports/_Head" />
+    <partial name="Partials/Imports/_Favicons" />
 </head>
 <body class="h-100 d-flex flex-column bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"];</text> } }">
     <header>
@@ -56,7 +41,8 @@
 
                     <ul class="navbar-nav ml-lg-auto">
                         @RenderSection("Navbar", required: false)
-                        @await Html.PartialAsync("_LoginPartial", new LoginViewModel
+
+                        @await Html.PartialAsync("Partials/_AuthNav", new LoginViewModel
                         {
                             HideLoginUI = ViewData["HideLoginUI"] == null ? false : (bool)ViewData["HideLoginUI"]
                         })
@@ -74,14 +60,8 @@
         </main>
     </div>
 
-    <partial name="_Footer" />
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src=@("https://unpkg.com/@popperjs/core@2")></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/bootstrap-argon/js/plugins/datetimepicker.js"></script>
-    <script src="~/lib/bootstrap-argon/js/argon-design-system.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <partial name="Partials/_Footer" />
+    <partial name="Partials/Imports/_Body" />
 
     @RenderSection("Scripts", required: false)
 </body>
