@@ -10,7 +10,7 @@ WORKDIR /src
 
 RUN apt-get update -yq 
 RUN apt-get install curl gnupg -yq 
-RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install -y nodejs
 
 COPY ["GGStream.csproj", ""]
