@@ -19,7 +19,7 @@
 @section Scripts {
     @inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 
-    @await Html.PartialAsync("Partials/_OvenPlayerStartup", new OvenPlayerViewModel(Configuration)
+    @await Html.PartialAsync("Partials/_OvenPlayer", new OvenPlayerViewModel(Configuration)
     {
         StreamKey = Model.StreamKey
     })

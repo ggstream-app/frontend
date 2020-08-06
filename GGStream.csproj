@@ -36,6 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\site.css" />
+    <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\lib\bootstrap-argon\css\argon-design-system.css.map" />
     <None Include="wwwroot\lib\bootstrap-argon\js\argon-design-system.js" />
     <None Include="wwwroot\lib\bootstrap-argon\js\argon-design-system.js.map" />

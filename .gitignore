@@ -36,3 +36,8 @@ msbuild.wrn
 
 # Local App Settings
 appsettings.Development.json
+
+# NPM
+node_modules/
+temp/
+wwwroot/dist/

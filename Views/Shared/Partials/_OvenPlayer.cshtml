@@ -1,0 +1,9 @@
+﻿@model OvenPlayerViewModel
+<script src="~/dist/ovenplayer.min.js"></script>
+
+<script type="text/javascript">
+    var player = OvenPlayer.create("player", {
+        sources: @(Html.Raw(Model.EndpointJson)),
+        autoStart: true
+    });
+</script>

@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "name": "ggstream",
+  "private": true,
+  "description": "Streaming frontend built for the OvenMediaEngine streaming server",
+  "repository": "https://github.com/ggstream-app/frontend",
+  "license": "MIT",
+  "scripts": {},
+  "dependencies": {
+    "@openfonts/cairo_latin": "~1.44.1",
+    "@popperjs/core": "~2.4.4",
+    "argon-design-system-free": "~1.2.0",
+    "bootstrap": "~4.5.1",
+    "dashjs": "~3.1.2",
+    "hls.js": "0.14.7",
+    "jquery": "3.5.1",
+    "jquery-validation": "~1.19.2",
+    "jquery-validation-unobtrusive": "~3.2.11"
+  },
+  "devDependencies": {
+    "grunt": "~1.2.1",
+    "grunt-contrib-clean": "~2.0.0",
+    "grunt-contrib-copy": "~1.0.0",
+    "grunt-contrib-cssmin": "~3.0.0",
+    "grunt-contrib-uglify": "~5.0.0",
+    "grunt-contrib-watch": "~1.1.0"
+  }
+}
