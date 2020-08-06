@@ -1,5 +1,3 @@
-using System;
-
 namespace GGStream.Models
 {
     public class ErrorViewModel

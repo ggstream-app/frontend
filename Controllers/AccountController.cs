@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Mvc;
@@ -34,19 +30,17 @@ namespace GGStream.Controllers
         [HttpGet]
         public IActionResult SignedOut()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                // Redirect to home page if the user is authenticated.
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
-
-            return View();
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         [HttpGet]
         public IActionResult AccessDenied()
         {
-            return View();
+            ViewData["Message"] = "This stream isn't live right now.";
+            ViewData["Color"] = "info";
+            ViewData["Icon"] = "fad fa-calendar-times";
+
+            return View("Error");
         }
     }
 }

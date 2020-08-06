@@ -1,10 +1,8 @@
 ﻿using GGStream.Data;
 using GGStream.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +12,7 @@ using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 
 namespace GGStream
@@ -40,7 +39,7 @@ namespace GGStream
             });
 
             // AAD Auth
-            services.AddMicrosoftWebAppAuthentication(Configuration, "AzureAd");
+            services.AddMicrosoftWebAppAuthentication(Configuration);
             services.AddRazorPages().AddMicrosoftIdentityUI();
 
             // Database
@@ -116,11 +115,11 @@ namespace GGStream
             logger.LogInformation("\n--- Application DateTime");
             var tzi = TimeZoneInfo.FindSystemTimeZoneById(Configuration.GetValue<string>("TimeZone"));
 
-            logger.LogInformation("System time: {Time}", DateTime.Now.ToString());
-            logger.LogInformation("UTC time: {TimeUTC}", DateTime.UtcNow.ToString());
+            logger.LogInformation("System time: {Time}", DateTime.Now.ToString(CultureInfo.InvariantCulture));
+            logger.LogInformation("UTC time: {TimeUTC}", DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
             logger.LogInformation("TimeZone: {TZ}", Configuration.GetValue<string>("TimeZone"));
             logger.LogInformation("Base Offset: {TZI} / DST: {DST}", tzi.BaseUtcOffset, tzi.IsDaylightSavingTime(DateTime.Now));
-            logger.LogInformation("ApplicationDateTime: {ADTime}", adt.Now().ToString());
+            logger.LogInformation("ApplicationDateTime: {ADTime}", adt.Now().ToString(CultureInfo.InvariantCulture));
 
             logger.LogInformation("\n--- AAD Authentication");
             logger.LogInformation("Domain: {Domain}", Configuration.GetValue<string>("AzureAd:Domain"));

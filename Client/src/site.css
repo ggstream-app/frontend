@@ -85,10 +85,16 @@ h6 {
 /* Bootstrap utility extensions
 -------------------------------------------------- */
 .flex-1-auto {
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    -o-flex: 1 1 auto;
     flex: 1 1 auto;
 }
 
 .flex-0-auto {
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    -o-flex: 0 0 auto;
     flex: 0 0 auto;
 }
 

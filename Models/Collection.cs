@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GGStream.Models
 {
@@ -16,6 +13,7 @@ namespace GGStream.Models
          */
         [Required]
         [Key]
+        // ReSharper disable once InconsistentNaming
         public string URL { get; set; }
 
         /**
@@ -36,81 +34,34 @@ namespace GGStream.Models
         public string BaseColor { get; set; }
 
         [NotMapped]
-        public string NearWhiteColor
-        {
-            get
-            {
-                return ChangeColorBrightness((float)0.8);
-            }
-        }
+        public string NearWhiteColor => ChangeColorBrightness((float)0.8);
 
         [NotMapped]
-        public string LightestColor
-        {
-            get
-            {
-                return ChangeColorBrightness((float)0.6);
-            }
-        }
+        public string LightestColor => ChangeColorBrightness((float)0.6);
 
         [NotMapped]
-        public string LighterColor
-        {
-            get
-            {
-                return ChangeColorBrightness((float)0.4);
-            }
-        }
+        public string LighterColor => ChangeColorBrightness((float)0.4);
 
         [NotMapped]
-        public string LightColor { 
-            get
-            {
-                return ChangeColorBrightness((float)0.2);
-            } 
-        }
+        public string LightColor => ChangeColorBrightness((float)0.2);
 
         [NotMapped]
-        public string DarkColor
-        {
-            get
-            {
-                return ChangeColorBrightness((float)-0.2);
-            }
-        }
-        
+        public string DarkColor => ChangeColorBrightness((float)-0.2);
+
 
         [NotMapped]
-        public string DarkerColor
-        {
-            get
-            {
-                return ChangeColorBrightness((float)-0.4);
-            }
-        }
+        public string DarkerColor => ChangeColorBrightness((float)-0.4);
 
         [NotMapped]
-        public string DarkestColor
-        {
-            get
-            {
-                return ChangeColorBrightness((float)-0.6);
-            }
-        }
+        public string DarkestColor => ChangeColorBrightness((float)-0.6);
 
         [NotMapped]
-        public string NearBlackColor
-        {
-            get
-            {
-                return ChangeColorBrightness((float)-0.8);
-            }
-        }
+        public string NearBlackColor => ChangeColorBrightness((float)-0.8);
 
         /**
          * Whether this collection is private (need stream key to watch) or public (pull latest stream).
          */
-        public Boolean Private { get; set; }
+        public bool Private { get; set; }
 
         /**
          * Which instructions to show. None means no button is shown.
@@ -138,9 +89,9 @@ namespace GGStream.Models
 
             var color = ColorTranslator.FromHtml(BaseColor);
 
-            float red = (float)color.R;
-            float green = (float)color.G;
-            float blue = (float)color.B;
+            var red = (float)color.R;
+            var green = (float)color.G;
+            var blue = (float)color.B;
 
             if (correctionFactor < 0)
             {

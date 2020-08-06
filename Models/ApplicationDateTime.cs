@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace GGStream.Models
@@ -14,13 +10,9 @@ namespace GGStream.Models
     }
     public class ApplicationDateTime : IApplicationDateTime
     {
-        private readonly IConfiguration Configuration;
-
         public ApplicationDateTime(IConfiguration configuration)
         {
-            Configuration = configuration;
-
-            TimeZoneId = Configuration.GetValue<string>("TimeZone");
+            TimeZoneId = configuration.GetValue<string>("TimeZone");
         }
 
         public string TimeZoneId { get; }

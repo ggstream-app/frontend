@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GGStream.Data;
@@ -104,7 +103,7 @@ namespace GGStream.Controllers
         private Stream StreamToPlay(Collection collection)
         {
             var today = _dateTime.Now();
-            var stream = _context.Stream.FirstOrDefault((Stream s) =>
+            var stream = _context.Stream.FirstOrDefault(s =>
                 s.Private != true &&
                 s.Collection.URL == collection.URL &&
                 (s.StartDate == null || s.StartDate < today) &&
