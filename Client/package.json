@@ -6,8 +6,8 @@
   "repository": "https://github.com/ggstream-app/frontend",
   "license": "MIT",
   "scripts": {
-    "preinstall": "npm-force-resolutions",
-    "build": "webpack"
+    "build": "webpack",
+    "force-resolutions": "npm-force-resolutions"
   },
   "dependencies": {
     "@openfonts/cairo_latin": "~1.44.1",
