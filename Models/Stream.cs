@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+// ReSharper disable InconsistentNaming
 
 namespace GGStream.Models
 {
@@ -52,6 +50,6 @@ namespace GGStream.Models
         /**
          * Whether this collection is private (need stream key to watch) or public (pull latest stream).
          */
-        public Boolean Private { get; set; }
+        public bool Private { get; set; }
     }
 }

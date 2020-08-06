@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using GGStream.Models;
 using GGStream.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace GGStream.Controllers
 {
     public class HomeController : Controller
     {
+        // ReSharper disable once NotAccessedField.Local
+        // Will use logging with #26
         private readonly ILogger<HomeController> _logger;
         private readonly Context _context;
         private readonly IApplicationDateTime _dateTime;
@@ -28,11 +26,10 @@ namespace GGStream.Controllers
         public IActionResult Index()
         {
             // Get all collections
-            List<Collection> allCollections = _context.Collection.OrderBy(s => s.URL).ToList();
-            List<string> collectionURLs = allCollections.Select(c => c.URL).ToList();
+            var allCollections = _context.Collection.OrderBy(s => s.URL).ToList();
 
             // Streams - All if logged in, public if logged out
-            List<Stream> streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < _dateTime.Now().AddDays(30)) && (s.EndDate == null || s.EndDate > _dateTime.Now()))
+            var streams = _context.Stream.Where(s => (s.StartDate == null || s.StartDate < _dateTime.Now().AddDays(30)) && (s.EndDate == null || s.EndDate > _dateTime.Now()))
                 .OrderBy(s => s.StartDate)
                 .ToList()
                 .ConvertAll(s => {
@@ -42,7 +39,7 @@ namespace GGStream.Controllers
                 .Where(s => User.Identity.IsAuthenticated || (s.Private != true && s.Collection.Private != true))
                 .ToList();
 
-            HomeViewModel model = new HomeViewModel
+            var model = new HomeViewModel
             {
                 PublicCollections = allCollections.Where(c => c.Private != true).ToList(),
                 CurrentPublicStreams = streams
@@ -54,7 +51,7 @@ namespace GGStream.Controllers
         [Route("/error")]
         public IActionResult HandleError([FromQuery]int code, [FromQuery]string message, [FromQuery]string icon)
         {
-            var genericMessages = new string[]{ "Something went wrong!",
+            var genericMessages = new[]{ "Something went wrong!",
                                                 "Egads! Something broke!",
                                                 "Zoinks! I think we broke it!" };
 
@@ -79,8 +76,8 @@ namespace GGStream.Controllers
 
             if (errorMsg == null)
             {
-                Random random = new Random();
-                int messageIdx = random.Next(0, genericMessages.Length);
+                var random = new Random();
+                var messageIdx = random.Next(0, genericMessages.Length);
                 errorMsg = $"{genericMessages[messageIdx]} Error code: {code}";
             }
 

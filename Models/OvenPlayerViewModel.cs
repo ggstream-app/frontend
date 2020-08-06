@@ -1,12 +1,8 @@
-﻿using GGStream.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+// ReSharper disable InconsistentNaming
 
 namespace GGStream.Models
 {
@@ -18,7 +14,7 @@ namespace GGStream.Models
         {
             get
             {
-                return Configuration.GetSection("SvcInstances").Get<List<SvcInstance>>();
+                return _configuration.GetSection("SvcInstances").Get<List<SvcInstance>>();
             }
         }
 
@@ -30,19 +26,19 @@ namespace GGStream.Models
 
                 var endpointArr = instances.Select(i =>
                 {
-                    List<EndpointJson> allEndpoints = new List<EndpointJson>();
+                    var allEndpoints = new List<EndpointJson>();
 
                     if (i.Protocols.WebRTC)
                     {
-                        allEndpoints.Add(GetWebRTCEndpoint(i));
+                        allEndpoints.Add(GetWebRtcEndpoint(i));
                     }
                     if (i.Protocols.DASH)
                     {
-                        allEndpoints.Add(GetDASHEndpoint(i));
+                        allEndpoints.Add(GetDashEndpoint(i));
                     }
                     if (i.Protocols.HLS)
                     {
-                        allEndpoints.Add(GetHLSEndpoint(i));
+                        allEndpoints.Add(GetHlsEndpoint(i));
                     }
 
                     return allEndpoints;
@@ -52,14 +48,14 @@ namespace GGStream.Models
             }
         }
 
-        private readonly IConfiguration Configuration;
+        private readonly IConfiguration _configuration;
 
         public OvenPlayerViewModel(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
-        private EndpointJson GetWebRTCEndpoint(SvcInstance instance)
+        private EndpointJson GetWebRtcEndpoint(SvcInstance instance)
         {
             var protocol = instance.Secure ? "wss" : "ws";
             var port = instance.Secure ? "3334" : "3333";
@@ -72,7 +68,7 @@ namespace GGStream.Models
             };
         }
 
-        private EndpointJson GetDASHEndpoint(SvcInstance instance)
+        private EndpointJson GetDashEndpoint(SvcInstance instance)
         {
             var protocol = instance.Secure ? "https" : "http";
             var port = instance.Secure ? "8443" : "8080";
@@ -85,7 +81,7 @@ namespace GGStream.Models
             };
         }
 
-        private EndpointJson GetHLSEndpoint(SvcInstance instance)
+        private EndpointJson GetHlsEndpoint(SvcInstance instance)
         {
             var protocol = instance.Secure ? "https" : "http";
             var port = instance.Secure ? "8443" : "8080";
@@ -103,18 +99,18 @@ namespace GGStream.Models
     {
         public string Name { get; set; }
         public string Endpoint { get; set; }
-        public Boolean Secure { get; set; }
+        public bool Secure { get; set; }
         public InstanceProtocols Protocols { get; set; }
     }
 
     public class InstanceProtocols
     {
-        public Boolean WebRTC { get; set; }
-        public Boolean DASH { get; set; }
-        public Boolean HLS { get; set; }
+        public bool WebRTC { get; set; }
+        public bool DASH { get; set; }
+        public bool HLS { get; set; }
     }
 
-    class EndpointJson
+    internal class EndpointJson
     {
 #pragma warning disable IDE1006 // Naming Styles
         public string type { get; set; }

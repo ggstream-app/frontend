@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GGStream.Data;
 using GGStream.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Authorization;
 
 namespace GGStream.Controllers
@@ -32,7 +28,7 @@ namespace GGStream.Controllers
         [Route("/admin/{url}/streams")]
         public async Task<IActionResult> CollectionIndex(string url)
         {
-            Collection collection = await _context.Collection.FindAsync(url);
+            var collection = await _context.Collection.FindAsync(url);
 
             if (collection == null)
             {
@@ -70,7 +66,7 @@ namespace GGStream.Controllers
         [Route("/admin/{url}/streams/create")]
         public async Task<IActionResult> Create(string url)
         {
-            Collection collection = await _context.Collection.FindAsync(url);
+            var collection = await _context.Collection.FindAsync(url);
 
             if (collection == null)
             {
@@ -87,8 +83,7 @@ namespace GGStream.Controllers
         [Route("/admin/{url}/streams/create")]
         public async Task<IActionResult> Create(string url, [Bind("Name,StartDate,EndDate,Private")] Stream stream)
         {
-            Collection collection = await _context.Collection.FindAsync(url);
-            ViewData["Collection:Name"] = collection.Name;
+            var collection = await _context.Collection.FindAsync(url);
 
             if (collection == null)
             {
@@ -98,15 +93,18 @@ namespace GGStream.Controllers
             {
                 stream.Collection = collection;
                 stream.CollectionURL = url;
+                ViewData["Collection:Name"] = collection.Name;
             }
 
             if (ModelState.IsValid)
             {
+                // ReSharper disable StringLiteralTypo
                 stream.ID = Nanoid.Nanoid.Generate("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 10);
                 stream.StreamKey = $"{url}-{Nanoid.Nanoid.Generate("_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")}";
+                // ReSharper restore StringLiteralTypo
                 _context.Add(stream);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(CollectionIndex), new { url = url });
+                return RedirectToAction(nameof(CollectionIndex), new { url });
             }
 
             return View(stream);

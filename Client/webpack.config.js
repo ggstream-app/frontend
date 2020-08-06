@@ -1,19 +1,19 @@
-﻿const path = require('path');
-var webpack = require('webpack')
+﻿const path = require("path");
+const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: {
-        site: './src/site.js',
-        dependencies: './src/dependencies/dependencies.js',
-        validation: './src/dependencies/validation.js',
+        site: "./src/site.js",
+        dependencies: "./src/dependencies/dependencies.js",
+        validation: "./src/dependencies/validation.js"
     },
     output: {
-        filename: '[name].min.js',
-        path: path.resolve(__dirname, '..', 'wwwroot', 'dist')
+        filename: "[name].min.js",
+        path: path.resolve(__dirname, "..", "wwwroot", "dist")
     },
-    devtool: 'source-map',
-    mode: 'development',
+    devtool: "source-map",
+    mode: "development",
     module: {
         rules: [
             { test: /\.css$/, use: [{ loader: MiniCssExtractPlugin.loader }, "css-loader"] },
@@ -25,7 +25,11 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "[name].css",
+            filename: "[name].css"
         }),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'
+        })
     ]
 };
