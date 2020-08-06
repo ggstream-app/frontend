@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack",
-    "force-resolutions": "npm-force-resolutions"
+    "preinstall": "npx npm-force-resolutions"
   },
   "dependencies": {
     "@openfonts/cairo_latin": "~1.44.1",
