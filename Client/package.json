@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "name": "ggstream",
+  "private": true,
+  "description": "Streaming frontend built for the OvenMediaEngine streaming server",
+  "repository": "https://github.com/ggstream-app/frontend",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
+  "dependencies": {
+    "@openfonts/cairo_latin": "~1.44.1",
+    "argon-design-system-free": "~1.2.0",
+    "bootstrap": "~4.5.1",
+    "jquery": "3.5.1",
+    "jquery-validation": "~1.19.2",
+    "jquery-validation-unobtrusive": "~3.2.11",
+    "popper.js": "~1.16.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "css-loader": "^4.2.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "file-loader": "^6.0.0",
+    "url-loader": "^4.1.0"
+  }
+}

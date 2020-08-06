@@ -8,6 +8,9 @@
     <DockerfileContext>.</DockerfileContext>
     <ApplicationInsightsResourceId>/subscriptions/a2470d3d-f20a-4263-b5d7-a424da9d52d9/resourceGroups/vlad-stream/providers/microsoft.insights/components/ggstream-ai</ApplicationInsightsResourceId>
     <WebProject_DirectoryAccessLevelKey>1</WebProject_DirectoryAccessLevelKey>
+    <MpaRoot>Client\</MpaRoot>
+    <WWWRoot>wwwroot\</WWWRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(MpaRoot)node_modules\**</DefaultItemExcludes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,21 +39,42 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\lib\bootstrap-argon\css\argon-design-system.css.map" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\argon-design-system.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\argon-design-system.js.map" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\argon-design-system.min.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\core\bootstrap.min.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\core\jquery.min.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\core\popper.min.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\bootstrap-datepicker.min.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\bootstrap-switch.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\chartjs.min.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\datetimepicker.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\jquery.sharrre.min.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\moment.min.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\nouislider.min.js" />
-    <None Include="wwwroot\lib\bootstrap-argon\js\plugins\perfect-scrollbar.jquery.min.js" />
+    <!-- Don't publish the MPA source files, but do show them in the project files list -->
+    <Content Remove="$(MpaRoot)**" />
+    <None Remove="$(MpaRoot)**" />
+    <None Include="$(MpaRoot)**" Exclude="$(MpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\ovenplayer\COMMITHASH" />
+    <None Include="wwwroot\lib\ovenplayer\downloader-0.9.0.js" />
+    <None Include="wwwroot\lib\ovenplayer\downloader-0.9.0.js.LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.js" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.js.LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.DashProvider-0.9.0.js" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.DashProvider-0.9.0.js.LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.DashProvider~ovenplayer.provider.HlsProvider~ovenplayer.provider.Html5~ovenplaye~2ec193ac-0.9.0.js" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.DashProvider~ovenplayer.provider.HlsProvider~ovenplayer.provider.Html5~ovenplaye~2ec193ac-0.9.0.js.LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.HlsProvider-0.9.0.js" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.HlsProvider-0.9.0.js.LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.Html5-0.9.0.js" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.Html5-0.9.0.js.LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.RtmpProvider-0.9.0.js" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.RtmpProvider-0.9.0.js.LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.WebRTCProvider-0.9.0.js" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.provider.WebRTCProvider-0.9.0.js.LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.sdk.js" />
+    <None Include="wwwroot\lib\ovenplayer\ovenplayer.sdk.js.LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\OvenPlayerFlash.swf" />
+    <None Include="wwwroot\lib\ovenplayer\report.html" />
+    <None Include="wwwroot\lib\ovenplayer\smiparser-0.9.0.js" />
+    <None Include="wwwroot\lib\ovenplayer\smiparser-0.9.0.js.LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\vendors~downloader-0.9.0.js" />
+    <None Include="wwwroot\lib\ovenplayer\vendors~downloader-0.9.0.js.LICENSE" />
+    <None Include="wwwroot\lib\ovenplayer\VERSION" />
+    <None Include="wwwroot\lib\ovenplayer\vttparser-0.9.0.js" />
+    <None Include="wwwroot\lib\ovenplayer\vttparser-0.9.0.js.LICENSE" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,4 +96,33 @@
     <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
+  <Target Name="NpmInstall" BeforeTargets="Build" Condition="!Exists('$(MpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(MpaRoot)" Command="npm install" />
+  </Target>
+
+  <Target Name="NpmRunBuild" BeforeTargets="Build" DependsOnTargets="NpmInstall">
+    <Exec WorkingDirectory="$(MpaRoot)" Command="npm run build" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="$(WWWRoot)dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="NpmClean" BeforeTargets="Clean">
+    <RemoveDir Directories="$(WWWRoot)dist" />
+  </Target>
 </Project>

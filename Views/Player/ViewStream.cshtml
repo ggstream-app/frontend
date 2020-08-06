@@ -19,7 +19,7 @@
 @section Scripts {
     @inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 
-    @await Html.PartialAsync("_OvenPlayerStartup", new OvenPlayerViewModel(Configuration)
+    @await Html.PartialAsync("Partials/_OvenPlayer", new OvenPlayerViewModel(Configuration)
     {
         StreamKey = Model.StreamKey
     })
@@ -87,78 +87,7 @@
     }
 }
 
-@* Jackbox Instructions Modal *@
-<div class="modal fade" id="modal-ins-Jackbox" tabindex="-1" role="dialog" aria-labelledby="modal-ins-jackbox-label" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modal-ins-jackbox-label">How to Play Jackbox!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row mb-3 pb-3 justify-content-center border-bottom">
-                        Welcome to the Jackbox stream, thanks for joining us! To get started, follow these simple steps:
-                    </div>
-                    @{
-                        if (Model.Collection.CallLink != null)
-                        {
-                            <div class="row mb-3">
-                                <div class="col-4">
-                                    <img src="~/images/jackbox/JoinCall.svg" />
-                                </div>
-                                <div class="col-8 align-self-center">
-                                    If you haven't joined the call yet, click the "Join Call" button on the stream page.
-                                </div>
-                            </div>
-                        }
-                    }
-                    <div class="row mb-3">
-                        <div class="col-8 order-2 order-md-1 align-self-center">
-                            <p>
-                                Go to <a href="https://jackbox.tv">https://jackbox.tv</a> to join the game.
-                            </p>
-
-                            <div class="text-muted">
-                                Some games will require you to draw, so it's recommended to do this on your phone or tablet.
-                            </div>
-
-                            <div class="text-muted">
-                                If you only have a laptop, consider joining the audience, or play in a trivia or text game!
-                            </div>
-                        </div>
-                        <div class="col-4 order-1 order-md-2">
-                            <img src="~/images/jackbox/Phone.svg" />
-                        </div>
-                    </div>
-                    <div class="row mb-3 pb-3 border-bottom">
-                        <div class="col-4">
-                            <img src="~/images/jackbox/RoomCode.svg" />
-                        </div>
-                        <div class="col-8 align-self-center">
-                            Enter the room code that's shown on the stream and give yourself a name. When you're ready, click the <strong>PLAY</strong> button!
-
-                            @{
-                                if (Model.Collection.CallLink != null)
-                                {
-                                    <div class="text-muted">
-                                        If you can't find the code, try asking in the call or chat.
-                                    </div>
-                                }
-                            }
-                        </div>
-                    </div>
-                    <div class="row mb-3 justify-content-center">
-                        You're in! If your name shows up on the screen, you'll be playing in the main game.
-
-                        <div class="text-muted">
-                            If you're in the audience, don't worry, you'll still get to vote and participate in the game!
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@if (Model.Collection.InstructionType == InstructionType.Jackbox)
+{
+    <partial name="Partials/Instructions/_Jackbox" />
+}
