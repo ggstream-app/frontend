@@ -62,7 +62,7 @@ namespace GGStream.Controllers
             {
                 _context.Add(collection);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Collections");
             }
             return View(collection);
         }
