@@ -99,8 +99,8 @@ namespace GGStream.Controllers
             if (ModelState.IsValid)
             {
                 // ReSharper disable StringLiteralTypo
-                stream.ID = Nanoid.Nanoid.Generate("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 10);
-                stream.StreamKey = $"{url}-{Nanoid.Nanoid.Generate("_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")}";
+                stream.ID = await Nanoid.Nanoid.GenerateAsync("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", 10);
+                stream.StreamKey = $"{url}-{await Nanoid.Nanoid.GenerateAsync("_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")}";
                 // ReSharper restore StringLiteralTypo
                 _context.Add(stream);
                 await _context.SaveChangesAsync();

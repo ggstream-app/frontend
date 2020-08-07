@@ -6,7 +6,7 @@
   "repository": "https://github.com/ggstream-app/frontend",
   "license": "MIT",
   "scripts": {
-    "build": "cd Client && webpack",
+    "build": "webpack",
     "preinstall": "npx npm-force-resolutions"
   },
   "dependencies": {

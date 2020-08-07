@@ -41,6 +41,16 @@
   <ItemGroup>
     <!-- Don't publish the MPA source files, but do show them in the project files list -->
     <Content Remove="$(MpaRoot)**" />
+    <Content Include="Client\package-lock.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Client\package.json">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <None Remove="$(MpaRoot)**" />
     <None Include="$(MpaRoot)**" Exclude="$(MpaRoot)node_modules\**" />
   </ItemGroup>
@@ -103,11 +113,11 @@
     </Exec>
     <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
     <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-    <Exec Command="npm install" />
+    <Exec WorkingDirectory="$(MpaRoot)" Command="npm install" />
   </Target>
 
   <Target Name="NpmRunBuild" BeforeTargets="Build" DependsOnTargets="NpmInstall">
-    <Exec Command="npm run build" />
+    <Exec WorkingDirectory="$(MpaRoot)" Command="npm run build" />
   </Target>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
