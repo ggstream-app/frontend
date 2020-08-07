@@ -1,16 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GGStream.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GGStream.Data
 {
     public class Context : DbContext
     {
-        public Context (DbContextOptions<Context> options)
+        public Context(DbContextOptions<Context> options)
             : base(options)
         {
         }
 
-        public DbSet<Models.Stream> Stream { get; set; }
+        public DbSet<Stream> Stream { get; set; }
 
-        public DbSet<Models.Collection> Collection { get; set; }
+        public DbSet<Collection> Collection { get; set; }
     }
 }

@@ -1,68 +1,75 @@
 ﻿<!DOCTYPE html>
 <html class="h-100" lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - GGStream</title>
 
-    <partial name="Partials/Imports/_Head" />
-    <partial name="Partials/Imports/_Favicons" />
+    <partial name="Partials/Imports/_Head"/>
+    <partial name="Partials/Imports/_Favicons"/>
 </head>
 <body class="h-100 d-flex flex-column bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"];</text> } }">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"];</text> } }">
-            <div class="container">
-                <a asp-action="Index" asp-controller="Home" class="navbar-title text-white">
-                    @{ if (ViewData["Icon:Nav"] != null)
-                        { <i class="mr-1 @ViewData["Icon:Nav"]"></i> } }
-                    @(ViewData["Title:Nav"] ?? "GGStream")
-                    @{ if (ViewData["Subtitle:Nav"] != null)
-                        {
-                            <span class="d-none d-md-inline ml-2">/</span>
-                            <span class="d-none d-md-inline text-muted ml-2" style="@{ if (ViewData["Color:Accent"] != null) { <text>color: @ViewData["Color:Accent"] !important;</text> } }">@ViewData["Subtitle:Nav"]</span> } }
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbar-default">
-                    <div class="navbar-collapse-header">
-                        <div class="row">
-                            <div class="col-6 collapse-brand">
-                                GGStream
-                            </div>
-                            <div class="col-6 collapse-close">
-                                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span></span>
-                                    <span></span>
-                                </button>
-                            </div>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark text-light bg-ggstream-nav" style="@{ if (ViewData["Color:Nav"] != null) { <text>background-color: @ViewData["Color:Nav"];</text> } }">
+        <div class="container">
+            <a asp-action="Index" asp-controller="Home" class="navbar-title text-white">
+                @{
+                    if (ViewData["Icon:Nav"] != null)
+                    {
+                        <i class="mr-1 @ViewData["Icon:Nav"]"></i>
+                    }
+                }
+                @(ViewData["Title:Nav"] ?? "GGStream")
+                @{
+                    if (ViewData["Subtitle:Nav"] != null)
+                    {
+                        <span class="d-none d-md-inline ml-2">/</span>
+                        <span class="d-none d-md-inline text-muted ml-2" style="@{ if (ViewData["Color:Accent"] != null) { <text>color: @ViewData["Color:Accent"] !important;</text> } }">@ViewData["Subtitle:Nav"]</span>
+                    }
+                }
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-default">
+                <div class="navbar-collapse-header">
+                    <div class="row">
+                        <div class="col-6 collapse-brand">
+                            GGStream
+                        </div>
+                        <div class="col-6 collapse-close">
+                            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
+                                <span></span>
+                                <span></span>
+                            </button>
                         </div>
                     </div>
-
-                    <ul class="navbar-nav ml-lg-auto">
-                        @RenderSection("Navbar", required: false)
-
-                        @await Html.PartialAsync("Partials/_AuthNav", new LoginViewModel
-                        {
-                            HideLoginUi = ViewData["HideLoginUI"] == null ? false : (bool)ViewData["HideLoginUI"]
-                        })
-                    </ul>
-
                 </div>
+
+                <ul class="navbar-nav ml-lg-auto">
+                    @RenderSection("Navbar", false)
+
+                    @await Html.PartialAsync("Partials/_AuthNav", new LoginViewModel
+                    {
+                        HideLoginUi = ViewData["HideLoginUI"] == null ? false : (bool) ViewData["HideLoginUI"]
+                    })
+                </ul>
+
             </div>
-        </nav>
-    </header>
-    <div class="container d-flex flex-1-auto bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"];</text> } }">
-        <main role="main" class="d-flex flex-1-auto flex-column mh-95
+        </div>
+    </nav>
+</header>
+<div class="container d-flex flex-1-auto bg-ggstream-base" style="@{ if (ViewData["Color:Base"] != null) { <text>background-color: @ViewData["Color:Base"];</text> } }">
+    <main role="main" class="d-flex flex-1-auto flex-column mh-95
               justify-content-@{ if (ViewData["Page:Align"] != null) { <text>@ViewData["Page:Align"]</text> } else { <text>start</text> } }
               align-self-@{ if (ViewData["Page:Align"] != null) { <text>@ViewData["Page:Align"]</text> } else { <text>start</text> } }">
-            @RenderBody()
-        </main>
-    </div>
+        @RenderBody()
+    </main>
+</div>
 
-    <partial name="Partials/_Footer" />
-    <partial name="Partials/Imports/_Body" />
+<partial name="Partials/_Footer"/>
+<partial name="Partials/Imports/_Body"/>
 
-    @RenderSection("Scripts", required: false)
+@RenderSection("Scripts", false)
 </body>
 </html>

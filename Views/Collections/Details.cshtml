@@ -1,4 +1,4 @@
-﻿@model GGStream.Models.Collection
+﻿@model Collection
 
 @{
     ViewData["Title"] = "Details";
@@ -8,36 +8,42 @@
 
 <div>
     <h4>Collection</h4>
-    <hr />
+    <hr/>
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class="col-sm-10">
-            @{ if (Model.Icon != null) { <i class="@Html.DisplayFor(model => model.Icon)"></i> } } @Html.DisplayFor(model => model.Name)
+            @{
+                if (Model.Icon != null)
+                {
+                    <i class="@Html.DisplayFor(model => model.Icon)"></i>
+                }
+            }
+            @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.BaseColor)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.BaseColor) / @Html.DisplayFor(model => model.LightColor) / @Html.DisplayFor(model => model.DarkColor)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Private)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Private)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.InstructionType)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.InstructionType)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CallLink)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CallLink)
         </dd>
     </dl>

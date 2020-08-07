@@ -7,30 +7,30 @@
 <h1>Edit</h1>
 
 <h4>Collection</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="URL" />
+            <input type="hidden" asp-for="URL"/>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control"/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Icon" class="control-label"></label>
-                <input asp-for="Icon" class="form-control" />
+                <input asp-for="Icon" class="form-control"/>
                 <span asp-validation-for="Icon" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="BaseColor" class="control-label"></label>
-                <input asp-for="BaseColor" type="color" class="form-control" />
+                <input asp-for="BaseColor" type="color" class="form-control"/>
                 <span asp-validation-for="BaseColor" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Private" /> @Html.DisplayNameFor(model => model.Private)
+                    <input class="form-check-input" asp-for="Private"/> @Html.DisplayNameFor(model => model.Private)
                 </label>
             </div>
             <div class="form-group">
@@ -42,11 +42,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="CallLink" class="control-label"></label>
-                <input asp-for="CallLink" class="form-control" />
+                <input asp-for="CallLink" class="form-control"/>
                 <span asp-validation-for="CallLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </form>
     </div>
@@ -57,5 +57,5 @@
 </div>
 
 @section Scripts {
-    <partial name="Partials/Imports/_Validation.cshtml" />
+    <partial name="Partials/Imports/_Validation.cshtml"/>
 }

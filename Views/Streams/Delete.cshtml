@@ -1,4 +1,4 @@
-﻿@model GGStream.Models.Stream
+﻿@model Stream
 
 @{
     ViewData["Title"] = "Delete";
@@ -9,7 +9,7 @@
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Stream</h4>
-    <hr />
+    <hr/>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ID)
@@ -54,10 +54,10 @@
             @Html.DisplayFor(model => model.Private)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
-        <input type="hidden" asp-for="StreamKey" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="hidden" asp-for="StreamKey"/>
+        <input type="submit" value="Delete" class="btn btn-danger"/> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>

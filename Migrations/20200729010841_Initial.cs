@@ -8,8 +8,8 @@ namespace GGStream.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Collection",
-                columns: table => new
+                "Collection",
+                table => new
                 {
                     URL = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
@@ -18,14 +18,11 @@ namespace GGStream.Migrations
                     InstructionType = table.Column<int>(nullable: false),
                     CallLink = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Collection", x => x.URL);
-                });
+                constraints: table => { table.PrimaryKey("PK_Collection", x => x.URL); });
 
             migrationBuilder.CreateTable(
-                name: "Stream",
-                columns: table => new
+                "Stream",
+                table => new
                 {
                     ID = table.Column<string>(nullable: false),
                     StreamKey = table.Column<string>(nullable: true),
@@ -37,26 +34,26 @@ namespace GGStream.Migrations
                 {
                     table.PrimaryKey("PK_Stream", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Stream_Collection_CollectionURL",
-                        column: x => x.CollectionURL,
-                        principalTable: "Collection",
-                        principalColumn: "URL",
+                        "FK_Stream_Collection_CollectionURL",
+                        x => x.CollectionURL,
+                        "Collection",
+                        "URL",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stream_CollectionURL",
-                table: "Stream",
-                column: "CollectionURL");
+                "IX_Stream_CollectionURL",
+                "Stream",
+                "CollectionURL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Stream");
+                "Stream");
 
             migrationBuilder.DropTable(
-                name: "Collection");
+                "Collection");
         }
     }
 }

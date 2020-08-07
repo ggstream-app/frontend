@@ -7,8 +7,8 @@ namespace GGStream.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Name",
-                table: "Stream",
+                "Name",
+                "Stream",
                 nullable: false,
                 defaultValue: "");
         }
@@ -16,8 +16,8 @@ namespace GGStream.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Name",
-                table: "Stream");
+                "Name",
+                "Stream");
         }
     }
 }
