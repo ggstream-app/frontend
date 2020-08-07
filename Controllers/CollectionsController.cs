@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using GGStream.Data;
 using GGStream.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GGStream.Controllers
 {
@@ -24,20 +24,14 @@ namespace GGStream.Controllers
             return View(await _context.Collection.ToListAsync());
         }
 
-        
+
         [Route("/admin/{url}")]
         public async Task<IActionResult> Details(string url)
         {
-            if (url == null)
-            {
-                return NotFound();
-            }
+            if (url == null) return NotFound();
 
             var collection = await _context.Collection.FindAsync(url);
-            if (collection == null)
-            {
-                return NotFound();
-            }
+            if (collection == null) return NotFound();
 
             return View(collection);
         }
@@ -51,12 +45,10 @@ namespace GGStream.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/create")]
-        public async Task<IActionResult> Create([Bind("URL,Name,Icon,BaseColor,Private,InstructionType,CallLink")] Collection collection)
+        public async Task<IActionResult> Create([Bind("URL,Name,Icon,BaseColor,Private,InstructionType,CallLink")]
+            Collection collection)
         {
-            if (collection.BaseColor == "#000000")
-            {
-                collection.BaseColor = null;
-            }
+            if (collection.BaseColor == "#000000") collection.BaseColor = null;
 
             if (ModelState.IsValid)
             {
@@ -64,39 +56,30 @@ namespace GGStream.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Collections");
             }
+
             return View(collection);
         }
 
         [Route("/admin/{url}/edit")]
         public async Task<IActionResult> Edit(string url)
         {
-            if (url == null)
-            {
-                return NotFound();
-            }
+            if (url == null) return NotFound();
 
             var collection = await _context.Collection.FindAsync(url);
-            if (collection == null)
-            {
-                return NotFound();
-            }
+            if (collection == null) return NotFound();
             return View(collection);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/edit")]
-        public async Task<IActionResult> Edit(string url, [Bind("URL,Name,Icon,BaseColor,Private,InstructionType,CallLink")] Collection collection)
+        public async Task<IActionResult> Edit(string url,
+            [Bind("URL,Name,Icon,BaseColor,Private,InstructionType,CallLink")]
+            Collection collection)
         {
-            if (url != collection.URL)
-            {
-                return NotFound();
-            }
+            if (url != collection.URL) return NotFound();
 
-            if (collection.BaseColor == "#000000")
-            {
-                collection.BaseColor = null;
-            }
+            if (collection.BaseColor == "#000000") collection.BaseColor = null;
 
             if (ModelState.IsValid)
             {
@@ -108,37 +91,29 @@ namespace GGStream.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!CollectionExists(collection.URL))
-                    {
                         return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(collection);
         }
 
         [Route("/admin/{url}/delete")]
         public async Task<IActionResult> Delete(string url)
         {
-            if (url == null)
-            {
-                return NotFound();
-            }
+            if (url == null) return NotFound();
 
             var collection = await _context.Collection.FindAsync(url);
-            if (collection == null)
-            {
-                return NotFound();
-            }
+            if (collection == null) return NotFound();
 
             return View(collection);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Route("/admin/{url}/delete")]
         public async Task<IActionResult> DeleteConfirmed(string url)

@@ -13,16 +13,16 @@ namespace GGStream.Controllers
         {
             var redirectUrl = Url.Action(nameof(HomeController.Index), "Home");
             return Challenge(
-                new AuthenticationProperties { RedirectUri = redirectUrl },
+                new AuthenticationProperties {RedirectUri = redirectUrl},
                 OpenIdConnectDefaults.AuthenticationScheme);
         }
 
         [HttpGet]
         public IActionResult SignOut()
         {
-            var callbackUrl = Url.Action(nameof(SignedOut), "Account", values: null, protocol: Request.Scheme);
+            var callbackUrl = Url.Action(nameof(SignedOut), "Account", null, Request.Scheme);
             return SignOut(
-                new AuthenticationProperties { RedirectUri = callbackUrl },
+                new AuthenticationProperties {RedirectUri = callbackUrl},
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 OpenIdConnectDefaults.AuthenticationScheme);
         }

@@ -8,6 +8,7 @@ namespace GGStream.Models
         string TimeZoneId { get; }
         DateTime Now();
     }
+
     public class ApplicationDateTime : IApplicationDateTime
     {
         public ApplicationDateTime(IConfiguration configuration)

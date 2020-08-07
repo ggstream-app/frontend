@@ -7,8 +7,8 @@ namespace GGStream.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "Private",
-                table: "Stream",
+                "Private",
+                "Stream",
                 nullable: false,
                 defaultValue: false);
         }
@@ -16,8 +16,8 @@ namespace GGStream.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Private",
-                table: "Stream");
+                "Private",
+                "Stream");
         }
     }
 }

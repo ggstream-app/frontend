@@ -33,30 +33,22 @@ namespace GGStream.Models
         [DisplayName("Base color (#hex)")]
         public string BaseColor { get; set; }
 
-        [NotMapped]
-        public string NearWhiteColor => ChangeColorBrightness((float)0.8);
+        [NotMapped] public string NearWhiteColor => ChangeColorBrightness((float) 0.8);
 
-        [NotMapped]
-        public string LightestColor => ChangeColorBrightness((float)0.6);
+        [NotMapped] public string LightestColor => ChangeColorBrightness((float) 0.6);
 
-        [NotMapped]
-        public string LighterColor => ChangeColorBrightness((float)0.4);
+        [NotMapped] public string LighterColor => ChangeColorBrightness((float) 0.4);
 
-        [NotMapped]
-        public string LightColor => ChangeColorBrightness((float)0.2);
+        [NotMapped] public string LightColor => ChangeColorBrightness((float) 0.2);
 
-        [NotMapped]
-        public string DarkColor => ChangeColorBrightness((float)-0.2);
+        [NotMapped] public string DarkColor => ChangeColorBrightness((float) -0.2);
 
 
-        [NotMapped]
-        public string DarkerColor => ChangeColorBrightness((float)-0.4);
+        [NotMapped] public string DarkerColor => ChangeColorBrightness((float) -0.4);
 
-        [NotMapped]
-        public string DarkestColor => ChangeColorBrightness((float)-0.6);
+        [NotMapped] public string DarkestColor => ChangeColorBrightness((float) -0.6);
 
-        [NotMapped]
-        public string NearBlackColor => ChangeColorBrightness((float)-0.8);
+        [NotMapped] public string NearBlackColor => ChangeColorBrightness((float) -0.8);
 
         /**
          * Whether this collection is private (need stream key to watch) or public (pull latest stream).
@@ -82,16 +74,13 @@ namespace GGStream.Models
 
         private string ChangeColorBrightness(float correctionFactor)
         {
-            if (BaseColor == null)
-            {
-                return null;
-            }
+            if (BaseColor == null) return null;
 
             var color = ColorTranslator.FromHtml(BaseColor);
 
-            var red = (float)color.R;
-            var green = (float)color.G;
-            var blue = (float)color.B;
+            var red = (float) color.R;
+            var green = (float) color.G;
+            var blue = (float) color.B;
 
             if (correctionFactor < 0)
             {
@@ -107,7 +96,7 @@ namespace GGStream.Models
                 blue = (255 - blue) * correctionFactor + blue;
             }
 
-            var newColor = Color.FromArgb(color.A, (int)red, (int)green, (int)blue);
+            var newColor = Color.FromArgb(color.A, (int) red, (int) green, (int) blue);
             return ColorTranslator.ToHtml(newColor);
         }
     }

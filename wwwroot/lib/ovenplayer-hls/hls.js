@@ -16745,7 +16745,7 @@ VTTParser.prototype = {
               self.state = 'ID';
             }
 
-            continue;
+            
         }
       }
     } catch (e) {

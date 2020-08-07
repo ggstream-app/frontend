@@ -17,8 +17,12 @@
             <div class="card border-0">
                 <div class="card-header bg-default d-flex align-items-center" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor;</text> } }">
                     <h5 class="text-secondary mb-0 flex-1-auto">
-                        @{ if (stream.Collection.Icon != null)
-                            { <i class="@Html.DisplayFor(model => stream.Collection.Icon) mr-1"></i> } }
+                        @{
+                            if (stream.Collection.Icon != null)
+                            {
+                                <i class="@Html.DisplayFor(model => stream.Collection.Icon) mr-1"></i>
+                            }
+                        }
                         @Html.DisplayFor(model => stream.Collection.Name)
                     </h5>
                     @if (User.Identity.IsAuthenticated)
@@ -34,7 +38,9 @@
                             <div class="col-12">
                                 <h4>
                                     @if (User.Identity.IsAuthenticated && (stream.Private || stream.Collection.Private))
-                                    {<i class="fad fa-lock mr-2"></i>}
+                                    {
+                                        <i class="fad fa-lock mr-2"></i>
+                                    }
                                     @Html.DisplayFor(model => stream.Name)
                                 </h4>
                             </div>
@@ -44,9 +50,12 @@
                                 @{
                                     if (stream.StartDate != null)
                                     {
-
-                                        <span class="mr-3"><i class="fad fa-calendar-day mr-1"></i> @string.Format("{0:ddd dd/MM/yyyy}", stream.StartDate)</span>
-                                        <span><i class="fad fa-clock mr-1"></i> @string.Format("{0:hh:mm tt}", stream.StartDate)</span>
+                                        <span class="mr-3">
+                                            <i class="fad fa-calendar-day mr-1"></i> @string.Format("{0:ddd dd/MM/yyyy}", stream.StartDate)
+                                        </span>
+                                        <span>
+                                            <i class="fad fa-clock mr-1"></i> @string.Format("{0:hh:mm tt}", stream.StartDate)
+                                        </span>
                                     }
                                     else
                                     {
@@ -66,9 +75,12 @@
                                 @{
                                     if (stream.EndDate != null)
                                     {
-
-                                        <span class="mr-3"><i class="fad fa-calendar-day mr-1"></i> @string.Format("{0:ddd dd/MM/yyyy}", stream.EndDate)</span>
-                                        <span><i class="fad fa-clock mr-1"></i> @string.Format("{0:hh:mm tt}", stream.EndDate)</span>
+                                        <span class="mr-3">
+                                            <i class="fad fa-calendar-day mr-1"></i> @string.Format("{0:ddd dd/MM/yyyy}", stream.EndDate)
+                                        </span>
+                                        <span>
+                                            <i class="fad fa-clock mr-1"></i> @string.Format("{0:hh:mm tt}", stream.EndDate)
+                                        </span>
                                     }
                                     else
                                     {
@@ -83,7 +95,7 @@
                                 @{
                                     if ((stream.StartDate == null || stream.StartDate < SystemTime.Now()) && (stream.EndDate == null || stream.EndDate > SystemTime.Now()))
                                     {
-                                        <a href="@Url.ActionLink("ViewStream", "Player", new { url = stream.ID })" class="btn btn-default" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor; border: 0;</text> } }">
+                                        <a href="@Url.ActionLink("ViewStream", "Player", new {url = stream.ID})" class="btn btn-default" style="@{ if (stream.Collection.BaseColor != null) { <text>background-color: @stream.Collection.BaseColor !important; color: @stream.Collection.NearWhiteColor; border: 0;</text> } }">
                                             <i class="fad fa-video mr-2"></i> Watch Stream
                                         </a>
                                     }
@@ -115,11 +127,15 @@
     @foreach (var collection in Model.PublicCollections)
     {
         <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4">
-            <a href="@Url.ActionLink("ViewStream", "Player", new { url = collection.URL })" class="card bg-default border-0" style="@{ if (collection.BaseColor != null) { <text>background-color: @collection.BaseColor !important;</text> } }">
+            <a href="@Url.ActionLink("ViewStream", "Player", new {url = collection.URL})" class="card bg-default border-0" style="@{ if (collection.BaseColor != null) { <text>background-color: @collection.BaseColor !important;</text> } }">
                 <div class="card-body d-flex flex-0-auto h-6rem justify-content-center align-items-center">
                     <h5 class="card-title mb-0 text-secondary" style="@{ if (collection.BaseColor != null) { <text>color: @collection.NearWhiteColor !important;</text> } }">
-                        @{ if (collection.Icon != null)
-                            { <i class="@Html.DisplayFor(model => collection.Icon) mr-1"></i> } }
+                        @{
+                            if (collection.Icon != null)
+                            {
+                                <i class="@Html.DisplayFor(model => collection.Icon) mr-1"></i>
+                            }
+                        }
                         @Html.DisplayFor(model => collection.Name)
                     </h5>
                 </div>

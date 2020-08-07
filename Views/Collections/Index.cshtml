@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GGStream.Models.Collection>
+﻿@model IEnumerable<Collection>
 
 @{
     ViewData["Title"] = "Index";
@@ -11,30 +11,37 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BaseColor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Private)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InstructionType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CallLink)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BaseColor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Private)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InstructionType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CallLink)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
-                @{ if (item.Icon != null) { <i class="@Html.DisplayFor(model => item.Icon)"></i> } } @Html.DisplayFor(modelItem => item.Name)
+                @{
+                    if (item.Icon != null)
+                    {
+                        <i class="@Html.DisplayFor(model => item.Icon)"></i>
+                    }
+                }
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BaseColor)
@@ -54,6 +61,6 @@
                 <a asp-action="Delete" asp-route-url="@item.URL">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

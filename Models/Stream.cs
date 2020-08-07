@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
 // ReSharper disable InconsistentNaming
 
 namespace GGStream.Models
@@ -31,6 +32,7 @@ namespace GGStream.Models
          * Collection this stream is a part of.
          */
         public Collection Collection { get; set; }
+
         public string CollectionURL { get; set; }
 
         /**

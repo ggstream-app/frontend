@@ -1,4 +1,5 @@
-﻿@model Stream
+﻿@using Microsoft.Extensions.Configuration
+@model Stream
 
 @{
     ViewData["Title"] = Model.Name + " - " + Model.Collection.Name;
@@ -17,7 +18,7 @@
 <div id="player"></div>
 
 @section Scripts {
-    @inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+    @inject IConfiguration Configuration
 
     @await Html.PartialAsync("Partials/_OvenPlayer", new OvenPlayerViewModel(Configuration)
     {
@@ -62,7 +63,7 @@
             <li class="nav-item">
                 <a class="nav-btn nav-link nav-link-icon btn btn-secondary text-default" style="@{ if (Model.Collection.BaseColor != null) { <text>background-color: @Model.Collection.LighterColor !important; color: @Model.Collection.DarkestColor !important; border: 0;</text> } }"
                    href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true"
-                   title="Share this stream!" data-content="<a href='@Url.ActionLink("ViewStream", "Player", new { url = @Model.ID })'>@Url.ActionLink("ViewStream", "Player", new { url = @Model.ID })</a>">
+                   title="Share this stream!" data-content="<a href='@Url.ActionLink("ViewStream", "Player", new {url = Model.ID})'>@Url.ActionLink("ViewStream", "Player", new {url = Model.ID})</a>">
                     <i class="fad fa-share-alt"></i>
                 </a>
             </li>
@@ -89,5 +90,5 @@
 
 @if (Model.Collection.InstructionType == InstructionType.Jackbox)
 {
-    <partial name="Partials/Instructions/_Jackbox" />
+    <partial name="Partials/Instructions/_Jackbox"/>
 }

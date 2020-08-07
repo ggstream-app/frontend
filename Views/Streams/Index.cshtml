@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GGStream.Models.Stream>
+﻿@model IEnumerable<Stream>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,8 +6,8 @@
 
 <h1>Index</h1>
 
-@{ 
-    if(ViewData["DisableCreate"] == null || (bool)ViewData["DisableCreate"] != true)
+@{
+    if (ViewData["DisableCreate"] == null || (bool) ViewData["DisableCreate"] != true)
     {
         <p>
             <a asp-action="Create" asp-route-url="@(ViewContext.RouteData.Values["url"])">Create New</a>
@@ -17,30 +17,31 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Collection)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Private)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Collection)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Private)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <th>
                 @Html.DisplayFor(modelItem => item.ID)
@@ -66,6 +67,6 @@
                 <a asp-action="Delete" asp-route-url="@item.CollectionURL" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

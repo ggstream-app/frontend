@@ -1,4 +1,8 @@
-﻿using GGStream.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Net;
+using GGStream.Data;
 using GGStream.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,10 +14,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Net;
 
 namespace GGStream
 {
@@ -33,7 +33,7 @@ namespace GGStream
             services.Configure<ForwardedHeadersOptions>(options =>
             {
                 options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-                
+
                 /* Add Docker default bridge */
                 options.KnownNetworks.Add(new IPNetwork(IPAddress.Parse("::ffff:172.17.0.0"), 24));
             });
@@ -44,7 +44,7 @@ namespace GGStream
 
             // Database
             services.AddDbContext<Context>(options =>
-                    options.UseSqlite(Configuration.GetConnectionString("Context")));
+                options.UseSqlite(Configuration.GetConnectionString("Context")));
 
             // App Insights
             services.AddApplicationInsightsTelemetry();
@@ -54,12 +54,13 @@ namespace GGStream
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger, IApplicationDateTime adt)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger,
+            IApplicationDateTime adt)
         {
             // Automatically apply DB migrations on startup.
             using (var serviceScope = app.ApplicationServices
-            .GetRequiredService<IServiceScopeFactory>()
-            .CreateScope())
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
             {
                 using (var context = serviceScope.ServiceProvider.GetService<Context>())
                 {
@@ -95,10 +96,7 @@ namespace GGStream
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
 
         public void LogAppStartup(ILogger<Startup> logger, IApplicationDateTime adt)
@@ -109,7 +107,9 @@ namespace GGStream
             logger.LogInformation("Ingest: {Ingest}", Configuration.GetValue<string>("IngestEndpoint"));
             Configuration.GetSection("SvcInstances").Get<List<SvcInstance>>().ForEach(i =>
             {
-                logger.LogInformation("Service: {Service} / {Endpoint} / Secure: {Secure}, WebRTC: {WebRTC}, DASH: {DASH}, HLS {HLS}", i.Name, i.Endpoint, i.Secure, i.Protocols.WebRTC, i.Protocols.DASH, i.Protocols.HLS);
+                logger.LogInformation(
+                    "Service: {Service} / {Endpoint} / Secure: {Secure}, WebRTC: {WebRTC}, DASH: {DASH}, HLS {HLS}",
+                    i.Name, i.Endpoint, i.Secure, i.Protocols.WebRTC, i.Protocols.DASH, i.Protocols.HLS);
             });
 
             logger.LogInformation("\n--- Application DateTime");
@@ -118,7 +118,8 @@ namespace GGStream
             logger.LogInformation("System time: {Time}", DateTime.Now.ToString(CultureInfo.InvariantCulture));
             logger.LogInformation("UTC time: {TimeUTC}", DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
             logger.LogInformation("TimeZone: {TZ}", Configuration.GetValue<string>("TimeZone"));
-            logger.LogInformation("Base Offset: {TZI} / DST: {DST}", tzi.BaseUtcOffset, tzi.IsDaylightSavingTime(DateTime.Now));
+            logger.LogInformation("Base Offset: {TZI} / DST: {DST}", tzi.BaseUtcOffset,
+                tzi.IsDaylightSavingTime(DateTime.Now));
             logger.LogInformation("ApplicationDateTime: {ADTime}", adt.Now().ToString(CultureInfo.InvariantCulture));
 
             logger.LogInformation("\n--- AAD Authentication");
@@ -127,8 +128,8 @@ namespace GGStream
             logger.LogInformation("ClientId: {ClientId}", Configuration.GetValue<string>("AzureAd:ClientId"));
 
             logger.LogInformation("\n--- Application Insights");
-            logger.LogInformation("Instrumentation Key: {IKey}", Configuration.GetValue<string>("ApplicationInsights:InstrumentationKey"));
-
+            logger.LogInformation("Instrumentation Key: {IKey}",
+                Configuration.GetValue<string>("ApplicationInsights:InstrumentationKey"));
         }
     }
 }
